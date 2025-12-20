@@ -1,3 +1,5 @@
+<img width="100" height="100" alt="image" src="https://github.com/user-attachments/assets/d6b41ab1-bff7-41ee-a0a7-f5c4c8f4731e" />
+
 # How To Go
 
 [![Go Version](https://img.shields.io/badge/go-1.24+-00ADD8?style=flat&logo=go)]()
