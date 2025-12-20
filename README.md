@@ -1,6 +1,6 @@
 # How To Go
 
-[![Go Version](https://img.shields.io/badge/go-1.25+-00ADD8?style=flat&logo=go)]()
+[![Go Version](https://img.shields.io/badge/go-1.24+-00ADD8?style=flat&logo=go)]()
 [![Build Status](https://img.shields.io/badge/build-passing-brightgreen?style=flat)]()
 [![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat)]()
 [![Contributions Welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)]()
