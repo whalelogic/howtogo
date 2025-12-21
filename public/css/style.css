@@ -1,0 +1,95 @@
+/* Reset and Base Styles */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    /* Go By Example uses a very standard, clean sans-serif stack */
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    color: #333;
+    background-color: #fff;
+    margin: 0;
+    padding: 0;
+}
+
+/* Links - GoByExample uses dark links, not blue */
+a {
+    color: #333;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Main Container Layout */
+div#intro {
+    /* Slightly wider than your original to match the site feel */
+    max-width: 800px; 
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+/* Header Typography */
+div#intro h2 {
+    margin-top: 0;
+    font-weight: bold; /* The site uses bold headers */
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+div#intro h2 a {
+    color: #333;
+    text-decoration: none;
+}
+
+div#intro p {
+    margin-bottom: 20px;
+    color: #555; /* Slightly softer text for descriptions */
+}
+
+/* Example List Styling - THE BIG CHANGE */
+ul.examples {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    /* This creates the signature look: Links look like code */
+    font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace; 
+}
+
+ul.examples li {
+    margin-bottom: 0; /* Tighter list */
+}
+
+ul.examples li a {
+    display: inline-block; /* Not a full block anymore */
+    background: transparent; /* Removed the button background */
+    padding: 2px 0; /* Minimal padding */
+    color: #333;
+    border-radius: 0;
+    font-size: 15px;
+}
+
+/* On hover, keep it simple */
+ul.examples li a:hover {
+    background: transparent;
+    text-decoration: underline;
+}
+
+/* Footer Styling */
+p.footer {
+    margin-top: 60px; /* More spacing */
+    color: #888;
+    font-size: 13px; /* Slightly smaller */
+    font-family: Helvetica, Arial, sans-serif; /* Ensure footer isn't monospace */
+    text-align: left; /* GoByExample footers are usually left-aligned or simple */
+    border-top: 1px solid #f0f0f0;
+    padding-top: 20px;
+}
+
+p.footer a {
+    color: #888;
+    text-decoration: underline;
+}

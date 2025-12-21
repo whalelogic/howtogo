@@ -1,0 +1,23 @@
+package pages
+
+import "github.com/whalelogic/howtogo/templates/layouts"
+
+templ Index() {
+	@Base("How to Go") {
+		<p>
+			<a href="https://go.dev">Go</a> is an open source programming language designed for
+			building scalable, secure and reliable software.
+		</p>
+		<p>
+			<em>How to Go</em> is a hands-on introduction to Go using annotated example programs.
+			Check out the first example or browse the full list below.
+		</p>
+
+		<ul class="examples">
+			<li><a href="hello-world">Hello World</a></li>
+			<li><a href="values">Values</a></li>
+			<li><a href="variables">Variables</a></li>
+			<li><a href="exit">Exit</a></li>
+		</ul>
+	}
+}
