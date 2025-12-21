@@ -1,0 +1,28 @@
+package main
+
+// Base is the layout shell for the application.
+// It accepts a 'title' string for the browser tab.
+templ Base(title string) {
+	<!DOCTYPE html>
+	<html>
+		<head>
+			<meta charset="utf-8"/>
+			<title>{ title }</title>
+			<link rel="stylesheet" href="site.css"/>
+		</head>
+		<body>
+			<div id="intro">
+				// Global Header
+				<h2><a href="./">How to Go</a></h2>
+
+				// The { children... } line is where specific page content will be injected
+				{ children... }
+
+				// Global Footer
+				<p class="footer">
+					by <a href="#">Your Name</a> | <a href="#">source</a> | <a href="#">license</a>
+				</p>
+			</div>
+		</body>
+	</html>
+}
