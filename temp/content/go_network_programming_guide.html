@@ -1,0 +1,194 @@
+<h1 id="comprehensive-guide-to-gos-nethttp-and-network-programming">🌐
+Comprehensive Guide to Go’s <code>net/http</code> and Network
+Programming</h1>
+<h2 id="introduction">🚀 Introduction</h2>
+<p>Go’s <code>net/http</code> package is one of its most powerful
+standard libraries — it enables you to build web servers, clients, REST
+APIs, and even microservices. This guide will walk you through the
+fundamentals of network programming in Go, including HTTP, TCP, JSON,
+and gRPC.</p>
+<hr />
+<h2 id="part-1-understanding-network-programming-basics">📡 Part 1:
+Understanding Network Programming Basics</h2>
+<h3 id="what-is-network-programming">🧠 What is Network
+Programming?</h3>
+<p>Network programming enables communication between processes or
+devices over a network using protocols such as TCP/IP, HTTP, WebSocket,
+or gRPC.</p>
+<h3 id="common-protocols-overview">🔗 Common Protocols Overview</h3>
+<hr />
+<p>Protocol Description Go Package</p>
+<hr />
+<p><strong>TCP (Transmission Connection-oriented <code>net</code>
+Control Protocol)</strong> protocol for reliable byte streams.</p>
+<p><strong>UDP (User Datagram Connectionless protocol <code>net</code>
+Protocol)</strong> for fast, unreliable<br />
+messaging.</p>
+<p><strong>HTTP (HyperText The foundation of web <code>net/http</code>
+Transfer Protocol)</strong> communication.</p>
+<p><strong>gRPC (Google High-performance RPC
+<code>google.golang.org/grpc</code> Remote Procedure framework using
+HTTP/2.<br />
+Call)</strong></p>
+<hr />
+<hr />
+<h2 id="part-2-http-with-go">🌍 Part 2: HTTP with Go</h2>
+<h3 id="creating-a-basic-http-server">🧩 Creating a Basic HTTP
+Server</h3>
+<div class="sourceCode" id="cb1"><pre class="sourceCode go"><code class="sourceCode go"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">package</span> main</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="op">(</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;fmt&quot;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;net/http&quot;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="op">)</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="kw">func</span> handler<span class="op">(</span>w http<span class="op">.</span>ResponseWriter<span class="op">,</span> r <span class="op">*</span>http<span class="op">.</span>Request<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    fmt<span class="op">.</span>Fprintf<span class="op">(</span>w<span class="op">,</span> <span class="st">&quot;Hello, World! 🌎 You requested: %s&quot;</span><span class="op">,</span> r<span class="op">.</span>URL<span class="op">.</span>Path<span class="op">)</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="kw">func</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    http<span class="op">.</span>HandleFunc<span class="op">(</span><span class="st">&quot;/&quot;</span><span class="op">,</span> handler<span class="op">)</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    fmt<span class="op">.</span>Println<span class="op">(</span><span class="st">&quot;🚀 Server running at http://localhost:8080&quot;</span><span class="op">)</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    http<span class="op">.</span>ListenAndServe<span class="op">(</span><span class="st">&quot;:8080&quot;</span><span class="op">,</span> <span class="ot">nil</span><span class="op">)</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<h3 id="key-functions-in-nethttp">🛠 Key Functions in
+<code>net/http</code></h3>
+<hr />
+<p>Function Purpose</p>
+<hr />
+<p><code>http.HandleFunc(pattern, handler)</code> Registers a handler
+function for a pattern.</p>
+<p><code>http.ListenAndServe(addr, handler)</code> Starts an HTTP server
+on a given address.</p>
+<p><code>http.ResponseWriter</code> Used to send a response to the
+client.</p>
+<p><code>*http.Request</code> Represents the incoming HTTP request.</p>
+<hr />
+<hr />
+<h2 id="serving-static-html-pages">🧾 Serving Static HTML Pages</h2>
+<p>You can serve static HTML files using Go’s built-in file server.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode go"><code class="sourceCode go"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>http<span class="op">.</span>Handle<span class="op">(</span><span class="st">&quot;/&quot;</span><span class="op">,</span> http<span class="op">.</span>FileServer<span class="op">(</span>http<span class="op">.</span>Dir<span class="op">(</span><span class="st">&quot;./static&quot;</span><span class="op">)))</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>http<span class="op">.</span>ListenAndServe<span class="op">(</span><span class="st">&quot;:8080&quot;</span><span class="op">,</span> <span class="ot">nil</span><span class="op">)</span></span></code></pre></div>
+<h3 id="helpful-tips">🧠 Helpful Tips</h3>
+<ul>
+<li>Always log requests for debugging.</li>
+<li>Use environment variables for ports and configuration.</li>
+<li>Serve static files from a separate <code>/static</code>
+directory.</li>
+</ul>
+<hr />
+<h2 id="part-3-json-apis-in-go">🔌 Part 3: JSON APIs in Go</h2>
+<h3 id="example-json-rest-api-endpoint">Example: JSON REST API
+Endpoint</h3>
+<div class="sourceCode" id="cb3"><pre class="sourceCode go"><code class="sourceCode go"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">package</span> main</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="op">(</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;encoding/json&quot;</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;net/http&quot;</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="op">)</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> Article <span class="kw">struct</span> <span class="op">{</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    Title  <span class="dt">string</span> <span class="st">`json:&quot;title&quot;`</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    Author <span class="dt">string</span> <span class="st">`json:&quot;author&quot;`</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="kw">func</span> getArticle<span class="op">(</span>w http<span class="op">.</span>ResponseWriter<span class="op">,</span> r <span class="op">*</span>http<span class="op">.</span>Request<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    w<span class="op">.</span>Header<span class="op">().</span>Set<span class="op">(</span><span class="st">&quot;Content-Type&quot;</span><span class="op">,</span> <span class="st">&quot;application/json&quot;</span><span class="op">)</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    json<span class="op">.</span>NewEncoder<span class="op">(</span>w<span class="op">).</span>Encode<span class="op">(</span>Article<span class="op">{</span>Title<span class="op">:</span> <span class="st">&quot;Learning Go&quot;</span><span class="op">,</span> Author<span class="op">:</span> <span class="st">&quot;Keith&quot;</span><span class="op">})</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="kw">func</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    http<span class="op">.</span>HandleFunc<span class="op">(</span><span class="st">&quot;/api/article&quot;</span><span class="op">,</span> getArticle<span class="op">)</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>    http<span class="op">.</span>ListenAndServe<span class="op">(</span><span class="st">&quot;:8080&quot;</span><span class="op">,</span> <span class="ot">nil</span><span class="op">)</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<hr />
+<h2 id="part-4-building-a-tcp-server">⚡ Part 4: Building a TCP
+Server</h2>
+<h3 id="example">Example</h3>
+<div class="sourceCode" id="cb4"><pre class="sourceCode go"><code class="sourceCode go"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">package</span> main</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="op">(</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;fmt&quot;</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;net&quot;</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="op">)</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="kw">func</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    ln<span class="op">,</span> _ <span class="op">:=</span> net<span class="op">.</span>Listen<span class="op">(</span><span class="st">&quot;tcp&quot;</span><span class="op">,</span> <span class="st">&quot;:9000&quot;</span><span class="op">)</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">{</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>        conn<span class="op">,</span> _ <span class="op">:=</span> ln<span class="op">.</span>Accept<span class="op">()</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">go</span> <span class="kw">func</span><span class="op">(</span>c net<span class="op">.</span>Conn<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>            fmt<span class="op">.</span>Fprintln<span class="op">(</span>c<span class="op">,</span> <span class="st">&quot;Welcome to the TCP server!&quot;</span><span class="op">)</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>            c<span class="op">.</span>Close<span class="op">()</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>        <span class="op">}(</span>conn<span class="op">)</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<hr />
+<h2 id="part-5-grpc-in-go">🛰️ Part 5: gRPC in Go</h2>
+<p>gRPC uses Protocol Buffers and HTTP/2 for efficient
+communication.</p>
+<h3 id="install-grpc-tools">Install gRPC Tools</h3>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">go</span> install google.golang.org/protobuf/cmd/protoc-gen-go@latest</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">go</span> install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest</span></code></pre></div>
+<h3 id="example-.proto-file">Example <code>.proto</code> File</h3>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode proto"><code class="sourceCode protobuf"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>syntax = <span class="st">&quot;proto3&quot;</span>;</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>service Greeter {</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  rpc SayHello (HelloRequest) returns (HelloReply);</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="kw">message</span> HelloRequest {</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="dt">string</span> name = <span class="dv">1</span>;</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="kw">message</span> HelloReply {</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  <span class="dt">string</span> <span class="kw">message</span> = <span class="dv">1</span>;</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<hr />
+<h2 id="helpful-things-to-remember">💡 Helpful Things to Remember</h2>
+<ul>
+<li>✅ <code>defer resp.Body.Close()</code> — always close response
+bodies!</li>
+<li>⚙️ Reuse connections with <code>http.Client</code> for
+performance.</li>
+<li>🧱 Use context for cancellation in HTTP requests.</li>
+<li>🔐 HTTPS is easy with <code>http.ListenAndServeTLS()</code>.</li>
+<li>🔥 Use <code>net/http/pprof</code> for performance profiling.</li>
+<li>🧭 Middleware can simplify logging, auth, etc.</li>
+<li>📦 Combine <code>net/http</code> with <code>html/template</code> for
+dynamic pages.</li>
+</ul>
+<hr />
+<h2 id="part-6-combining-htmltemplate-with-nethttp">🧱 Part 6: Combining
+<code>html/template</code> with <code>net/http</code></h2>
+<div class="sourceCode" id="cb7"><pre class="sourceCode go"><code class="sourceCode go"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">package</span> main</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="op">(</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;html/template&quot;</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;net/http&quot;</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="op">)</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> PageData <span class="kw">struct</span> <span class="op">{</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    Title   <span class="dt">string</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    Message <span class="dt">string</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="kw">func</span> handler<span class="op">(</span>w http<span class="op">.</span>ResponseWriter<span class="op">,</span> r <span class="op">*</span>http<span class="op">.</span>Request<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    tmpl <span class="op">:=</span> template<span class="op">.</span>Must<span class="op">(</span>template<span class="op">.</span>ParseFiles<span class="op">(</span><span class="st">&quot;index.html&quot;</span><span class="op">))</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>    data <span class="op">:=</span> PageData<span class="op">{</span>Title<span class="op">:</span> <span class="st">&quot;Welcome!&quot;</span><span class="op">,</span> Message<span class="op">:</span> <span class="st">&quot;Hello from Go Templates&quot;</span><span class="op">}</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>    tmpl<span class="op">.</span>Execute<span class="op">(</span>w<span class="op">,</span> data<span class="op">)</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a><span class="kw">func</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>    http<span class="op">.</span>HandleFunc<span class="op">(</span><span class="st">&quot;/&quot;</span><span class="op">,</span> handler<span class="op">)</span></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>    http<span class="op">.</span>ListenAndServe<span class="op">(</span><span class="st">&quot;:8080&quot;</span><span class="op">,</span> <span class="ot">nil</span><span class="op">)</span></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<hr />
+<h2 id="conclusion">📘 Conclusion</h2>
+<p>The <code>net/http</code> package is the backbone of Go web
+development. It’s minimalistic, fast, and flexible — letting you build
+from simple servers to enterprise APIs and microservices.</p>
+<p>When combined with <code>html/template</code>,
+<code>encoding/json</code>, and frameworks like <code>grpc</code>, it
+becomes a complete web stack for backend developers.</p>

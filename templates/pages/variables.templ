@@ -1,0 +1,41 @@
+package pages
+
+import "github.com/whalelogic/howtogo/templates/layouts"
+import "github.com/whalelogic/howtogo/templates/components"
+
+templ Variables() {
+	@layouts.Base("Variables | How to Go") {
+		<div class="example">
+			@components.Header()
+			<h1>Variables</h1>
+			<p>Variables let you name values. Go uses explicit <code>var</code> declarations or short-hand <code>:=</code> inside functions.</p>
+			<pre>
+				<code class="language-go">
+					@templ.Raw(`package main
+
+import "fmt"
+
+func main() {
+	var a string = "initial"
+	fmt.Println(a)
+
+	var b, c int = 1, 2
+	fmt.Println(b, c)
+
+	var d = true // type inferred
+	fmt.Println(d)
+
+	f := "short" // short declaration inside functions
+	fmt.Println(f)
+}`)
+				</code>
+			</pre>
+			<h2>Key Points</h2>
+			<ul>
+				<li><code>var</code> allows explicit types or inferred types from the initializer.</li>
+				<li><code>:=</code> is only valid inside functions; it infers the type.</li>
+				<li>Multiple assignment is common for parallel declarations.</li>
+			</ul>
+		</div>
+	}
+}

@@ -1,0 +1,96 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "JetBrains Mono", Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    color: #333 ;
+    background-color: #fff;
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    color: #333;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+    box-shadow: none !important;
+    outline: none !important;
+}
+
+/* Main Container Layout */
+div#intro {
+    max-width: 800px; 
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+/* Header Typography */
+div#intro h2 {
+    margin-top: 0;
+    font-weight: bold; 
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+div#intro h2 a {
+    color: #333;
+    text-decoration: none;
+}
+
+div#intro p {
+    margin-bottom: 20px;
+    color: #555; 
+}
+
+/* Example List */
+ul.examples {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace; 
+}
+
+ul.examples li {
+    margin-bottom: 0; 
+}
+
+ul.examples li a {
+    display: inline-block;  
+    background: transparent; 
+    padding: 2px 0; 
+    color: #333;
+    border-radius: 0;
+    font-size: 15px;
+}
+
+
+ul.examples li a:hover,
+ul.examples li a:focus,
+ul.examples li a:focus-visible {
+    background: transparent;
+    text-decoration: underline;
+    outline: none;
+    box-shadow: none !important;
+}
+
+/* Footer Styling */
+p.footer {
+    margin-top: 60px; /* More spacing */
+    color: #888;
+    font-size: 13px; /* Slightly smaller */
+    font-family: Helvetica, Arial, sans-serif; /* Ensure footer isn't monospace */
+    text-align: left; 
+    border-top: 1px solid #f0f0f0;
+    padding-top: 20px;
+}
+
+p.footer a {
+    color: #888;
+    text-decoration: underline;
+}

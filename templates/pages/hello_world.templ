@@ -1,0 +1,40 @@
+package pages
+
+import (
+	"github.com/whalelogic/howtogo/templates/components"
+	"github.com/whalelogic/howtogo/templates/layouts"
+)
+
+templ HelloWorld() {
+	@layouts.Base("How to Go") {
+		<div class="example">
+			@components.Header()
+			<h1>Hello, World!</h1>
+			<p>This is the traditional first program for learning a new programming language.</p>
+			<p>In Go, you can create a simple "Hello, World!" program like this:</p>
+			<pre>
+				<code class="language-go">
+					@templ.Raw(`package main
+
+import "fmt"
+
+func main() {
+    fmt.Println("Hello, World!")
+}`)
+				</code>
+			</pre>
+			<p>To run this program, save it to a file named <code>hello.go</code> and use the command:</p>
+			<pre>
+				<code class="language-bash">
+					@templ.Raw(`go run hello.go`)
+				</code>
+			</pre>
+			<p>This will output:</p>
+			<pre>
+				<code class="language-plaintext">
+					@templ.Raw(`Hello, World!`)
+				</code>
+			</pre>
+		</div>
+	}
+}

@@ -8,6 +8,9 @@ package pages
 import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
+import "github.com/whalelogic/howtogo/templates/layouts"
+import "github.com/whalelogic/howtogo/templates/components"
+
 func Index() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
@@ -41,13 +44,21 @@ func Index() templ.Component {
 				}()
 			}
 			ctx = templ.InitializeContext(ctx)
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<p><a href=\"https://go.dev\">Go</a> is an open source programming language designed for building scalable, secure and reliable software.</p><p><em>How to Go</em> is a hands-on introduction to Go using annotated example programs. Check out the first example or browse the full list below.</p><ul class=\"examples\"><li><a href=\"hello-world\">Hello World</a></li><li><a href=\"values\">Values</a></li><li><a href=\"variables\">Variables</a></li><li><a href=\"exit\">Exit</a></li></ul>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div class=\"example home\">")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = components.Header().Render(ctx, templ_7745c5c3_Buffer)
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<ul class=\"examples menu-list\"><li><a href=\"hello-world\">Hello World</a></li><li><a href=\"values\">Values</a></li><li><a href=\"variables\">Variables</a></li><li><a href=\"constants\">Constants</a></li><li><a href=\"for\">For</a></li><li><a href=\"if-else\">If/Else</a></li><li><a href=\"switch\">Switch</a></li><li><a href=\"arrays\">Arrays</a></li><li><a href=\"slices\">Slices</a></li><li><a href=\"maps\">Maps</a></li><li><a href=\"range\">Range</a></li><li><a href=\"functions\">Functions</a></li><li><a href=\"multiple-return-values\">Multiple Return Values</a></li><li><a href=\"variadic-functions\">Variadic Functions</a></li><li><a href=\"closures\">Closures</a></li><li><a href=\"recursion\">Recursion</a></li><li><a href=\"pointers\">Pointers</a></li><li><a href=\"strings-and-runes\">Strings and Runes</a></li><li><a href=\"structs\">Structs</a></li><li><a href=\"methods\">Methods</a></li><li><a href=\"interfaces\">Interfaces</a></li><li><a href=\"generics\">Generics</a></li><li><a href=\"errors\">Errors</a></li><li><a href=\"goroutines\">Goroutines</a></li><li><a href=\"channels\">Channels</a></li><li><a href=\"channel-buffering\">Channel Buffering</a></li><li><a href=\"channel-synchronization\">Channel Synchronization</a></li><li><a href=\"select\">Select</a></li><li><a href=\"timeouts\">Timeouts</a></li><li><a href=\"timers\">Timers</a></li><li><a href=\"tickers\">Tickers</a></li><li><a href=\"worker-pools\">Worker Pools</a></li><li><a href=\"waitgroups\">WaitGroups</a></li><li><a href=\"mutexes\">Mutexes</a></li><li><a href=\"stateful-goroutines\">Stateful Goroutines</a></li><li><a href=\"sorting\">Sorting</a></li><li><a href=\"panic\">Panic</a></li><li><a href=\"defer\">Defer</a></li><li><a href=\"recover\">Recover</a></li><li><a href=\"json\">JSON</a></li><li><a href=\"xml\">XML</a></li><li><a href=\"time\">Time</a></li><li><a href=\"context\">Context</a></li><li><a href=\"exit\">Exit</a></li></ul></div>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			return nil
 		})
-		templ_7745c5c3_Err = Base("How to Go").Render(templ.WithChildren(ctx, templ_7745c5c3_Var2), templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = layouts.Base("How to Go").Render(templ.WithChildren(ctx, templ_7745c5c3_Var2), templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

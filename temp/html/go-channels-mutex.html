@@ -1,0 +1,680 @@
+<h1 id="channels-mutexes">🧵 Channels &amp; Mutexes 🔒</h1>
+<h3 id="a-go-reference-guide">A Go Reference &amp; Guide</h3>
+<p>A thorough reference and practical guide for using channels and
+mutexes in Go. This document collects syntax, keywords, type/method
+tables, idioms, patterns, pitfalls, recipes, and advanced topics with
+examples and recommendation checklists.</p>
+<p>Contents - Table of Contents - Overview - Channels (syntax,
+semantics, examples, patterns) - Channel Quick Reference Table - Channel
+Patterns &amp; Recipes - Mutexes (sync.Mutex, sync.RWMutex, sync.Cond) -
+Mutex Quick Reference Table - Mutex Patterns &amp; Recipes - Channels vs
+Mutexes — When to use what - Concurrency Gotchas, Debugging &amp;
+Performance - FAQs &amp; Checklist - Further reading</p>
+<hr />
+<h2 id="table-of-contents">📚 Table of Contents</h2>
+<ul>
+<li><a href="#-overview">Overview</a></li>
+<li><a href="#-channels--concepts--syntax">Channels — Concepts &amp;
+Syntax</a>
+<ul>
+<li><a href="#creation--types">Creation &amp; Types</a></li>
+<li><a href="#send--receive--comma-ok">Send / Receive /
+Comma-ok</a></li>
+<li><a href="#directional-channel-types">Directional channel
+types</a></li>
+<li><a href="#buffered-vs-unbuffered">Buffered vs Unbuffered</a></li>
+<li><a href="#closing-channels">Closing channels</a></li>
+<li><a href="#range-over-channel">Range over channel</a></li>
+<li><a href="#select-and-non-blocking-ops">select and non-blocking
+ops</a></li>
+<li><a href="#nil-channels--semantics">Nil channels &amp;
+semantics</a></li>
+<li><a href="#channel-examples">Channel Examples</a></li>
+</ul></li>
+<li><a href="#-channel-quick-reference-table">Channel Quick Reference
+Table</a></li>
+<li><a href="#-channel-patterns--recipes">Channel Patterns &amp;
+Recipes</a>
+<ul>
+<li><a href="#producer-consumer--pipeline">Producer-consumer /
+Pipeline</a></li>
+<li><a href="#worker-pool--fan-out-fan-in">Worker pool / Fan-out
+fan-in</a></li>
+<li><a href="#bounded-buffer-with-context-cancellation">Bounded buffer
+with context cancellation</a></li>
+<li><a href="#broadcast-via-close">Broadcast via close</a></li>
+</ul></li>
+<li><a href="#-mutexes--concepts--syntax">Mutexes — Concepts &amp;
+Syntax</a>
+<ul>
+<li><a href="#syncmutex">sync.Mutex</a></li>
+<li><a href="#syncrwmutex">sync.RWMutex</a></li>
+<li><a href="#synccond">sync.Cond</a></li>
+<li><a href="#best-practices--common-pitfalls">Best practices &amp;
+common pitfalls</a></li>
+<li><a href="#mutex-examples">Mutex Examples</a></li>
+</ul></li>
+<li><a href="#-mutex-quick-reference-table">Mutex Quick Reference
+Table</a></li>
+<li><a href="#-mutex-patterns--recipes">Mutex Patterns &amp; Recipes</a>
+<ul>
+<li><a href="#thread-safe-counters--maps">Thread-safe counters &amp;
+maps</a></li>
+<li><a href="#read-mostly-caches-with-rwmutex">Read-mostly caches with
+RWMutex</a></li>
+<li><a href="#condition-variable-example">Condition variable
+example</a></li>
+</ul></li>
+<li><a href="#-channels-vs-mutexes--choosing--hybrids">Channels vs
+Mutexes — Choosing &amp; Hybrids</a></li>
+<li><a href="#-concurrency-gotchas--debugging">Concurrency Gotchas &amp;
+Debugging</a></li>
+<li><a href="#-performance--alternatives">Performance &amp;
+Alternatives</a></li>
+<li><a href="#-faqs--checklist">FAQs &amp; Checklist</a></li>
+<li><a href="#-further-reading">Further reading</a></li>
+</ul>
+<hr />
+<h2 id="overview">🔎 Overview</h2>
+<p>Go provides two broad primitives to coordinate concurrent goroutines
+and manage access to shared state:</p>
+<ul>
+<li>Channels: typed pipes to send/receive values between goroutines.
+They embody message-passing and are excellent for pipelines, worker
+pools, and ownership transfer.</li>
+<li>Mutexes: low-level locks (sync.Mutex, sync.RWMutex) for synchronized
+access to shared in-memory state.</li>
+</ul>
+<p>This guide explains syntax, semantics, idiomatic usage, and patterns
+for both.</p>
+<hr />
+<h2 id="channels-concepts-syntax">🧭 Channels — Concepts &amp;
+Syntax</h2>
+<p>Channels let goroutines communicate safely and synchronize without
+explicit locks.</p>
+<h3 id="creation-types">Creation &amp; Types</h3>
+<ul>
+<li>make(chan T) — unbuffered (synchronous)</li>
+<li>make(chan T, n) — buffered (capacity n)</li>
+<li>Zero value is nil: var ch chan T</li>
+</ul>
+<p>Examples:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode go"><code class="sourceCode go"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>ch <span class="op">:=</span> <span class="bu">make</span><span class="op">(</span><span class="kw">chan</span> <span class="dt">int</span><span class="op">)</span>      <span class="co">// unbuffered</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>buf <span class="op">:=</span> <span class="bu">make</span><span class="op">(</span><span class="kw">chan</span> <span class="dt">string</span><span class="op">,</span> <span class="dv">10</span><span class="op">)</span> <span class="co">// buffered with capacity 10</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> nilch <span class="kw">chan</span> <span class="dt">int</span>        <span class="co">// nil channel; blocks on recv/send</span></span></code></pre></div>
+<h3 id="send-receive-comma-ok">Send / Receive / Comma-ok</h3>
+<ul>
+<li>Send: ch &lt;- v</li>
+<li>Receive: v := &lt;-ch</li>
+<li>Discard receive: &lt;-ch</li>
+<li>Comma-ok: v, ok := &lt;-ch // ok == false when channel closed and
+drained</li>
+</ul>
+<p>Example:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode go"><code class="sourceCode go"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>ch <span class="op">&lt;-</span> <span class="dv">42</span>            <span class="co">// send</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">:=</span> <span class="op">&lt;-</span>ch           <span class="co">// receive</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>v<span class="op">,</span> ok <span class="op">:=</span> <span class="op">&lt;-</span>ch       <span class="co">// ok false if closed</span></span></code></pre></div>
+<h3 id="directional-channel-types">Directional channel types</h3>
+<ul>
+<li>Bidirectional: chan T</li>
+<li>Send-only: chan&lt;- T</li>
+<li>Receive-only: &lt;-chan T</li>
+</ul>
+<p>Function signatures:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode go"><code class="sourceCode go"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">func</span> producer<span class="op">(</span>out <span class="kw">chan</span><span class="op">&lt;-</span> <span class="dt">int</span><span class="op">)</span> <span class="op">{</span> out <span class="op">&lt;-</span> <span class="dv">1</span> <span class="op">}</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">func</span> consumer<span class="op">(</span>in <span class="op">&lt;-</span><span class="kw">chan</span> <span class="dt">int</span><span class="op">)</span>  <span class="op">{</span> fmt<span class="op">.</span>Println<span class="op">(&lt;-</span>in<span class="op">)</span> <span class="op">}</span></span></code></pre></div>
+<h3 id="buffered-vs-unbuffered">Buffered vs Unbuffered</h3>
+<ul>
+<li>Unbuffered: send and receive must synchronize; useful for
+handoff.</li>
+<li>Buffered: send succeeds immediately until buffer fills; decouples
+sender/receiver timing.</li>
+</ul>
+<h3 id="closing-channels">Closing channels</h3>
+<ul>
+<li>close(ch) signals no more values will be sent.</li>
+<li>Receivers read remaining values; subsequent reads yield zero values
+with ok==false.</li>
+<li>Only the sender should close; sending on closed channel panics;
+closing twice panics.</li>
+</ul>
+<div class="sourceCode" id="cb4"><pre class="sourceCode go"><code class="sourceCode go"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">close</span><span class="op">(</span>ch<span class="op">)</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>v<span class="op">,</span> ok <span class="op">:=</span> <span class="op">&lt;-</span>ch <span class="co">// ok == false if drained</span></span></code></pre></div>
+<h3 id="range-over-channel">Range over channel</h3>
+<p>Range receives until ch is closed and drained:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode go"><code class="sourceCode go"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> v <span class="op">:=</span> <span class="kw">range</span> ch <span class="op">{</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    fmt<span class="op">.</span>Println<span class="op">(</span>v<span class="op">)</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<h3 id="select-and-non-blocking-ops">select and non-blocking ops</h3>
+<p>select multiplexes channel operations:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode go"><code class="sourceCode go"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="cf">select</span> <span class="op">{</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="cf">case</span> v <span class="op">:=</span> <span class="op">&lt;-</span>ch1<span class="op">:</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">// handle v</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="cf">case</span> ch2 <span class="op">&lt;-</span> x<span class="op">:</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">// sent x</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="cf">case</span> <span class="op">&lt;-</span>time<span class="op">.</span>After<span class="op">(</span>time<span class="op">.</span>Second<span class="op">):</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="co">// timeout</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="cf">default</span><span class="op">:</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    <span class="co">// non-blocking fallback</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>Non-blocking send/receive idiom:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode go"><code class="sourceCode go"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="cf">select</span> <span class="op">{</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="cf">case</span> ch <span class="op">&lt;-</span> v<span class="op">:</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">// sent</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="cf">default</span><span class="op">:</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">// would block</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<h3 id="nil-channels-semantics">Nil channels &amp; semantics</h3>
+<ul>
+<li>A nil channel blocks forever on send and receive.</li>
+<li>Useful for dynamic select: set case channel to nil to disable
+it.</li>
+</ul>
+<div class="sourceCode" id="cb8"><pre class="sourceCode go"><code class="sourceCode go"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> ch <span class="kw">chan</span> <span class="dt">int</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co">// &lt;-ch // blocks forever</span></span></code></pre></div>
+<h3 id="panics-gotchas">Panics &amp; gotchas</h3>
+<ul>
+<li>Sending on closed channel =&gt; panic</li>
+<li>Closing closed channel =&gt; panic</li>
+<li>Closing nil channel =&gt; panic</li>
+<li>Range without close (no sender closes) =&gt; deadlock if reader
+expects termination</li>
+<li>len(cap) are snapshot-ish and race-prone; avoid relying on them for
+synchronization</li>
+</ul>
+<hr />
+<h2 id="channel-examples">🧪 Channel Examples</h2>
+<p>Simple handoff:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode go"><code class="sourceCode go"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>ch <span class="op">:=</span> <span class="bu">make</span><span class="op">(</span><span class="kw">chan</span> <span class="dt">string</span><span class="op">)</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="cf">go</span> <span class="kw">func</span><span class="op">()</span> <span class="op">{</span> ch <span class="op">&lt;-</span> <span class="st">&quot;hello&quot;</span> <span class="op">}()</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>fmt<span class="op">.</span>Println<span class="op">(&lt;-</span>ch<span class="op">)</span> <span class="co">// prints &quot;hello&quot;</span></span></code></pre></div>
+<p>Buffered:</p>
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode go"><code class="sourceCode go"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>ch <span class="op">:=</span> <span class="bu">make</span><span class="op">(</span><span class="kw">chan</span> <span class="dt">int</span><span class="op">,</span> <span class="dv">2</span><span class="op">)</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>ch <span class="op">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>ch <span class="op">&lt;-</span> <span class="dv">2</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co">// no blocking yet</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>fmt<span class="op">.</span>Println<span class="op">(&lt;-</span>ch<span class="op">,</span> <span class="op">&lt;-</span>ch<span class="op">)</span></span></code></pre></div>
+<p>Timeout with select:</p>
+<div class="sourceCode" id="cb11"><pre
+class="sourceCode go"><code class="sourceCode go"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="cf">select</span> <span class="op">{</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="cf">case</span> v <span class="op">:=</span> <span class="op">&lt;-</span>ch<span class="op">:</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    fmt<span class="op">.</span>Println<span class="op">(</span><span class="st">&quot;got&quot;</span><span class="op">,</span> v<span class="op">)</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="cf">case</span> <span class="op">&lt;-</span>time<span class="op">.</span>After<span class="op">(</span><span class="dv">500</span> <span class="op">*</span> time<span class="op">.</span>Millisecond<span class="op">):</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    fmt<span class="op">.</span>Println<span class="op">(</span><span class="st">&quot;timeout&quot;</span><span class="op">)</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>Producer-consumer pipeline:</p>
+<div class="sourceCode" id="cb12"><pre
+class="sourceCode go"><code class="sourceCode go"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">func</span> gen<span class="op">(</span>nums <span class="op">...</span><span class="dt">int</span><span class="op">)</span> <span class="op">&lt;-</span><span class="kw">chan</span> <span class="dt">int</span> <span class="op">{</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    out <span class="op">:=</span> <span class="bu">make</span><span class="op">(</span><span class="kw">chan</span> <span class="dt">int</span><span class="op">)</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">go</span> <span class="kw">func</span><span class="op">()</span> <span class="op">{</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">defer</span> <span class="bu">close</span><span class="op">(</span>out<span class="op">)</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> _<span class="op">,</span> n <span class="op">:=</span> <span class="kw">range</span> nums <span class="op">{</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>            out <span class="op">&lt;-</span> n</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    <span class="op">}()</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> out</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="kw">func</span> sq<span class="op">(</span>in <span class="op">&lt;-</span><span class="kw">chan</span> <span class="dt">int</span><span class="op">)</span> <span class="op">&lt;-</span><span class="kw">chan</span> <span class="dt">int</span> <span class="op">{</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>    out <span class="op">:=</span> <span class="bu">make</span><span class="op">(</span><span class="kw">chan</span> <span class="dt">int</span><span class="op">)</span></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">go</span> <span class="kw">func</span><span class="op">()</span> <span class="op">{</span></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">defer</span> <span class="bu">close</span><span class="op">(</span>out<span class="op">)</span></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> n <span class="op">:=</span> <span class="kw">range</span> in <span class="op">{</span></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>            out <span class="op">&lt;-</span> n<span class="op">*</span>n</span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>    <span class="op">}()</span></span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> out</span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<hr />
+<h2 id="channel-quick-reference-table">📋 Channel Quick Reference
+Table</h2>
+<table>
+<colgroup>
+<col style="width: 30%" />
+<col style="width: 40%" />
+<col style="width: 30%" />
+</colgroup>
+<thead>
+<tr>
+<th>Concept / Function</th>
+<th style="text-align: right;">Syntax</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Create unbuffered</td>
+<td style="text-align: right;"><code>make(chan T)</code></td>
+<td>Blocks on send until recv ready</td>
+</tr>
+<tr>
+<td>Create buffered</td>
+<td style="text-align: right;"><code>make(chan T, n)</code></td>
+<td>Buffer capacity n</td>
+</tr>
+<tr>
+<td>Send</td>
+<td style="text-align: right;"><code>ch &lt;- v</code></td>
+<td>Blocks if unbuffered or buffer full</td>
+</tr>
+<tr>
+<td>Receive</td>
+<td style="text-align: right;"><code>v := &lt;-ch</code></td>
+<td>Blocks if empty</td>
+</tr>
+<tr>
+<td>Receive discard</td>
+<td style="text-align: right;"><code>&lt;-ch</code></td>
+<td>Receive and drop value</td>
+</tr>
+<tr>
+<td>Comma-ok</td>
+<td style="text-align: right;"><code>v, ok := &lt;-ch</code></td>
+<td>ok==false when closed and drained</td>
+</tr>
+<tr>
+<td>Close</td>
+<td style="text-align: right;"><code>close(ch)</code></td>
+<td>Panic if closed twice or nil</td>
+</tr>
+<tr>
+<td>Range</td>
+<td style="text-align: right;"><code>for v := range ch {}</code></td>
+<td>Stops when closed and drained</td>
+</tr>
+<tr>
+<td>Directional types</td>
+<td style="text-align: right;"><code>chan&lt;- T</code>,
+<code>&lt;-chan T</code></td>
+<td>Use in function signatures</td>
+</tr>
+<tr>
+<td>len/cap</td>
+<td style="text-align: right;"><code>len(ch)</code>,
+<code>cap(ch)</code></td>
+<td>Snapshot; not synchronization tools</td>
+</tr>
+<tr>
+<td>Nil channel</td>
+<td style="text-align: right;"><code>var ch chan T</code></td>
+<td>Blocks forever on ops</td>
+</tr>
+<tr>
+<td>select</td>
+<td style="text-align: right;"><code>select { case ... }</code></td>
+<td>Multiplexing, default for non-blocking</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="channel-patterns-recipes">🔧 Channel Patterns &amp; Recipes</h2>
+<h3 id="producer-consumer-pipeline">Producer-consumer / Pipeline</h3>
+<ul>
+<li>Use chaining functions that return receive-only channels.</li>
+<li>Always close the channel from the producer when done.</li>
+<li>Keep pipelines cancellable using context.Context.</li>
+</ul>
+<p>Example:</p>
+<div class="sourceCode" id="cb13"><pre
+class="sourceCode go"><code class="sourceCode go"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">func</span> generator<span class="op">(</span>ctx context<span class="op">.</span>Context<span class="op">,</span> nums <span class="op">...</span><span class="dt">int</span><span class="op">)</span> <span class="op">&lt;-</span><span class="kw">chan</span> <span class="dt">int</span> <span class="op">{</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    out <span class="op">:=</span> <span class="bu">make</span><span class="op">(</span><span class="kw">chan</span> <span class="dt">int</span><span class="op">)</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">go</span> <span class="kw">func</span><span class="op">()</span> <span class="op">{</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">defer</span> <span class="bu">close</span><span class="op">(</span>out<span class="op">)</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> _<span class="op">,</span> n <span class="op">:=</span> <span class="kw">range</span> nums <span class="op">{</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>            <span class="cf">select</span> <span class="op">{</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>            <span class="cf">case</span> <span class="op">&lt;-</span>ctx<span class="op">.</span>Done<span class="op">():</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>                <span class="cf">return</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>            <span class="cf">case</span> out <span class="op">&lt;-</span> n<span class="op">:</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>            <span class="op">}</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>    <span class="op">}()</span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> out</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<h3 id="worker-pool-fan-out-fan-in">Worker pool (fan-out / fan-in)</h3>
+<ul>
+<li>Fan-out: multiple workers read from same input channel.</li>
+<li>Fan-in: aggregate worker results into a single output channel.</li>
+</ul>
+<p>Sketch:</p>
+<div class="sourceCode" id="cb14"><pre
+class="sourceCode go"><code class="sourceCode go"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="kw">func</span> worker<span class="op">(</span>id <span class="dt">int</span><span class="op">,</span> jobs <span class="op">&lt;-</span><span class="kw">chan</span> Job<span class="op">,</span> results <span class="kw">chan</span><span class="op">&lt;-</span> Result<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> j <span class="op">:=</span> <span class="kw">range</span> jobs <span class="op">{</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>        <span class="co">// process</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>        results <span class="op">&lt;-</span> result</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>jobs <span class="op">:=</span> <span class="bu">make</span><span class="op">(</span><span class="kw">chan</span> Job<span class="op">)</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>results <span class="op">:=</span> <span class="bu">make</span><span class="op">(</span><span class="kw">chan</span> Result<span class="op">)</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> w <span class="op">:=</span> <span class="dv">0</span><span class="op">;</span> w <span class="op">&lt;</span> nW<span class="op">;</span> w<span class="op">++</span> <span class="op">{</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">go</span> worker<span class="op">(</span>w<span class="op">,</span> jobs<span class="op">,</span> results<span class="op">)</span></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a><span class="co">// send jobs then close jobs</span></span></code></pre></div>
+<p>Use sync.WaitGroup to close results after all workers finish:</p>
+<div class="sourceCode" id="cb15"><pre
+class="sourceCode go"><code class="sourceCode go"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> wg sync<span class="op">.</span>WaitGroup</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="op">:=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> n<span class="op">;</span> i<span class="op">++</span> <span class="op">{</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    wg<span class="op">.</span>Add<span class="op">(</span><span class="dv">1</span><span class="op">)</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">go</span> <span class="kw">func</span><span class="op">()</span> <span class="op">{</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">defer</span> wg<span class="op">.</span>Done<span class="op">()</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>        <span class="co">// worker loop</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>    <span class="op">}()</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="cf">go</span> <span class="kw">func</span><span class="op">()</span> <span class="op">{</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>    wg<span class="op">.</span>Wait<span class="op">()</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>    <span class="bu">close</span><span class="op">(</span>results<span class="op">)</span></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a><span class="op">}()</span></span></code></pre></div>
+<h3 id="bounded-buffer-cancellation">Bounded buffer + cancellation</h3>
+<p>Combine buffered channels with context to build cancelable
+queues.</p>
+<h3 id="broadcast-via-close">Broadcast via close</h3>
+<ul>
+<li>For one-time broadcast (no more values), send values into a channel,
+then close; receivers do range and exit when drained.</li>
+<li>To broadcast the same value to many receivers, use a separate
+channel per receiver or use a “fan-out” goroutine that duplicates the
+stream.</li>
+</ul>
+<hr />
+<h2 id="mutexes-concepts-syntax">🔒 Mutexes — Concepts &amp; Syntax</h2>
+<p>Mutexes are for protecting shared memory when multiple goroutines
+access or mutate it.</p>
+<h3 id="sync.mutex">sync.Mutex</h3>
+<ul>
+<li>Type: sync.Mutex</li>
+<li>Methods:
+<ul>
+<li>mu.Lock()</li>
+<li>mu.Unlock()</li>
+</ul></li>
+<li>Zero value is an unlocked Mutex.</li>
+</ul>
+<p>Idioms:</p>
+<div class="sourceCode" id="cb16"><pre
+class="sourceCode go"><code class="sourceCode go"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> mu sync<span class="op">.</span>Mutex</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>mu<span class="op">.</span>Lock<span class="op">()</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="cf">defer</span> mu<span class="op">.</span>Unlock<span class="op">()</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co">// critical section</span></span></code></pre></div>
+<p>Rules: - Do not copy a Mutex after first use (copying breaks it). -
+Locks are not reentrant — Lock twice in the same goroutine
+deadlocks.</p>
+<h3 id="sync.rwmutex">sync.RWMutex</h3>
+<ul>
+<li>Type: sync.RWMutex</li>
+<li>Methods:
+<ul>
+<li>mu.RLock()</li>
+<li>mu.RUnlock()</li>
+<li>mu.Lock()</li>
+<li>mu.Unlock()</li>
+</ul></li>
+</ul>
+<p>Use RLock for read-only access when many readers and few writers.</p>
+<p>Pitfalls: - Avoid upgrading from RLock to Lock while holding RLock —
+deadlock risk. - Prefer simple Mutex if RW complexity doesn’t help.</p>
+<h3 id="sync.cond">sync.Cond</h3>
+<ul>
+<li>Use for wait/notify semantics with an associated Locker (often
+*sync.Mutex).</li>
+<li>Create: cond := sync.NewCond(&amp;mu)</li>
+<li>Methods:
+<ul>
+<li>cond.Wait() — atomically release lock and wait; reacquire lock
+before returning.</li>
+<li>cond.Signal() — wake one waiter.</li>
+<li>cond.Broadcast() — wake all waiters.</li>
+</ul></li>
+</ul>
+<p>Pattern:</p>
+<div class="sourceCode" id="cb17"><pre
+class="sourceCode go"><code class="sourceCode go"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>mu <span class="op">:=</span> <span class="op">&amp;</span>sync<span class="op">.</span>Mutex<span class="op">{}</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>cond <span class="op">:=</span> sync<span class="op">.</span>NewCond<span class="op">(</span>mu<span class="op">)</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>mu<span class="op">.</span>Lock<span class="op">()</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">!</span>ready <span class="op">{</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    cond<span class="op">.</span>Wait<span class="op">()</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>mu<span class="op">.</span>Unlock<span class="op">()</span></span></code></pre></div>
+<h3 id="best-practices-common-pitfalls">Best practices &amp; common
+pitfalls</h3>
+<ul>
+<li>Always Unlock with defer immediately after Lock.</li>
+<li>Keep critical sections small and avoid blocking operations while
+holding a mutex (I/O, network, time.Sleep).</li>
+<li>Never copy Mutex/RWMutex once used (store in struct, pass pointer to
+struct if necessary).</li>
+<li>Use RWMutex when reads greatly outnumber writes and contention
+matters.</li>
+<li>Prefer channels for coordination (signaling, ownership) and mutexes
+for protecting shared state.</li>
+</ul>
+<hr />
+<h2 id="mutex-examples">🧪 Mutex Examples</h2>
+<p>Counter:</p>
+<div class="sourceCode" id="cb18"><pre
+class="sourceCode go"><code class="sourceCode go"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> Counter <span class="kw">struct</span> <span class="op">{</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>    mu sync<span class="op">.</span>Mutex</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    n  <span class="dt">int</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="kw">func</span> <span class="op">(</span>c <span class="op">*</span>Counter<span class="op">)</span> Inc<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>    c<span class="op">.</span>mu<span class="op">.</span>Lock<span class="op">()</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">defer</span> c<span class="op">.</span>mu<span class="op">.</span>Unlock<span class="op">()</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>    c<span class="op">.</span>n<span class="op">++</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="kw">func</span> <span class="op">(</span>c <span class="op">*</span>Counter<span class="op">)</span> Value<span class="op">()</span> <span class="dt">int</span> <span class="op">{</span></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>    c<span class="op">.</span>mu<span class="op">.</span>Lock<span class="op">()</span></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">defer</span> c<span class="op">.</span>mu<span class="op">.</span>Unlock<span class="op">()</span></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> c<span class="op">.</span>n</span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>Read-mostly cache with RWMutex:</p>
+<div class="sourceCode" id="cb19"><pre
+class="sourceCode go"><code class="sourceCode go"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> SafeCache <span class="kw">struct</span> <span class="op">{</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>    mu sync<span class="op">.</span>RWMutex</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    m  <span class="kw">map</span><span class="op">[</span><span class="dt">string</span><span class="op">]</span><span class="dt">string</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="kw">func</span> <span class="op">(</span>c <span class="op">*</span>SafeCache<span class="op">)</span> Get<span class="op">(</span>k <span class="dt">string</span><span class="op">)</span> <span class="op">(</span><span class="dt">string</span><span class="op">,</span> <span class="dt">bool</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>    c<span class="op">.</span>mu<span class="op">.</span>RLock<span class="op">()</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>    v<span class="op">,</span> ok <span class="op">:=</span> c<span class="op">.</span>m<span class="op">[</span>k<span class="op">]</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>    c<span class="op">.</span>mu<span class="op">.</span>RUnlock<span class="op">()</span></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> v<span class="op">,</span> ok</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a><span class="kw">func</span> <span class="op">(</span>c <span class="op">*</span>SafeCache<span class="op">)</span> Set<span class="op">(</span>k<span class="op">,</span> v <span class="dt">string</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>    c<span class="op">.</span>mu<span class="op">.</span>Lock<span class="op">()</span></span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>    c<span class="op">.</span>m<span class="op">[</span>k<span class="op">]</span> <span class="op">=</span> v</span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>    c<span class="op">.</span>mu<span class="op">.</span>Unlock<span class="op">()</span></span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>Condition variable (producer/consumer):</p>
+<div class="sourceCode" id="cb20"><pre
+class="sourceCode go"><code class="sourceCode go"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> Queue <span class="kw">struct</span> <span class="op">{</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>    mu    sync<span class="op">.</span>Mutex</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    cond  <span class="op">*</span>sync<span class="op">.</span>Cond</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    items <span class="op">[]</span><span class="dt">int</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="kw">func</span> NewQueue<span class="op">()</span> <span class="op">*</span>Queue <span class="op">{</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>    q <span class="op">:=</span> <span class="op">&amp;</span>Queue<span class="op">{}</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>    q<span class="op">.</span>cond <span class="op">=</span> sync<span class="op">.</span>NewCond<span class="op">(&amp;</span>q<span class="op">.</span>mu<span class="op">)</span></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> q</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a><span class="kw">func</span> <span class="op">(</span>q <span class="op">*</span>Queue<span class="op">)</span> Push<span class="op">(</span>x <span class="dt">int</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>    q<span class="op">.</span>mu<span class="op">.</span>Lock<span class="op">()</span></span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>    q<span class="op">.</span>items <span class="op">=</span> <span class="bu">append</span><span class="op">(</span>q<span class="op">.</span>items<span class="op">,</span> x<span class="op">)</span></span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>    q<span class="op">.</span>mu<span class="op">.</span>Unlock<span class="op">()</span></span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>    q<span class="op">.</span>cond<span class="op">.</span>Signal<span class="op">()</span></span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a><span class="kw">func</span> <span class="op">(</span>q <span class="op">*</span>Queue<span class="op">)</span> Pop<span class="op">()</span> <span class="dt">int</span> <span class="op">{</span></span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a>    q<span class="op">.</span>mu<span class="op">.</span>Lock<span class="op">()</span></span>
+<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="bu">len</span><span class="op">(</span>q<span class="op">.</span>items<span class="op">)</span> <span class="op">==</span> <span class="dv">0</span> <span class="op">{</span></span>
+<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a>        q<span class="op">.</span>cond<span class="op">.</span>Wait<span class="op">()</span></span>
+<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb20-22"><a href="#cb20-22" aria-hidden="true" tabindex="-1"></a>    x <span class="op">:=</span> q<span class="op">.</span>items<span class="op">[</span><span class="dv">0</span><span class="op">]</span></span>
+<span id="cb20-23"><a href="#cb20-23" aria-hidden="true" tabindex="-1"></a>    q<span class="op">.</span>items <span class="op">=</span> q<span class="op">.</span>items<span class="op">[</span><span class="dv">1</span><span class="op">:]</span></span>
+<span id="cb20-24"><a href="#cb20-24" aria-hidden="true" tabindex="-1"></a>    q<span class="op">.</span>mu<span class="op">.</span>Unlock<span class="op">()</span></span>
+<span id="cb20-25"><a href="#cb20-25" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> x</span>
+<span id="cb20-26"><a href="#cb20-26" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<hr />
+<h2 id="mutex-quick-reference-table">📋 Mutex Quick Reference Table</h2>
+<table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 26%" />
+<col style="width: 33%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr>
+<th>Type</th>
+<th style="text-align: right;">Methods / Ops</th>
+<th style="text-align: center;">Zero-value usable?</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>sync.Mutex</td>
+<td style="text-align: right;">Lock(), Unlock()</td>
+<td style="text-align: center;">Yes</td>
+<td>Not reentrant; don’t copy</td>
+</tr>
+<tr>
+<td>sync.RWMutex</td>
+<td style="text-align: right;">RLock(), RUnlock(), Lock(), Unlock()</td>
+<td style="text-align: center;">Yes</td>
+<td>Readers/writers semantics</td>
+</tr>
+<tr>
+<td>sync.Cond</td>
+<td style="text-align: right;">Wait(), Signal(), Broadcast()</td>
+<td style="text-align: center;">N/A (needs Locker)</td>
+<td>Use with a Locker (often *sync.Mutex)</td>
+</tr>
+</tbody>
+</table>
+<p>Common patterns: - mu.Lock(); defer mu.Unlock() - mu.RLock(); defer
+mu.RUnlock()</p>
+<hr />
+<h2 id="mutex-patterns-recipes">🛠️ Mutex Patterns &amp; Recipes</h2>
+<h3 id="thread-safe-map-cache">Thread-safe map / cache</h3>
+<p>Go’s standard maps are not safe for concurrent writes. Use a
+mutex:</p>
+<div class="sourceCode" id="cb21"><pre
+class="sourceCode go"><code class="sourceCode go"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> SafeMap <span class="kw">struct</span> <span class="op">{</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>    mu sync<span class="op">.</span>Mutex</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    m  <span class="kw">map</span><span class="op">[</span><span class="dt">string</span><span class="op">]</span><span class="dt">int</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="kw">func</span> <span class="op">(</span>s <span class="op">*</span>SafeMap<span class="op">)</span> Load<span class="op">(</span>k <span class="dt">string</span><span class="op">)</span> <span class="op">(</span><span class="dt">int</span><span class="op">,</span> <span class="dt">bool</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>    s<span class="op">.</span>mu<span class="op">.</span>Lock<span class="op">()</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>    v<span class="op">,</span> ok <span class="op">:=</span> s<span class="op">.</span>m<span class="op">[</span>k<span class="op">]</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>    s<span class="op">.</span>mu<span class="op">.</span>Unlock<span class="op">()</span></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> v<span class="op">,</span> ok</span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a><span class="kw">func</span> <span class="op">(</span>s <span class="op">*</span>SafeMap<span class="op">)</span> Store<span class="op">(</span>k <span class="dt">string</span><span class="op">,</span> v <span class="dt">int</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>    s<span class="op">.</span>mu<span class="op">.</span>Lock<span class="op">()</span></span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>    s<span class="op">.</span>m<span class="op">[</span>k<span class="op">]</span> <span class="op">=</span> v</span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>    s<span class="op">.</span>mu<span class="op">.</span>Unlock<span class="op">()</span></span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>For high read concurrency, use sync.RWMutex or sync.Map (concurrent
+map in stdlib for specific patterns).</p>
+<h3 id="double-checked-locking-careful">Double-checked locking
+(careful!)</h3>
+<p>Avoid naïve double-checked locking. Use sync.Once or channels.</p>
+<p>Use sync.Once for lazy initialization:</p>
+<div class="sourceCode" id="cb22"><pre
+class="sourceCode go"><code class="sourceCode go"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> once sync<span class="op">.</span>Once</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> cfg <span class="op">*</span>Config</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="kw">func</span> GetConfig<span class="op">()</span> <span class="op">*</span>Config <span class="op">{</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>    once<span class="op">.</span>Do<span class="op">(</span><span class="kw">func</span><span class="op">()</span> <span class="op">{</span> cfg <span class="op">=</span> loadConfig<span class="op">()</span> <span class="op">})</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> cfg</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<h3 id="condition-variable-example">Condition variable example</h3>
+<p>See queue example above.</p>
+<hr />
+<h2 id="channels-vs-mutexes-choosing-hybrids">⚖️ Channels vs Mutexes —
+Choosing &amp; Hybrids</h2>
+<p>When to use channels: - You can model the problem as passing
+ownership or messages between goroutines. - Pipelines, worker pools,
+timeouts, throttling, bounded queues. - Prefer when you want to avoid
+shared mutable state.</p>
+<p>When to use mutexes: - You have shared memory (counters, caches,
+maps) with fine-grained reads/writes. - Performance-sensitive sections
+where channel overhead is too high. - Complex structures where explicit
+locking is simpler.</p>
+<p>Hybrid: - Use channels for control flow and mutexes for protecting
+in-memory caches behind the scenes. - Use channels to serialize access
+(single goroutine actor model) if suitable: one goroutine owns the state
+and services request messages on a channel (avoids mutexes).</p>
+<p>Example actor pattern:</p>
+<div class="sourceCode" id="cb23"><pre
+class="sourceCode go"><code class="sourceCode go"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> request <span class="kw">struct</span><span class="op">{</span> key <span class="dt">string</span><span class="op">;</span> resp <span class="kw">chan</span><span class="op">&lt;-</span> <span class="dt">int</span> <span class="op">}</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="kw">func</span> actor<span class="op">(</span>reqs <span class="op">&lt;-</span><span class="kw">chan</span> request<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>    store <span class="op">:=</span> <span class="bu">make</span><span class="op">(</span><span class="kw">map</span><span class="op">[</span><span class="dt">string</span><span class="op">]</span><span class="dt">int</span><span class="op">)</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> r <span class="op">:=</span> <span class="kw">range</span> reqs <span class="op">{</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>        r<span class="op">.</span>resp <span class="op">&lt;-</span> store<span class="op">[</span>r<span class="op">.</span>key<span class="op">]</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<hr />
+<h2 id="concurrency-gotchas-debugging">⚠️ Concurrency Gotchas &amp;
+Debugging</h2>
+<ul>
+<li>Race conditions: use <code>go test -race</code> or
+<code>go run -race</code> to detect data races.</li>
+<li>Deadlocks: common causes include waiting on channels that no
+goroutine will write to, or double-locking mutexes.</li>
+<li>Panic on send to closed channel or closing already closed
+channel.</li>
+<li>Blocking on nil channels causes goroutine hang.</li>
+<li>Avoid long blocking operations while holding a mutex.</li>
+</ul>
+<p>Debugging tips: - Reproduce with race detector. - Add logging with
+goroutine IDs (use third-party libraries or attach request IDs). - Break
+problems into smaller testable components. - Use context.Context for
+cancellation propagation.</p>
+<hr />
+<h2 id="performance-alternatives">🚀 Performance &amp; Alternatives</h2>
+<ul>
+<li>Channels are slightly heavier than raw mutex when used for extremely
+hot-path synchronization. For counters and simple state, consider
+<code>sync/atomic</code>.</li>
+<li><code>sync.Map</code> is optimized for certain read-heavy concurrent
+maps.</li>
+<li><code>sync.Pool</code> for object pooling.</li>
+<li>Keep locks small and critical sections short. Avoid I/O in critical
+section.</li>
+<li>For very high throughput, microbench with
+<code>go test -bench</code> and <code>-benchmem</code> to compare
+channels vs mutexes vs atomics.</li>
+</ul>
+<hr />
+<h2 id="faqs-checklist">✅ FAQs &amp; Checklist</h2>
+<p>Q: Who should close a channel?<br />
+A: The sender. Close signals no more values.</p>
+<p>Q: Can I read from a closed channel?<br />
+A: Yes; receives return zero value and ok==false.</p>
+<p>Q: Is Mutex zero value usable?<br />
+A: Yes.</p>
+<p>Q: Should I use defer Unlock always?<br />
+A: Usually yes — it ensures unlock on all return paths. In super-hot
+code, sometimes explicit Unlock is used to avoid defer cost; measure
+first.</p>
+<p>Q: How to avoid deadlock while upgrading RLock to Lock?<br />
+A: Don’t upgrade. Instead, release RLock and then Lock (with potential
+retry), or use a different design.</p>
+<p>Checklist before shipping concurrent code: - [ ] Run tests with -race
+- [ ] Add timeouts / context where blocking can occur - [ ] Keep
+critical sections short - [ ] Avoid copying Mutex-containing structs - [
+] Ensure all senders close channels or use other termination signals - [
+] Use sync.Once for one-time initialization</p>
+<hr />
+<h2 id="further-reading">📖 Further reading</h2>
+<ul>
+<li>Official Go blog — <a href="https://go.dev/blog/pipelines">Go
+Concurrency Patterns</a><br />
+</li>
+<li>sync package docs — <a href="https://pkg.go.dev/sync">sync</a><br />
+</li>
+<li>Effective Go — <a
+href="https://go.dev/doc/effective_go#concurrency">Effective Go -
+Concurrency</a><br />
+</li>
+<li>Go Memory Model — <a href="https://go.dev/ref/mem">The Go Memory
+Model</a></li>
+</ul>
+<hr />

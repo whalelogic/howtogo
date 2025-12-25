@@ -1,0 +1,29 @@
+flowchart TD
+    subgraph Server_Gin["Server (Gin)"]
+        main["main.go"] -->|"GET /"| idx["Index()"]
+        main -->|"GET /hello-world"| hello["HelloWorld()"]
+        main -->|"GET /values"| values["Values()"]
+        main -->|"GET /variables"| vars["Variables()"]
+        main -->|"GET /constants"| consts["Constants()"]
+        main -->|Static assets| assets["/public/css\n/public/icons/"]
+    end
+
+    subgraph Templates
+        idx --> base["Base layout"]
+        hello --> base
+        values --> base
+        vars --> base
+        consts --> base
+        base --> header["components/Header()"]
+        base --> footerNote["Footer text (inline in Base)"]
+    end
+
+    subgraph Pages
+        idx --> list["Example links"]
+        hello --> helloCode["Hello code block"]
+        values --> valuesCode["Values code block"]
+        vars --> varsCode["Vars code block"]
+        consts --> constCode["Const code block"]
+    end
+
+    assets --> base

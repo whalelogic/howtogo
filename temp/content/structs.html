@@ -1,0 +1,103 @@
+<h1 class="title" id="structs-in-go">Structs in Go</h1>
+<p>A struct is a composite data type that groups together variables
+under a single name. These variables, known as fields, can be of
+different types. Structs are a fundamental concept in Go for creating
+complex data structures.</p>
+<h2 class="subtitle" id="defining-and-using-structs">Defining and Using
+Structs</h2>
+<p>You can define a struct using the <code>type</code> and
+<code>struct</code> keywords. Once a struct type is defined, you can
+create instances (values) of that struct.</p>
+<pre><code>package main
+
+import &quot;fmt&quot;
+
+// Define a struct type
+type Person struct {
+    Name string
+    Age  int
+}
+
+func main() {
+    // Create an instance of the Person struct
+    p1 := Person{Name: &quot;Alice&quot;, Age: 30}
+    fmt.Println(p1)
+
+    // Accessing struct fields
+    fmt.Println(&quot;Name:&quot;, p1.Name)
+    fmt.Println(&quot;Age:&quot;, p1.Age)
+
+    // You can also create a pointer to a struct
+    p2 := &amp;Person{Name: &quot;Bob&quot;, Age: 25}
+    fmt.Println(p2.Name) // Go automatically dereferences the pointer
+}</code></pre>
+<h2 class="subtitle" id="methods-on-structs">Methods on Structs</h2>
+<p>Go allows you to define methods on struct types. A method is a
+function with a special receiver argument. The receiver appears in its
+own argument list between the <code>func</code> keyword and the method
+name.</p>
+<pre><code>package main
+
+import &quot;fmt&quot;
+
+type Rectangle struct {
+    Width, Height float64
+}
+
+// A method for the Rectangle struct
+func (r Rectangle) Area() float64 {
+    return r.Width * r.Height
+}
+
+func main() {
+    rect := Rectangle{Width: 10, Height: 5}
+    fmt.Println(&quot;Area:&quot;, rect.Area())
+}</code></pre>
+<h2 class="subtitle" id="embedding-structs">Embedding Structs</h2>
+<p>Go does not provide inheritance in the traditional sense, but it does
+support composition through struct embedding. You can embed a struct
+within another struct to “inherit” its fields and methods.</p>
+<pre><code>package main
+
+import &quot;fmt&quot;
+
+type Engine struct {
+    Horsepower int
+}
+
+func (e Engine) Start() {
+    fmt.Println(&quot;Engine started.&quot;)
+}
+
+type Car struct {
+    Engine // Embed the Engine struct
+    Make   string
+    Model  string
+}
+
+func main() {
+    car := Car{
+        Engine: Engine{Horsepower: 300},
+        Make:   &quot;Toyota&quot;,
+        Model:  &quot;Camry&quot;,
+    }
+
+    // The Car struct now has the fields and methods of Engine
+    fmt.Println(&quot;Horsepower:&quot;, car.Horsepower)
+    car.Start()
+}</code></pre>
+<p>This is a powerful feature that allows for flexible and reusable
+code.</p>
+<h2 class="subtitle" id="key-features-of-structs">Key Features of
+Structs</h2>
+<ul>
+<li><strong>Composition:</strong> Structs are the primary way to build
+complex data types in Go.</li>
+<li><strong>Methods:</strong> You can define methods on structs to add
+behavior.</li>
+<li><strong>Embedding:</strong> Structs can be embedded within other
+structs to promote code reuse.</li>
+<li><strong>Value vs. Pointer Receivers:</strong> Methods can have
+either a value or a pointer receiver, which affects whether the method
+can modify the original struct.</li>
+</ul>

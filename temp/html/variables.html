@@ -1,0 +1,82 @@
+<h1 class="title" id="variables-in-go">Variables in Go</h1>
+<p>In Go, variables are explicitly declared and used by the compiler to
+check the type-correctness of function calls. This section covers how to
+declare, initialize, and use variables in Go.</p>
+<h2 class="subtitle" id="declaration-and-initialization">Declaration and
+Initialization</h2>
+<p>Variables can be declared using the <code>var</code> keyword,
+followed by the variable name and type. You can also initialize the
+variable at the time of declaration.</p>
+<pre><code>package main
+
+import &quot;fmt&quot;
+
+func main() {
+    // Declare a variable of type string
+    var name string
+    name = &quot;Go&quot;
+    fmt.Println(&quot;Hello, &quot; + name)
+
+    // Declare and initialize a variable
+    var version = 1.17
+    fmt.Println(&quot;Version:&quot;, version)
+
+    // Multiple variables can be declared at once
+    var x, y int = 10, 20
+    fmt.Println(x, y)
+}</code></pre>
+<h2 class="subtitle" id="short-variable-declarations">Short Variable
+Declarations</h2>
+<p>Inside a function, you can use the <code>:=</code> short assignment
+statement to declare and initialize a variable. The type of the variable
+is inferred from the value on the right-hand side.</p>
+<pre><code>package main
+
+import &quot;fmt&quot;
+
+func main() {
+    // Short variable declaration
+    language := &quot;Go&quot;
+    fmt.Println(language)
+
+    // Multiple assignments
+    a, b, c := 1, &quot;hello&quot;, true
+    fmt.Println(a, b, c)
+}</code></pre>
+<p><strong>Note:</strong> Short variable declarations are only available
+inside functions.</p>
+<h2 class="subtitle" id="constants">Constants</h2>
+<p>Constants are declared like variables, but with the
+<code>const</code> keyword. They can be character, string, boolean, or
+numeric values. Constants cannot be declared using the <code>:=</code>
+syntax.</p>
+<pre><code>package main
+
+import &quot;fmt&quot;
+
+const Pi = 3.14
+
+func main() {
+    const World = &quot;World&quot;
+    fmt.Println(&quot;Hello&quot;, World)
+    fmt.Println(&quot;Happy&quot;, Pi, &quot;Day&quot;)
+
+    const Truth = true
+    fmt.Println(&quot;Go rules?&quot;, Truth)
+}</code></pre>
+<h2 class="subtitle" id="basic-data-types">Basic Data Types</h2>
+<p>Go has a variety of basic data types, including:</p>
+<ul>
+<li><strong>bool:</strong> A boolean value, either <code>true</code> or
+<code>false</code>.</li>
+<li><strong>string:</strong> A sequence of bytes.</li>
+<li><strong>int, int8, int16, int32, int64:</strong> Signed integers of
+various sizes.</li>
+<li><strong>uint, uint8, uint16, uint32, uint64, uintptr:</strong>
+Unsigned integers of various sizes.</li>
+<li><strong>byte:</strong> An alias for <code>uint8</code>.</li>
+<li><strong>rune:</strong> An alias for <code>int32</code>, represents a
+Unicode code point.</li>
+<li><strong>float32, float64:</strong> Floating-point numbers.</li>
+<li><strong>complex64, complex128:</strong> Complex numbers.</li>
+</ul>

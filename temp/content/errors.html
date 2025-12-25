@@ -1,0 +1,152 @@
+<h1 class="title" id="error-handling-in-go">Error Handling in Go</h1>
+<p>Go’s approach to error handling is explicit and straightforward.
+Errors are values that are returned from functions, not thrown as
+exceptions.</p>
+<h2 class="subtitle" id="the-error-type">The error Type</h2>
+<p>The error type is a built-in interface:</p>
+<pre><code>type error interface {
+    Error() string
+}
+
+// Using errors
+import &quot;errors&quot;
+
+func divide(a, b float64) (float64, error) {
+    if b == 0 {
+        return 0, errors.New(&quot;division by zero&quot;)
+    }
+    return a / b, nil
+}
+
+func main() {
+    result, err := divide(10, 0)
+    if err != nil {
+        fmt.Println(&quot;Error:&quot;, err)
+        return
+    }
+    fmt.Println(&quot;Result:&quot;, result)
+}</code></pre>
+<h2 class="subtitle" id="creating-custom-errors">Creating Custom
+Errors</h2>
+<p>Create custom error types by implementing the error interface:</p>
+<pre><code>type ValidationError struct {
+    Field string
+    Message string
+}
+
+func (e *ValidationError) Error() string {
+    return fmt.Sprintf(&quot;validation error on %s: %s&quot;, e.Field, e.Message)
+}
+
+func validateAge(age int) error {
+    if age &lt; 0 {
+        return &amp;ValidationError{
+            Field: &quot;age&quot;,
+            Message: &quot;cannot be negative&quot;,
+        }
+    }
+    return nil
+}</code></pre>
+<h2 class="subtitle" id="error-wrapping">Error Wrapping</h2>
+<p>Wrap errors to add context using fmt.Errorf with %w:</p>
+<pre><code>import (
+    &quot;fmt&quot;
+    &quot;errors&quot;
+)
+
+func readConfig(filename string) error {
+    _, err := os.Open(filename)
+    if err != nil {
+        return fmt.Errorf(&quot;failed to read config: %w&quot;, err)
+    }
+    return nil
+}
+
+func main() {
+    err := readConfig(&quot;config.json&quot;)
+    if err != nil {
+        fmt.Println(err)
+        
+        // Unwrap to check original error
+        if errors.Is(err, os.ErrNotExist) {
+            fmt.Println(&quot;Config file not found&quot;)
+        }
+    }
+}</code></pre>
+<h2 class="subtitle" id="error-checking-patterns">Error Checking
+Patterns</h2>
+<p>Common patterns for checking specific errors:</p>
+<pre><code>// errors.Is - check if error matches a value
+if errors.Is(err, os.ErrNotExist) {
+    // Handle file not found
+}
+
+// errors.As - check if error is of a specific type
+var validationErr *ValidationError
+if errors.As(err, &amp;validationErr) {
+    fmt.Println(&quot;Field:&quot;, validationErr.Field)
+}
+
+// Type assertion
+if netErr, ok := err.(*net.Error); ok {
+    if netErr.Timeout() {
+        // Handle timeout
+    }
+}</code></pre>
+<h2 class="subtitle" id="panic-and-recover">Panic and Recover</h2>
+<p>For unrecoverable errors, use panic and recover:</p>
+<pre><code>func riskyOperation() {
+    defer func() {
+        if r := recover(); r != nil {
+            fmt.Println(&quot;Recovered from:&quot;, r)
+        }
+    }()
+    
+    // This will panic
+    panic(&quot;something went wrong&quot;)
+}
+
+// Use panic sparingly, only for truly exceptional situations
+func mustConnect(addr string) *Connection {
+    conn, err := connect(addr)
+    if err != nil {
+        panic(fmt.Sprintf(&quot;failed to connect to %s: %v&quot;, addr, err))
+    }
+    return conn
+}</code></pre>
+<h2 class="subtitle" id="best-practices">Best Practices</h2>
+<p>Guidelines for effective error handling:</p>
+<pre><code>// 1. Always check errors
+f, err := os.Open(&quot;file.txt&quot;)
+if err != nil {
+    return err
+}
+defer f.Close()
+
+// 2. Provide context with error messages
+if err != nil {
+    return fmt.Errorf(&quot;failed to process user %d: %w&quot;, userID, err)
+}
+
+// 3. Handle errors at the appropriate level
+func processFile(filename string) error {
+    // Handle specific errors here
+    if err := validateFile(filename); err != nil {
+        return err
+    }
+    
+    // Let unexpected errors bubble up
+    return processData(filename)
+}
+
+// 4. Use named return values for error handling
+func operation() (result int, err error) {
+    defer func() {
+        if err != nil {
+            err = fmt.Errorf(&quot;operation failed: %w&quot;, err)
+        }
+    }()
+    
+    // Do work...
+    return
+}</code></pre>

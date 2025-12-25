@@ -1,0 +1,96 @@
+<h1 class="title" id="functions-in-go">Functions in Go</h1>
+<p>Functions are central to Go. They are the building blocks of a Go
+program and are used to perform specific tasks. This section covers the
+basics of creating and using functions in Go.</p>
+<h2 class="subtitle" id="defining-and-calling-functions">Defining and
+Calling Functions</h2>
+<p>A function is defined with the <code>func</code> keyword, followed by
+the function name, a list of parameters, the return type(s), and the
+function body.</p>
+<pre><code>package main
+
+import &quot;fmt&quot;
+
+// A simple function with two parameters and one return value
+func add(x int, y int) int {
+    return x + y
+}
+
+func main() {
+    result := add(42, 13)
+    fmt.Println(&quot;42 + 13 =&quot;, result)
+}</code></pre>
+<p>When you have multiple consecutive parameters of the same type, you
+can omit the type from all but the last one.</p>
+<pre><code>func add(x, y int) int {
+    return x + y
+}</code></pre>
+<h2 class="subtitle" id="multiple-return-values">Multiple Return
+Values</h2>
+<p>A function in Go can return any number of results. This is often used
+to return both a result and an error value.</p>
+<pre><code>package main
+
+import (
+    &quot;fmt&quot;
+    &quot;errors&quot;
+)
+
+func divide(a, b float64) (float64, error) {
+    if b == 0 {
+        return 0, errors.New(&quot;division by zero&quot;)
+    }
+    return a / b, nil
+}
+
+func main() {
+    result, err := divide(10, 2)
+    if err != nil {
+        fmt.Println(&quot;Error:&quot;, err)
+    } else {
+        fmt.Println(&quot;Result:&quot;, result)
+    }
+
+    result, err = divide(10, 0)
+    if err != nil {
+        fmt.Println(&quot;Error:&quot;, err)
+    } else {
+        fmt.Println(&quot;Result:&quot;, result)
+    }
+}</code></pre>
+<h2 class="subtitle" id="variadic-functions">Variadic Functions</h2>
+<p>A function that can be called with a varying number of arguments is
+called a variadic function. The last parameter of a variadic function is
+of the form <code>...T</code>, which means it can accept any number of
+arguments of type <code>T</code>.</p>
+<pre><code>package main
+
+import &quot;fmt&quot;
+
+func sum(nums ...int) {
+    fmt.Print(nums, &quot; &quot;)
+    total := 0
+    for _, num := range nums {
+        total += num
+    }
+    fmt.Println(total)
+}
+
+func main() {
+    sum(1, 2)
+    sum(1, 2, 3)
+
+    nums := []int{1, 2, 3, 4}
+    sum(nums...)
+}</code></pre>
+<h2 class="subtitle" id="key-features-of-functions">Key Features of
+Functions</h2>
+<ul>
+<li><strong>First-Class Citizens:</strong> Functions are first-class
+citizens in Go, meaning they can be assigned to variables, passed as
+arguments to other functions, and returned from other functions.</li>
+<li><strong>Anonymous Functions:</strong> You can create functions
+without a name, known as anonymous functions or function literals.</li>
+<li><strong>Closures:</strong> An anonymous function can form a closure,
+which means it has access to the variables in its lexical scope.</li>
+</ul>

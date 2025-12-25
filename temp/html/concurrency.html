@@ -1,0 +1,109 @@
+<h1 class="title" id="concurrency-in-go">Concurrency in Go</h1>
+<p>Go provides built-in support for concurrent programming, making it
+easy to write programs that can handle multiple tasks simultaneously.
+Concurrency in Go is based on two main concepts:
+<strong>goroutines</strong> and <strong>channels</strong>.</p>
+<h2 class="subtitle" id="goroutines">Goroutines</h2>
+<p>A goroutine is a lightweight thread of execution. You can start a new
+goroutine by using the <code>go</code> keyword before a function call.
+The function will then run concurrently with the calling function.</p>
+<pre><code>package main
+
+import (
+    &quot;fmt&quot;
+    &quot;time&quot;
+)
+
+func say(s string) {
+    for i := 0; i &lt; 5; i++ {
+        time.Sleep(100 * time.Millisecond)
+        fmt.Println(s)
+    }
+}
+
+func main() {
+    go say(&quot;world&quot;)
+    say(&quot;hello&quot;)
+}</code></pre>
+<p>In this example, <code>go say("world")</code> starts a new goroutine.
+The <code>main</code> function continues to execute, and both functions
+run concurrently.</p>
+<h2 class="subtitle" id="channels">Channels</h2>
+<p>Channels are a typed conduit through which you can send and receive
+values with the <code>&lt;-</code> operator. Channels can be used to
+communicate between goroutines.</p>
+<pre><code>package main
+
+import &quot;fmt&quot;
+
+func sum(s []int, c chan int) {
+    sum := 0
+    for _, v := range s {
+        sum += v
+    }
+    c &lt;- sum // send sum to c
+}
+
+func main() {
+    s := []int{7, 2, 8, -9, 4, 0}
+
+    c := make(chan int)
+    go sum(s[:len(s)/2], c)
+    go sum(s[len(s)/2:], c)
+    x, y := &lt;-c, &lt;-c // receive from c
+
+    fmt.Println(x, y, x+y)
+}</code></pre>
+<p>This example creates two goroutines to calculate the sum of two
+halves of a slice. The results are sent back to the <code>main</code>
+function through a channel.</p>
+<h2 class="subtitle" id="select">Select</h2>
+<p>The <code>select</code> statement lets a goroutine wait on multiple
+communication operations. A <code>select</code> blocks until one of its
+cases can run, then it executes that case. It chooses one at random if
+multiple are ready.</p>
+<pre><code>package main
+
+import (
+    &quot;fmt&quot;
+    &quot;time&quot;
+)
+
+func main() {
+    c1 := make(chan string)
+    c2 := make(chan string)
+
+    go func() {
+        time.Sleep(1 * time.Second)
+        c1 &lt;- &quot;one&quot;
+    }()
+    go func() {
+        time.Sleep(2 * time.Second)
+        c2 &lt;- &quot;two&quot;
+    }()
+
+    for i := 0; i &lt; 2; i++ {
+        select {
+        case msg1 := &lt;-c1:
+            fmt.Println(&quot;received&quot;, msg1)
+        case msg2 := &lt;-c2:
+            fmt.Println(&quot;received&quot;, msg2)
+        }
+    }
+}</code></pre>
+<h2 class="subtitle" id="sync-package">Sync Package</h2>
+<p>The <code>sync</code> package provides basic synchronization
+primitives such as mutual exclusion locks. These are useful for
+protecting shared data from being accessed by multiple goroutines at the
+same time.</p>
+<ul>
+<li><code>sync.Mutex</code>: A mutual exclusion lock.</li>
+<li><code>sync.RWMutex</code>: A reader/writer mutual exclusion
+lock.</li>
+<li><code>sync.WaitGroup</code>: Waits for a collection of goroutines to
+finish.</li>
+<li><code>sync.Once</code>: An object that will perform exactly one
+action.</li>
+<li><code>sync.Cond</code>: A condition variable, a rendezvous point for
+goroutines waiting for or announcing the occurrence of an event.</li>
+</ul>

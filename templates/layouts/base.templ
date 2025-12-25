@@ -1,27 +1,18 @@
-package main
+package layouts
 
-// Base is the layout shell for the application.
-// It accepts a 'title' string for the browser tab.
 templ Base(title string) {
 	<!DOCTYPE html>
-	<html>
+	<html lang="en">
 		<head>
 			<meta charset="utf-8"/>
+			<meta name="viewport" content="width=device-width, initial-scale=1"/>
 			<title>{ title }</title>
-			<link rel="stylesheet" href="site.css"/>
+			<link rel="stylesheet" href="/css/style.css"/>
 		</head>
 		<body>
 			<div id="intro">
-				// Global Header
-				<h2><a href="./">How to Go</a></h2>
-
-				// The { children... } line is where specific page content will be injected
+				<h2 align="center"><a href="/">How to Go</a></h2>
 				{ children... }
-
-				// Global Footer
-				<p class="footer">
-					by <a href="#">Your Name</a> | <a href="#">source</a> | <a href="#">license</a>
-				</p>
 			</div>
 		</body>
 	</html>

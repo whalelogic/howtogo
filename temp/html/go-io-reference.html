@@ -1,0 +1,153 @@
+<h1 id="go-io-package-reference">Go <code>io</code> Package
+Reference</h1>
+<p>The <code>io</code> package provides basic interfaces to I/O
+primitives. Its primary job is to wrap existing implementations of such
+primitives, such as those in package <strong><code>os</code></strong>,
+into shared public interfaces that abstract the functionality.</p>
+<h2 id="core-interfaces">Core Interfaces</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: left;">Name</th>
+<th style="text-align: left;">Signature</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Reader</strong></td>
+<td
+style="text-align: left;"><code>Read(p []byte) (n int, err error)</code></td>
+<td style="text-align: left;">Reads up to len(p) bytes into p. Returns
+bytes read and error (EOF at end).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Writer</strong></td>
+<td
+style="text-align: left;"><code>Write(p []byte) (n int, err error)</code></td>
+<td style="text-align: left;">Writes len(p) bytes from p to the
+underlying data stream.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Closer</strong></td>
+<td style="text-align: left;"><code>Close() error</code></td>
+<td style="text-align: left;">Standard interface for closing a stream,
+releasing resources.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Seeker</strong></td>
+<td
+style="text-align: left;"><code>Seek(offset int64, whence int) (int64, error)</code></td>
+<td style="text-align: left;">Sets the offset for the next Read or
+Write.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>ReadWriter</strong></td>
+<td
+style="text-align: left;"><code>interface { Reader; Writer }</code></td>
+<td style="text-align: left;">Groups the basic Read and Write
+methods.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="utility-functions-methods">Utility Functions &amp; Methods</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: left;">Function</th>
+<th style="text-align: left;">Signature</th>
+<th style="text-align: left;">Usage Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Copy</strong></td>
+<td
+style="text-align: left;"><code>Copy(dst Writer, src Reader) (int64, error)</code></td>
+<td
+style="text-align: left;"><code>io.Copy(os.Stdout, strings.NewReader("Hello"))</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>ReadAll</strong></td>
+<td
+style="text-align: left;"><code>ReadAll(r Reader) ([]byte, error)</code></td>
+<td
+style="text-align: left;"><code>data, err := io.ReadAll(response.Body)</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>WriteString</strong></td>
+<td
+style="text-align: left;"><code>WriteString(w Writer, s string) (int, error)</code></td>
+<td
+style="text-align: left;"><code>io.WriteString(f, "Write this string to file")</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>LimitReader</strong></td>
+<td
+style="text-align: left;"><code>LimitReader(r Reader, n int64) Reader</code></td>
+<td
+style="text-align: left;"><code>lr := io.LimitReader(largeReader, 1024)</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>MultiReader</strong></td>
+<td
+style="text-align: left;"><code>MultiReader(readers ...Reader) Reader</code></td>
+<td
+style="text-align: left;"><code>combined := io.MultiReader(r1, r2, r3)</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>TeeReader</strong></td>
+<td
+style="text-align: left;"><code>TeeReader(r Reader, w Writer) Reader</code></td>
+<td
+style="text-align: left;"><code>tr := io.TeeReader(r, os.Stdout) // Reads and prints simultaneously</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="practical-examples">Practical Examples</h2>
+<h3 id="copying-a-file-to-standard-output">1. Copying a File to Standard
+Output</h3>
+<div class="sourceCode" id="cb1"><pre class="sourceCode go"><code class="sourceCode go"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">package</span> main</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="op">(</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;io&quot;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;os&quot;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;strings&quot;</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="op">)</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="kw">func</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    reader <span class="op">:=</span> strings<span class="op">.</span>NewReader<span class="op">(</span><span class="st">&quot;This is a data stream.</span><span class="ch">\n</span><span class="st">&quot;</span><span class="op">)</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="co">// io.Copy is memory efficient as it uses a buffer internally</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> _<span class="op">,</span> err <span class="op">:=</span> io<span class="op">.</span>Copy<span class="op">(</span>os<span class="op">.</span>Stdout<span class="op">,</span> reader<span class="op">);</span> err <span class="op">!=</span> <span class="ot">nil</span> <span class="op">{</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>        <span class="bu">panic</span><span class="op">(</span>err<span class="op">)</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<ol start="2" type="1">
+<li>Using a <strong>LimitReader</strong> to prevent memory exhaustion
+Go</li>
+</ol>
+<div class="sourceCode" id="cb2"><pre class="sourceCode go"><code class="sourceCode go"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">func</span> handleRequest<span class="op">(</span>r io<span class="op">.</span>Reader<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Only allow reading 1MB of data</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    limitedReader <span class="op">:=</span> io<span class="op">.</span>LimitReader<span class="op">(</span>r<span class="op">,</span> <span class="dv">1024</span><span class="op">*</span><span class="dv">1024</span><span class="op">)</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    data<span class="op">,</span> _ <span class="op">:=</span> io<span class="op">.</span>ReadAll<span class="op">(</span>limitedReader<span class="op">)</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    _ <span class="op">=</span> data</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<hr />
+<h3 id="the-nethttp-package-reference">2. The <code>net/http</code>
+Package Reference</h3>
+<p>This file covers both <strong>Client</strong> and
+<strong>Server</strong> implementations, including the
+<strong><code>ResponseWriter</code></strong> and
+<strong><code>Request</code></strong> structs.</p>

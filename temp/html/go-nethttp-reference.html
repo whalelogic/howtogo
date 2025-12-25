@@ -1,0 +1,144 @@
+<h1 id="go-nethttp-package-comprehensive-reference">Go
+<code>net/http</code> Package Comprehensive Reference</h1>
+<p>The <strong><code>net/http</code></strong> package provides HTTP
+client and server implementations.</p>
+<h2 id="server-side-reference">Server-Side Reference</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: left;">Type/Function</th>
+<th style="text-align: left;">Signature</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Handler</strong></td>
+<td
+style="text-align: left;"><code>interface { ServeHTTP(ResponseWriter, *Request) }</code></td>
+<td style="text-align: left;">The primary interface for HTTP logic.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>HandlerFunc</strong></td>
+<td
+style="text-align: left;"><code>type HandlerFunc func(ResponseWriter, *Request)</code></td>
+<td style="text-align: left;">An adapter allowing functions to act as
+Handlers.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>ListenAndServe</strong></td>
+<td
+style="text-align: left;"><code>func ListenAndServe(addr string, h Handler) error</code></td>
+<td style="text-align: left;">Starts a server on the given address.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>ResponseWriter</strong></td>
+<td
+style="text-align: left;"><code>interface { Header(); Write(); WriteHeader() }</code></td>
+<td style="text-align: left;">Used to construct the HTTP response.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>ServeMux</strong></td>
+<td style="text-align: left;"><code>struct</code></td>
+<td style="text-align: left;">An HTTP request multiplexer (router).</td>
+</tr>
+</tbody>
+</table>
+<h2 id="client-side-reference">Client-Side Reference</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: left;">Type/Function</th>
+<th style="text-align: left;">Signature</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Client</strong></td>
+<td
+style="text-align: left;"><code>struct { Transport RoundTripper; Timeout time.Duration }</code></td>
+<td style="text-align: left;">An HTTP client for making requests.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Get</strong></td>
+<td
+style="text-align: left;"><code>func Get(url string) (*Response, error)</code></td>
+<td style="text-align: left;">Helper for simple GET requests.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Post</strong></td>
+<td
+style="text-align: left;"><code>func Post(url, contentType string, body Reader) (*Response, error)</code></td>
+<td style="text-align: left;">Helper for POST requests.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>NewRequest</strong></td>
+<td
+style="text-align: left;"><code>func NewRequest(method, url string, body Reader) (*Request, error)</code></td>
+<td style="text-align: left;">Creates a complex request object.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="essential-structs">Essential Structs</h2>
+<h3 id="http.request">http.Request</h3>
+<ul>
+<li><code>Method string</code>: GET, POST, etc.</li>
+<li><code>URL *url.URL</code>: The target URL.</li>
+<li><code>Header Header</code>: Map of headers.</li>
+<li><code>Body io.ReadCloser</code>: The request body (must be closed by
+server).</li>
+</ul>
+<h3 id="http.response">http.Response</h3>
+<ul>
+<li><code>Status string</code>: e.g., “200 OK”.</li>
+<li><code>StatusCode int</code>: e.g., 200.</li>
+<li><code>Body io.ReadCloser</code>: The response body (must be closed
+by client).</li>
+</ul>
+<hr />
+<h2 id="practical-examples">Practical Examples</h2>
+<h3 id="simple-http-server">1. Simple HTTP Server</h3>
+<div class="sourceCode" id="cb1"><pre class="sourceCode go"><code class="sourceCode go"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">package</span> main</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="op">(</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;fmt&quot;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;net/http&quot;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="op">)</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="kw">func</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    http<span class="op">.</span>HandleFunc<span class="op">(</span><span class="st">&quot;/&quot;</span><span class="op">,</span> <span class="kw">func</span><span class="op">(</span>w http<span class="op">.</span>ResponseWriter<span class="op">,</span> r <span class="op">*</span>http<span class="op">.</span>Request<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>        fmt<span class="op">.</span>Fprintf<span class="op">(</span>w<span class="op">,</span> <span class="st">&quot;Hello, you&#39;ve requested: %s</span><span class="ch">\n</span><span class="st">&quot;</span><span class="op">,</span> r<span class="op">.</span>URL<span class="op">.</span>Path<span class="op">)</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="op">})</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    fmt<span class="op">.</span>Println<span class="op">(</span><span class="st">&quot;Server starting on :8080&quot;</span><span class="op">)</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    http<span class="op">.</span>ListenAndServe<span class="op">(</span><span class="st">&quot;:8080&quot;</span><span class="op">,</span> <span class="ot">nil</span><span class="op">)</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<h4 id="http-client-with-context-and-timeout">2. HTTP Client with
+Context and Timeout</h4>
+<p>```go package main</p>
+<p>import ( “context” “io” “net/http” “time” )</p>
+<p>func main() { client := &amp;http.Client{Timeout: 5 *
+time.Second}</p>
+<pre><code>req, _ := http.NewRequestWithContext(context.Background(), &quot;GET&quot;, &quot;[https://api.example.com](https://api.example.com)&quot;, nil)
+
+resp, err := client.Do(req)
+if err != nil {
+    panic(err)
+}
+defer resp.Body.Close()
+
+body, _ := io.ReadAll(resp.Body)
+fmt.Println(string(body))</code></pre>
+<p>}</p>

@@ -1,39 +1,64 @@
 package main
 
 import (
-	"fmt"
-	"io"
+	"log"
 	"net/http"
+
+	"github.com/a-h/templ"
+	"github.com/gin-gonic/gin"
+
+	"github.com/whalelogic/howtogo/templates/pages"
 )
 
-type server struct {
-	addr string
-	port int
-}
-
-func CheckHealth(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "text/plain")
-	w.WriteHeader(http.StatusOK)
-	_, err := io.WriteString(w, "200 OK. You are healthy.\n")
-	if err != nil {
-		fmt.Println("Error writing response:", err)
-	} else {
-		fmt.Println("Health check responded with OK")
+func render(c *gin.Context, status int, component templ.Component) {
+	c.Status(status)
+	if err := component.Render(c.Request.Context(), c.Writer); err != nil {
+		// Surface render errors to logs while keeping response simple.
+		log.Printf("render error: %v", err)
 	}
 }
 
 func main() {
-
-	srv := &server{
-		addr: "localhost",
-		port: 8080,
-	}
-	http.HandleFunc("/health", CheckHealth)
-
-	address := fmt.Sprintf("%s:%d", srv.addr, srv.port)
-	fmt.Printf("Starting server at %s\n", address)
-	if err := http.ListenAndServe(address, nil); err != nil {
-		fmt.Println("Error starting server:", err)
+	r := gin.Default()
+	if err := r.SetTrustedProxies(nil); err != nil {
+		log.Fatalf("failed to set trusted proxies: %v", err)
 	}
 
+	r.Static("/css", "./public/css")
+	r.Static("/icons", "./public/icons")
+
+	r.GET("/health", func(c *gin.Context) {
+		c.String(http.StatusOK, "200 OK\n")
+	})
+
+	// test component
+
+	component := pages.HelloWorld()
+	r.GET("/test", func(c *gin.Context) {
+		render(c, http.StatusOK, component)
+	})
+
+	r.GET("/", func(c *gin.Context) {
+		render(c, http.StatusOK, pages.Index())
+	})
+
+	r.GET("/hello-world", func(c *gin.Context) {
+		render(c, http.StatusOK, pages.HelloWorld())
+	})
+
+	r.GET("/values", func(c *gin.Context) {
+		render(c, http.StatusOK, pages.Values())
+	})
+
+	r.GET("/variables", func(c *gin.Context) {
+		render(c, http.StatusOK, pages.Variables())
+	})
+
+	r.GET("/constants", func(c *gin.Context) {
+		render(c, http.StatusOK, pages.Constants())
+	})
+
+	if err := r.Run(":8080"); err != nil {
+		log.Fatalf("server failed: %v", err)
+	}
 }

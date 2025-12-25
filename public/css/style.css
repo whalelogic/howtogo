@@ -1,95 +1,71 @@
-/* Reset and Base Styles */
-* {
-    box-sizing: border-box;
-}
+/* Reset */
+* { box-sizing: border-box; }
 
 body {
-    /* Go By Example uses a very standard, clean sans-serif stack */
-    font-family: Helvetica, Arial, sans-serif;
-    font-size: 16px;
-    line-height: 1.6;
-    color: #333;
-    background-color: #fff;
+    font-family: "Ubuntu", "monospace", "Georgia", serif;
+    font-size: 14px;
+    line-height: 1.4;
+    color: #252519;
+    background: #ffffff;
     margin: 0;
     padding: 0;
 }
 
-/* Links - GoByExample uses dark links, not blue */
-a {
-    color: #333;
-    text-decoration: none;
-}
+a { color: #261a3b; text-decoration: none; }
+a:hover { text-decoration: underline; box-shadow: none !important; outline: none !important; }
 
-a:hover {
-    text-decoration: underline;
-}
-
-/* Main Container Layout */
+/* Container */
 div#intro {
-    /* Slightly wider than your original to match the site feel */
-    max-width: 800px; 
-    margin: 0 auto;
-    padding: 40px 20px;
+    max-width: 800px;
+    min-width: 800px;
+    margin: 0 auto 80px auto;
+    padding: 40px 20px 20px 20px;
 }
 
-/* Header Typography */
-div#intro h2 {
-    margin-top: 0;
-    font-weight: bold; /* The site uses bold headers */
-    font-size: 24px;
-    margin-bottom: 20px;
-}
+div#intro h2 { margin: 0 0 20px 0; font-size: 32px; line-height: 40px; }
+div#intro h1, div#intro h2, div#intro h3, div#intro h4 { font-family: Georgia, serif; font-weight: 700; }
+div#intro p { margin: 0 0 20px 0; color: #252519; }
 
-div#intro h2 a {
-    color: #333;
-    text-decoration: none;
-}
+.example { width: 900px; min-width: 900px; max-width: 900px; margin: 0 auto 120px auto; }
+.example h1 { font-size: 28px; margin: 20px 0 12px 0; }
+.example h2 { font-size: 22px; margin: 18px 0 10px 0; }
+.example ul { padding-left: 18px; }
+.example.home { width: 60%; min-width: 40%; max-width: 70%; margin-bottom: 80px; }
 
-div#intro p {
-    margin-bottom: 20px;
-    color: #555; /* Slightly softer text for descriptions */
+/* Code blocks */
+pre, code { font-family: 'Menlo', 'Monaco', 'Consolas', 'Lucida Console', monospace; }
+pre {
+    font-size: 13px;
+    line-height: 18px;
+    background: #f0f0f0;
+    padding: 12px 14px;
+    overflow-x: auto;
+    border-radius: 4px;
+    margin: 12px 0 20px 0;
+    white-space: pre;
+    max-width: 80%;
 }
+code { font-size: 13px; }
 
-/* Example List Styling - THE BIG CHANGE */
-ul.examples {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    /* This creates the signature look: Links look like code */
-    font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace; 
-}
+.docs { max-width: 420px; }
 
-ul.examples li {
-    margin-bottom: 0; /* Tighter list */
-}
+/* Example list on home */
+ul.examples { list-style: none; padding: 0; margin: 0; font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace; }
+ul.examples li { margin-bottom: 0; }
+ul.examples li a { display: inline-block; padding: 2px 0; color: #333; font-size: 14px; }
+ul.examples li a:hover,
+ul.examples li a:focus,
+ul.examples li a:focus-visible { background: transparent; text-decoration: underline; outline: none; box-shadow: none !important; }
 
-ul.examples li a {
-    display: inline-block; /* Not a full block anymore */
-    background: transparent; /* Removed the button background */
-    padding: 2px 0; /* Minimal padding */
-    color: #333;
-    border-radius: 0;
-    font-size: 15px;
-}
-
-/* On hover, keep it simple */
-ul.examples li a:hover {
-    background: transparent;
-    text-decoration: underline;
-}
-
-/* Footer Styling */
+/* Footer */
 p.footer {
-    margin-top: 60px; /* More spacing */
-    color: #888;
-    font-size: 13px; /* Slightly smaller */
-    font-family: Helvetica, Arial, sans-serif; /* Ensure footer isn't monospace */
-    text-align: left; /* GoByExample footers are usually left-aligned or simple */
+    margin-top: 60px;
+    color: #808080;
+    font-size: 13px;
+    font-family: Helvetica, Arial, sans-serif;
+    text-align: left;
     border-top: 1px solid #f0f0f0;
     padding-top: 20px;
 }
-
-p.footer a {
-    color: #888;
-    text-decoration: underline;
-}
+p.footer a { color: #808080; text-decoration: underline; }
+.gh-link img { vertical-align: middle; margin-right: 6px; }

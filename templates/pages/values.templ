@@ -1,0 +1,36 @@
+package pages
+
+import "github.com/whalelogic/howtogo/templates/layouts"
+import "github.com/whalelogic/howtogo/templates/components"
+
+templ Values() {
+	@layouts.Base("Values | How to Go") {
+		<div class="example">
+			@components.Header()
+			<h1>Values</h1>
+			<p>Values in Go cover numbers, strings, booleans, and compound types. They are the building blocks you combine to model data.</p>
+			<pre>
+				<code class="language-go">
+					@templ.Raw(`package main
+
+import "fmt"
+
+func main() {
+	fmt.Println("go" + "lang")
+	fmt.Println("1+1 =", 1+1)
+	fmt.Println("7.0/3.0 =", 7.0/3.0)
+	fmt.Println(true && false)
+	fmt.Println(true || false)
+	fmt.Println(!true)
+}`)
+				</code>
+			</pre>
+			<h2>Key Points</h2>
+			<ul>
+				<li>Strings concatenate with <code>+</code>; numbers use arithmetic operators.</li>
+				<li>Booleans support the usual logical operators.</li>
+				<li>Literals default to untyped until used in context.</li>
+			</ul>
+		</div>
+	}
+}
