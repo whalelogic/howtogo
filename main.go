@@ -24,8 +24,8 @@ func main() {
 		log.Fatalf("failed to set trusted proxies: %v", err)
 	}
 
-	r.Static("/css", "./public/css")
-	r.Static("/icons", "./public/icons")
+	r.Static("/css", "./static/css")
+	r.Static("/icons", "./static/icons")
 
 	r.GET("/health", func(c *gin.Context) {
 		c.String(http.StatusOK, "200 OK\n")

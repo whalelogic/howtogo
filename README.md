@@ -73,6 +73,8 @@ Goal: 300+ runnable examples across all major topics.
 
 https://go.dev/dl/
 
+### Dev tools 
+```templ generate --watch --proxy="http://localhost:8080" --cmd="go run ."```
 
 ### Run an Example
 

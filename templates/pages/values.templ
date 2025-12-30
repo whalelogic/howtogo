@@ -6,8 +6,7 @@ import "github.com/whalelogic/howtogo/templates/components"
 templ Values() {
 	@layouts.Base("Values | How to Go") {
 		<div class="example">
-			@components.Header()
-			<h1>Values</h1>
+            @components.CustomHeader("Values")
 			<p>Values in Go cover numbers, strings, booleans, and compound types. They are the building blocks you combine to model data.</p>
 			<pre>
 				<code class="language-go">
@@ -25,6 +24,8 @@ func main() {
 }`)
 				</code>
 			</pre>
+            @components.CodeOutput("go run main.go\n")
+            @components.CodeOutput("Output: golang\n")
 			<h2>Key Points</h2>
 			<ul>
 				<li>Strings concatenate with <code>+</code>; numbers use arithmetic operators.</li>
