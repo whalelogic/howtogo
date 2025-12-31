@@ -48,11 +48,11 @@ func Constants() templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = components.Header().Render(ctx, templ_7745c5c3_Buffer)
+			templ_7745c5c3_Err = components.CustomHeader("Constants").Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<h1>Constants</h1><p>Constants hold values that do not change. They are great for configuration, sizes, and enumerations.</p><pre><code class=\"language-go\">")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<p style=\"width: 80%;\">Constants hold values that do not change. They are great for configuration, sizes, and enumerations. One common use for constants is declaring an <code style=\"color: red; font-weight: 500;\">API_KEY</code>. Declaring a constant Pi (3.14) </p><pre><code class=\"language-go\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -64,19 +64,46 @@ import "math"
 const s string = "constant"
 
 func main() {
-	fmt.Println(s)
 
-	const n = 500000000
-	const d = 3e20 / n
-	fmt.Println(d)
-	fmt.Println(int64(d))
+  fmt.Println(s)
 
-	fmt.Println(math.Sin(n))
+  const pi = 3.14
+  const n = 500000000
+  const d = 3e20 / n
+  fmt.Println(math.Sqrt(pi))
+  fmt.Println(d)
+  fmt.Println(int64(d))
+  fmt.Println(math.Sin(n))
+
 }`).Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "</code></pre><h2>Key Points</h2><ul><li>Constants are declared with <code>const</code> and cannot be changed.</li><li>Numeric constants are high-precision until given a type.</li><li>You can use constants in expressions; the compiler folds them.</li></ul></div>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "</code></pre><h4>Output:</h4>")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = components.CodeOutput(`constant
+1.772004514666935
+60000000000
+-0.28470407323754404
+`).Render(ctx, templ_7745c5c3_Buffer)
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "<h2>Key Points</h2><ul><li>Constants are declared with <code>const</code> and cannot be changed.</li><li>Numeric constants are high-precision until given a type.</li><li>You can use constants in expressions; the compiler folds them.</li></ul><div style=\"margin-top: 20px; justify-content: space-between; display: flex; width: 80%;\">")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = components.Button("Previous:  Variables", "/variables").Render(ctx, templ_7745c5c3_Buffer)
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = components.Button("Next: Functions", "/functions").Render(ctx, templ_7745c5c3_Buffer)
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "</div></div>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

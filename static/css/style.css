@@ -23,9 +23,9 @@ div#intro {
     padding: 40px 20px 20px 20px;
 }
 
-div#intro h2 { margin: 0 0 20px 0; font-size: 28px; line-height: 40px; color: #2ba0c4; padding-top: 12px;}
-div#intro h1, div#intro h2, div#intro h3, div#intro h4 { font-family: Georgia, serif; font-weight: 700; }
-div#intro p { margin: 0 0 20px 0; color: #252519; }
+div#intro h2 { margin: 0 0 20px 0; font-size: 36px; line-height: 40px; padding-top: 12px;}
+div#intro h1, div#intro h2, div#intro h3, div#intro h4 { font-family: Georgia, serif; font-weight: 700; color: #2ea3b2; }
+div#intro p { margin: 0 0 20px 0; color: #252519; font-family: Roboto; }
 
 .example { width: 900px; min-width: 900px; max-width: 900px; margin: 0 auto 120px auto; }
 .example h1 { font-size: 28px; margin: 20px 0 12px 0; padding-top: 12px; }
@@ -39,7 +39,7 @@ pre {
     font-size: 13px;
     font-weight: 500;
     line-height: 1.6;
-    background: #2a2a2d;
+    background: transparent;
     padding: 12px 14px;
     overflow-x: auto;
     border-radius: 4px;
@@ -53,7 +53,7 @@ code { font-size: 13px; }
 
 .btn-primary {
     display: inline-block;
-    background-color: #261a3b;
+    background-color: #2ea3b2;
     color: #ffffff !important;
     font-size: 14px;
     font-weight: 500;
@@ -61,6 +61,7 @@ code { font-size: 13px; }
     border-radius: 4px;
     text-decoration: none;
     box-shadow: none !important;
+    margin-left: 4px;
 }
 
 /* Example list on home */

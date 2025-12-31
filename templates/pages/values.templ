@@ -27,16 +27,16 @@ templ Values() {
 					@templ.Raw(code)
 				</code>
 			</pre>
-            @components.CodeOutput("go run main.go\n")
-            @components.CodeOutput("Output: golang\n")
-			<h2>Key Points</h2>
+            <h4>Output:</h4>
+            @components.CodeOutput("golang\n1+1 = 2\n7.0/3.0 = 2.3333333333333335\nfalse\ntrue\nfalse\n")
+            @components.CustomHeader("Key Points")
 			<ul>
 				<li>Strings concatenate with <code>+</code>; numbers use arithmetic operators.</li>
 				<li>Booleans support the usual logical operators.</li>
 				<li>Literals default to untyped until used in context.</li>
 			</ul>
             <div style="margin-top: 20px; justify-content: space-between; display: flex; width: 80%;">
-              @components.Button("Previous:  Intro", "/intro")
+              @components.Button("Previous:  Intro", "/hello-world")
               @components.Button("Next: Constants", "/constants")
             </div>
 

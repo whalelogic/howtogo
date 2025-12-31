@@ -73,23 +73,23 @@ func Values() templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "</code></pre>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "</code></pre><h4>Output:</h4>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = components.CodeOutput("go run main.go\n").Render(ctx, templ_7745c5c3_Buffer)
+			templ_7745c5c3_Err = components.CodeOutput("golang\n1+1 = 2\n7.0/3.0 = 2.3333333333333335\nfalse\ntrue\nfalse\n").Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = components.CodeOutput("Output: golang\n").Render(ctx, templ_7745c5c3_Buffer)
+			templ_7745c5c3_Err = components.CustomHeader("Key Points").Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "<h2>Key Points</h2><ul><li>Strings concatenate with <code>+</code>; numbers use arithmetic operators.</li><li>Booleans support the usual logical operators.</li><li>Literals default to untyped until used in context.</li></ul><div style=\"margin-top: 20px; justify-content: space-between; display: flex; width: 80%;\">")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "<ul><li>Strings concatenate with <code>+</code>; numbers use arithmetic operators.</li><li>Booleans support the usual logical operators.</li><li>Literals default to untyped until used in context.</li></ul><div style=\"margin-top: 20px; justify-content: space-between; display: flex; width: 80%;\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = components.Button("Previous:  Intro", "/intro").Render(ctx, templ_7745c5c3_Buffer)
+			templ_7745c5c3_Err = components.Button("Previous:  Intro", "/hello-world").Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

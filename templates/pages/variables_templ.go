@@ -76,7 +76,19 @@ func main() {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "</code></pre><h2>Key Points</h2><ul><li><code>var</code> allows explicit types or inferred types from the initializer.</li><li><code>:=</code> is only valid inside functions; it infers the type.</li><li>Multiple assignment is common for parallel declarations.</li></ul></div>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "</code></pre><h2>Key Points</h2><ul><li><code>var</code> allows explicit types or inferred types from the initializer.</li><li><code>:=</code> is only valid inside functions; it infers the type.</li><li>Multiple assignment is common for parallel declarations.</li></ul><div style=\"margin-top: 20px; justify-content: space-between; display: flex; width: 80%;\">")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = components.Button("Previous:  Values", "/values").Render(ctx, templ_7745c5c3_Buffer)
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = components.Button("Next: Constants", "/constants").Render(ctx, templ_7745c5c3_Buffer)
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "</div></div>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
