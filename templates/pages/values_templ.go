@@ -57,7 +57,11 @@ func Values() templ.Component {
 				}()
 			}
 			ctx = templ.InitializeContext(ctx)
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div class=\"example\">")
+			templ_7745c5c3_Err = components.Breadcrumb("values", "Values").Render(ctx, templ_7745c5c3_Buffer)
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, " ")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -65,7 +69,7 @@ func Values() templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<p style=\"width: 80%;\"><b>Values</b> in Go cover numbers, strings, booleans, and compound types. They are the building blocks you combine to model data.</p><pre><code class=\"language-go\">")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, " <p><b>Values</b> in Go cover numbers, strings, booleans, and compound types. They are the building blocks you combine to model data.</p><div class=\"code-block\"><pre><code class=\"language-go\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -73,7 +77,7 @@ func Values() templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "</code></pre><h4>Output:</h4>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "</code></pre></div><span class=\"output-label\">Output:</span><div class=\"code-block output-block\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -81,23 +85,27 @@ func Values() templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "</div><h2>Value Types Reference</h2><table class=\"reference-table\"><thead><tr><th>Type</th><th>Examples</th><th>Operations</th><th>Notes</th></tr></thead> <tbody><tr><td><code>string</code></td><td>\"hello\", \"go\" + \"lang\"</td><td>Concatenation with <code>+</code></td><td>Immutable UTF-8 encoded</td></tr><tr><td><code>int</code></td><td>1, 42, -10</td><td>+, -, *, /, %</td><td>Platform dependent size (32 or 64-bit)</td></tr><tr><td><code>float64</code></td><td>3.14, 7.0/3.0</td><td>+, -, *, /</td><td>IEEE-754 64-bit floating point</td></tr><tr><td><code>bool</code></td><td>true, false</td><td>&&, ||, !</td><td>Logical operations only</td></tr></tbody></table>")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
 			templ_7745c5c3_Err = components.CustomHeader("Key Points").Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "<ul><li>Strings concatenate with <code>+</code>; numbers use arithmetic operators.</li><li>Booleans support the usual logical operators.</li><li>Literals default to untyped until used in context.</li></ul><div style=\"margin-top: 20px; justify-content: space-between; display: flex; width: 80%;\">")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, " <ul><li>Strings concatenate with <code>+</code>; numbers use arithmetic operators.</li><li>Booleans support the usual logical operators.</li><li>Literals default to untyped until used in context.</li><li>Go is statically typed - type conversions must be explicit.</li></ul><div class=\"nav-buttons\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = components.Button("Previous:  Intro", "/hello-world").Render(ctx, templ_7745c5c3_Buffer)
+			templ_7745c5c3_Err = components.Button("Previous: Intro", "/hello-world").Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = components.Button("Next: Constants", "/constants").Render(ctx, templ_7745c5c3_Buffer)
+			templ_7745c5c3_Err = components.Button("Next: Variables", "/variables").Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "</div></div>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "</div>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

@@ -5,10 +5,9 @@ import "github.com/whalelogic/howtogo/templates/components"
 
 templ Index() {
 	@layouts.Base("How to Go") {
-		<div class="example home">
-			@components.Header()
-			<ul class="examples menu-list">
-				<li><a href="hello-world">Hello World</a></li>
+		@components.Header()
+		<ul class="examples menu-list">
+			<li><a href="hello-world">Hello World</a></li>
 				<li><a href="values">Values</a></li>
 				<li><a href="variables">Variables</a></li>
 				<li><a href="constants">Constants</a></li>
@@ -51,8 +50,7 @@ templ Index() {
 				<li><a href="xml">XML</a></li>
 				<li><a href="time">Time</a></li>
 				<li><a href="context">Context</a></li>
-				<li><a href="exit">Exit</a></li>
-			</ul>
-		</div>
+			<li><a href="exit">Exit</a></li>
+		</ul>
 	}
 }

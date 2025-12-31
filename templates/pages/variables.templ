@@ -5,9 +5,10 @@ import "github.com/whalelogic/howtogo/templates/components"
 
 templ Variables() {
 	@layouts.Base("Variables | How to Go") {
-		<div class="example">
-			@components.CustomHeader("Variables")
-			<p style="width: 80%;">Variables let you name values. Go uses explicit <code>var</code> declarations or short-hand <code>:=</code> inside functions.</p>
+		@components.Breadcrumb("variables", "Variables")
+		@components.CustomHeader("Variables")
+		<p>Variables let you name values. Go uses explicit <code>var</code> declarations or short-hand <code>:=</code> inside functions.</p>
+		<div class="code-block">
 			<pre>
 				<code class="language-go">
 					@templ.Raw(`package main
@@ -24,21 +25,101 @@ func main() {
 	var d = true // type inferred
 	fmt.Println(d)
 
+	var e int // zero value
+	fmt.Println(e)
+
 	f := "short" // short declaration inside functions
 	fmt.Println(f)
 }`)
 				</code>
 			</pre>
-			<h2>Key Points</h2>
-			<ul>
-				<li><code>var</code> allows explicit types or inferred types from the initializer.</li>
-				<li><code>:=</code> is only valid inside functions; it infers the type.</li>
-				<li>Multiple assignment is common for parallel declarations.</li>
-			</ul>
-            <div style="margin-top: 20px; justify-content: space-between; display: flex; width: 80%;">
-              @components.Button("Previous:  Values", "/values")
-              @components.Button("Next: Constants", "/constants")
-            </div>
+		</div>
+		<span class="output-label">Output:</span>
+		<div class="code-block output-block">
+			@components.CodeOutput(`initial
+1 2
+true
+0
+short`)
+		</div>
+		<h2>Variable Declaration Syntax</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Declaration</th>
+					<th>Example</th>
+					<th>Scope</th>
+					<th>Description</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td><code>var name type</code></td>
+					<td><code>var x int</code></td>
+					<td>Package or Function</td>
+					<td>Explicit type, zero value initialized</td>
+				</tr>
+				<tr>
+					<td><code>var name = value</code></td>
+					<td><code>var x = 10</code></td>
+					<td>Package or Function</td>
+					<td>Type inferred from value</td>
+				</tr>
+				<tr>
+					<td><code>name := value</code></td>
+					<td><code>x := 10</code></td>
+					<td>Function only</td>
+					<td>Short declaration, type inferred</td>
+				</tr>
+				<tr>
+					<td><code>var a, b type</code></td>
+					<td><code>var x, y int</code></td>
+					<td>Package or Function</td>
+					<td>Multiple variables, same type</td>
+				</tr>
+			</tbody>
+		</table>
+		<h2>Zero Values</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Type</th>
+					<th>Zero Value</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td><code>int, int8, int16, int32, int64</code></td>
+					<td>0</td>
+				</tr>
+				<tr>
+					<td><code>float32, float64</code></td>
+					<td>0.0</td>
+				</tr>
+				<tr>
+					<td><code>bool</code></td>
+					<td>false</td>
+				</tr>
+				<tr>
+					<td><code>string</code></td>
+					<td>"" (empty string)</td>
+				</tr>
+				<tr>
+					<td>Pointers, slices, maps, channels, functions, interfaces</td>
+					<td>nil</td>
+				</tr>
+			</tbody>
+		</table>
+		<h2>Key Points</h2>
+		<ul>
+			<li><code>var</code> allows explicit types or inferred types from the initializer.</li>
+			<li><code>:=</code> is only valid inside functions; it infers the type.</li>
+			<li>Multiple assignment is common for parallel declarations.</li>
+			<li>Uninitialized variables have their type's zero value, never undefined.</li>
+		</ul>
+		<div class="nav-buttons">
+			@components.Button("Previous: Values", "/values")
+			@components.Button("Next: Constants", "/constants")
 		</div>
 	}
 }

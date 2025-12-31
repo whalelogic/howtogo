@@ -1,4 +1,3 @@
-// Package layouts defines the layout templates.
 package layouts
 
 templ Base(title string) {
@@ -15,17 +14,12 @@ templ Base(title string) {
             <script>hljs.highlightAll();</script>
 		</head>
 		<body>
-			<div class="container">
-				<h2 align="center" class="site-title">
-					<a href="/">
-						<img src="/icons/devicon-master/icons/go/go-original.svg" alt="Go Gopher" class="gopher-icon"/>
-						How to Go
-					</a>
-				</h2>
-				<main>
-					{ children... }
-				</main>
+			<div id="intro">
+				<h2 align="center"><a href="/">How to Go</a></h2>
+				{ children... }
 			</div>
 		</body>
 	</html>
 }
+
+

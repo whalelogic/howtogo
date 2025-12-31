@@ -1,0 +1,22 @@
+package components
+
+templ Breadcrumb(path string, current string) {
+	<div class="page-header">
+		<nav class="breadcrumbs">
+			<a href="/">Home</a>
+			if path != "" {
+				<span class="breadcrumb-separator">/</span>
+				<span>{ current }</span>
+			}
+		</nav>
+		<div class="badges">
+			<span class="badge badge-go">Go 1.23</span>
+			<span class="badge badge-success">Passing</span>
+			<span class="badge">v1.0.2</span>
+			<a href="https://github.com/whalelogic" target="_blank" rel="noopener noreferrer" class="badge badge-github">
+				<img src="/icons/devicon-master/icons/github/github-original.svg" alt="GitHub" class="badge-icon" style="background-color: white; border-radius: 12px;"/>
+				GitHub
+			</a>
+		</div>
+	</div>
+}
