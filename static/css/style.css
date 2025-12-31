@@ -5,14 +5,15 @@ body {
     font-family: "Roboto Mono", "monospace", "Georgia", serif;
     font-size: 14px;
     line-height: 1.4;
-    color: #252519;
+    color: #2a2a2f;
     background: #ffffff;
     margin: 0;
     padding: 0;
 }
 
+
 a { color: #261a3b; text-decoration: none; }
-a:hover { text-decoration: underline; box-shadow: none !important; outline: none !important; }
+a:hover { text-decoration: none; box-shadow: none !important; outline: none !important; }
 
 /* Container */
 div#intro {
@@ -22,13 +23,13 @@ div#intro {
     padding: 40px 20px 20px 20px;
 }
 
-div#intro h2 { margin: 0 0 20px 0; font-size: 32px; line-height: 40px; }
+div#intro h2 { margin: 0 0 20px 0; font-size: 28px; line-height: 40px; color: #2ba0c4; padding-top: 12px;}
 div#intro h1, div#intro h2, div#intro h3, div#intro h4 { font-family: Georgia, serif; font-weight: 700; }
 div#intro p { margin: 0 0 20px 0; color: #252519; }
 
 .example { width: 900px; min-width: 900px; max-width: 900px; margin: 0 auto 120px auto; }
-.example h1 { font-size: 28px; margin: 20px 0 12px 0; }
-.example h2 { font-size: 22px; margin: 18px 0 10px 0; }
+.example h1 { font-size: 28px; margin: 20px 0 12px 0; padding-top: 12px; }
+.example h2 { font-size: 22px; margin: 18px 0 10px 0; padding-top: 12px; }
 .example ul { padding-left: 18px; }
 .example.home { width: 60%; min-width: 40%; max-width: 70%; margin-bottom: 80px; }
 
@@ -36,8 +37,9 @@ div#intro p { margin: 0 0 20px 0; color: #252519; }
 pre, code { font-family: 'Roboto Mono', 'Menlo', 'Monaco', 'Consolas', 'Lucida Console', monospace; border-radius: 4px; }
 pre {
     font-size: 13px;
+    font-weight: 500;
     line-height: 1.6;
-    background: #1c1c1c;
+    background: #2a2a2d;
     padding: 12px 14px;
     overflow-x: auto;
     border-radius: 4px;
@@ -48,6 +50,18 @@ pre {
 code { font-size: 13px; }
 
 .docs { max-width: 420px; }
+
+.btn-primary {
+    display: inline-block;
+    background-color: #261a3b;
+    color: #ffffff !important;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 10px 16px;
+    border-radius: 4px;
+    text-decoration: none;
+    box-shadow: none !important;
+}
 
 /* Example list on home */
 ul.examples { list-style: none; padding: 0; margin: 0; font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace; }

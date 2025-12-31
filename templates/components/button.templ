@@ -1,8 +1,8 @@
 // Package components contains reusable UI (Templ) components.
 package components
 
-templ Button(text string) {
-	<button class="btn-primary">{ text }</button>
+templ Button(text string, url string) {
+	<a href={ url } class="btn-primary">{ text }</a>
 }
 
 

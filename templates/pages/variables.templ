@@ -6,9 +6,8 @@ import "github.com/whalelogic/howtogo/templates/components"
 templ Variables() {
 	@layouts.Base("Variables | How to Go") {
 		<div class="example">
-			@components.Header()
-			<h1>Variables</h1>
-			<p>Variables let you name values. Go uses explicit <code>var</code> declarations or short-hand <code>:=</code> inside functions.</p>
+			@components.CustomHeader("Variables")
+			<p style="width: 80%;">Variables let you name values. Go uses explicit <code>var</code> declarations or short-hand <code>:=</code> inside functions.</p>
 			<pre>
 				<code class="language-go">
 					@templ.Raw(`package main

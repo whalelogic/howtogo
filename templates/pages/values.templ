@@ -3,14 +3,8 @@ package pages
 import "github.com/whalelogic/howtogo/templates/layouts"
 import "github.com/whalelogic/howtogo/templates/components"
 
-templ Values() {
-	@layouts.Base("Values | How to Go") {
-		<div class="example">
-            @components.CustomHeader("Values")
-			<p>Values in Go cover numbers, strings, booleans, and compound types. They are the building blocks you combine to model data.</p>
-			<pre>
-				<code class="language-go">
-					@templ.Raw(`package main
+
+var code string = `package main
 
 import "fmt"
 
@@ -21,7 +15,16 @@ func main() {
 	fmt.Println(true && false)
 	fmt.Println(true || false)
 	fmt.Println(!true)
-}`)
+}`
+
+templ Values() {
+	@layouts.Base("Values | How to Go") {
+		<div class="example">
+            @components.CustomHeader("Values")
+			<p style="width: 80%;"><b>Values</b> in Go cover numbers, strings, booleans, and compound types. They are the building blocks you combine to model data.</p>
+			<pre>
+				<code class="language-go">
+					@templ.Raw(code)
 				</code>
 			</pre>
             @components.CodeOutput("go run main.go\n")
@@ -32,6 +35,11 @@ func main() {
 				<li>Booleans support the usual logical operators.</li>
 				<li>Literals default to untyped until used in context.</li>
 			</ul>
+            <div style="margin-top: 20px; justify-content: space-between; display: flex; width: 80%;">
+              @components.Button("Previous:  Intro", "/intro")
+              @components.Button("Next: Constants", "/constants")
+            </div>
+
 		</div>
 	}
 }

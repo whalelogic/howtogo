@@ -2,12 +2,11 @@ package main
 
 import (
 	"log"
-	"net/http"
 
 	"github.com/a-h/templ"
 	"github.com/gin-gonic/gin"
 
-	"github.com/whalelogic/howtogo/templates/pages"
+	"github.com/whalelogic/howtogo/handlers"
 )
 
 func render(c *gin.Context, status int, component templ.Component) {
@@ -27,36 +26,13 @@ func main() {
 	r.Static("/css", "./static/css")
 	r.Static("/icons", "./static/icons")
 
-	r.GET("/health", func(c *gin.Context) {
-		c.String(http.StatusOK, "200 OK\n")
-	})
+	r.GET("/health", handlers.HealthCheckHandler) 
+	r.GET("/", handlers.HomePageHandler)
+	r.GET("/hello-world", handlers.HelloWorldHandler)
+	r.GET("/values", handlers.ValuesHandler)
+	r.GET("/variables", handlers.VariablesHandler)
+	r.GET("/constants", handlers.ConstantsHandler)
 
-	// test component
-
-	component := pages.HelloWorld()
-	r.GET("/test", func(c *gin.Context) {
-		render(c, http.StatusOK, component)
-	})
-
-	r.GET("/", func(c *gin.Context) {
-		render(c, http.StatusOK, pages.Index())
-	})
-
-	r.GET("/hello-world", func(c *gin.Context) {
-		render(c, http.StatusOK, pages.HelloWorld())
-	})
-
-	r.GET("/values", func(c *gin.Context) {
-		render(c, http.StatusOK, pages.Values())
-	})
-
-	r.GET("/variables", func(c *gin.Context) {
-		render(c, http.StatusOK, pages.Variables())
-	})
-
-	r.GET("/constants", func(c *gin.Context) {
-		render(c, http.StatusOK, pages.Constants())
-	})
 
 	if err := r.Run(":8080"); err != nil {
 		log.Fatalf("server failed: %v", err)
