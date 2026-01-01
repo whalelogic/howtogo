@@ -50,7 +50,7 @@ func HelloWorld() templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, " ")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, " <br>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -58,7 +58,7 @@ func HelloWorld() templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, " <h1>Hello, World!</h1><p>This is the traditional first program for learning a new programming language.</p><p>In Go, you can create a simple \"Hello, World!\" program like this:</p><div class=\"code-block\"><pre><code class=\"language-go\">")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, " <br><br><br><h1><img src=\"https://img.icons8.com/?size=100&id=768ZYN92f0tO&format=png&color=000000\" alt=\"Hello World Icon\" width=\"40\" height=\"40\" style=\"vertical-align: middle; margin-right: 0.5rem;\"> Hello, World!</h1><p>This is the traditional first program for learning a new programming language.</p><p>In Go, you can create a simple \"Hello, World!\" program like this:</p><div class=\"code-block\"><pre><code class=\"language-go\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

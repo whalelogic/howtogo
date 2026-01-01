@@ -58,7 +58,7 @@ func Constants() templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, " <p>Constants hold values that do not change. They are great for configuration, sizes, and enumerations. One common use for constants is declaring an <code style=\"color: red; font-weight: 500;\">API_KEY</code>. Declaring a constant Pi (3.14) </p><div class=\"code-block\"><pre><code class=\"language-go\">")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, " <p>Constants hold values that do not change. They are great for configuration, sizes, and enumerations. One common use for constants is declaring an <code style=\"color: red; font-weight: 500;\">API_KEY</code>. </p><div class=\"code-block\"><pre><code class=\"language-go\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

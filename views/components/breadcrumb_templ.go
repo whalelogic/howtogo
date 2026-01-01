@@ -52,7 +52,7 @@ func Breadcrumb(path string, current string) templ.Component {
 				return templ_7745c5c3_Err
 			}
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "</nav><div class=\"badges\"><span class=\"badge badge-go\">Go 1.25</span> <span class=\"badge badge-success\">Victory!</span> <span class=\"badge\">v1.0.2</span> <a href=\"https://github.com/whalelogic\" target=\"_blank\" rel=\"noopener noreferrer\" class=\"badge badge-github\"><img src=\"https://devicon-website.vercel.app/api/github/original.svg?color=%236AFF94\" alt=\"GitHub\" class=\"badge-icon\"> GitHub</a></div></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "</nav><div class=\"badges\"><a href=\"https://go.dev/doc/devel/release\" target=\"_blank\" rel=\"noopener\"><img src=\"https://img.shields.io/badge/Go-1.23+-00ADD8?style=flat-square&logo=go&logoColor=white\" alt=\"Go Version\"></a> <a href=\"https://github.com/whalelogic/howtogo/stargazers\" target=\"_blank\" rel=\"noopener\"><img src=\"https://img.shields.io/github/stars/whalelogic/howtogo?style=flat-square&logo=github&color=2ea3b2\" alt=\"GitHub stars\"></a> <a href=\"https://github.com/whalelogic/howtogo\" target=\"_blank\" rel=\"noopener\"><img src=\"https://img.shields.io/github/license/whalelogic/howtogo?style=flat-square&color=2ea3b2\" alt=\"License\"></a> <a href=\"https://github.com/whalelogic\" target=\"_blank\" rel=\"noopener\"><img src=\"https://img.shields.io/badge/GitHub-whalelogic-90EE90?style=flat-square&logo=github&logoColor=white\" alt=\"whalelogic on GitHub\"></a></div></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
