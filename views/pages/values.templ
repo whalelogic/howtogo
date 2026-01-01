@@ -1,7 +1,7 @@
 package pages
 
-import "github.com/whalelogic/howtogo/templates/layouts"
-import "github.com/whalelogic/howtogo/templates/components"
+import "github.com/whalelogic/howtogo/views/layouts"
+import "github.com/whalelogic/howtogo/views/components"
 
 
 var code string = `package main
@@ -30,9 +30,7 @@ templ Values() {
 			</pre>
 		</div>
 		<span class="output-label">Output:</span>
-		<div class="code-block output-block">
-			@components.CodeOutput("golang\n1+1 = 2\n7.0/3.0 = 2.3333333333333335\nfalse\ntrue\nfalse\n")
-		</div>
+		@components.CodeOutput("golang\n1+1 = 2\n7.0/3.0 = 2.3333333333333335\nfalse\ntrue\nfalse\n")
 		<h2>Value Types Reference</h2>
 		<table class="reference-table">
 			<thead>

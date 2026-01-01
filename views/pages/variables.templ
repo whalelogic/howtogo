@@ -1,13 +1,13 @@
 package pages
 
-import "github.com/whalelogic/howtogo/templates/layouts"
-import "github.com/whalelogic/howtogo/templates/components"
+import "github.com/whalelogic/howtogo/views/layouts"
+import "github.com/whalelogic/howtogo/views/components"
 
 templ Variables() {
 	@layouts.Base("Variables | How to Go") {
 		@components.Breadcrumb("variables", "Variables")
 		@components.CustomHeader("Variables")
-		<p>Variables let you name values. Go uses explicit <code>var</code> declarations or short-hand <code>:=</code> inside functions.</p>
+		<p>Variables let you name values. Go uses explicit <code>var</code> declarations or short-hand <code style="color: red;">:=</code> inside functions.</p>
 		<div class="code-block">
 			<pre>
 				<code class="language-go">
@@ -35,13 +35,11 @@ func main() {
 			</pre>
 		</div>
 		<span class="output-label">Output:</span>
-		<div class="code-block output-block">
-			@components.CodeOutput(`initial
+		@components.CodeOutput(`initial
 1 2
 true
 0
 short`)
-		</div>
 		<h2>Variable Declaration Syntax</h2>
 		<table class="reference-table">
 			<thead>

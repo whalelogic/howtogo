@@ -25,6 +25,9 @@ func main() {
 
 	r.Static("/css", "./static/css")
 	r.Static("/icons", "./static/icons")
+	r.StaticFile("/favicon.ico", "./favicon.ico")
+	r.StaticFile("/robots.txt", "./static/robots.txt")
+	r.StaticFile("/sitemap.xml", "./static/sitemap.xml")
 
 	r.GET("/health", handlers.HealthCheckHandler) 
 	r.GET("/", handlers.HomePageHandler)
@@ -32,6 +35,12 @@ func main() {
 	r.GET("/values", handlers.ValuesHandler)
 	r.GET("/variables", handlers.VariablesHandler)
 	r.GET("/constants", handlers.ConstantsHandler)
+	r.GET("/for", handlers.ForHandler)
+	r.GET("/ifelse", handlers.IfElseHandler)
+	r.GET("/arrays", handlers.ArraysHandler)
+	r.GET("/switch", handlers.SwitchHandler)
+	r.GET("/slices", handlers.SlicesHandler)
+	r.GET("/maps", handlers.MapsHandler)
 
 
 	if err := r.Run(":8080"); err != nil {

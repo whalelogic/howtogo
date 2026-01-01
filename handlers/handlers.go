@@ -6,7 +6,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"github.com/whalelogic/howtogo/templates/pages"
+	"github.com/whalelogic/howtogo/views/pages"
 	"github.com/a-h/templ"
 	"log"
 )
@@ -42,4 +42,27 @@ func ConstantsHandler(c *gin.Context) {
 	render(c, http.StatusOK, pages.Constants())
 }
 
+func ForHandler(c *gin.Context) {
+	render(c, http.StatusOK, pages.For())
+}
+
+func IfElseHandler(c *gin.Context) {
+	render(c, http.StatusOK, pages.IfElse())
+}
+
+func ArraysHandler(c *gin.Context) {
+	render(c, http.StatusOK, pages.Arrays())
+}
+
+func SwitchHandler(c *gin.Context) {
+	render(c, http.StatusOK, pages.Switch())
+}
+
+func SlicesHandler(c *gin.Context) {
+	render(c, http.StatusOK, pages.Slices())
+}
+
+func MapsHandler(c *gin.Context) {
+	render(c, http.StatusOK, pages.Maps())
+}
 

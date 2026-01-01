@@ -8,8 +8,8 @@ package pages
 import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
-import "github.com/whalelogic/howtogo/templates/layouts"
-import "github.com/whalelogic/howtogo/templates/components"
+import "github.com/whalelogic/howtogo/views/layouts"
+import "github.com/whalelogic/howtogo/views/components"
 
 var code string = `package main
 
@@ -77,7 +77,7 @@ func Values() templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "</code></pre></div><span class=\"output-label\">Output:</span><div class=\"code-block output-block\">")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "</code></pre></div><span class=\"output-label\">Output:</span>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -85,7 +85,7 @@ func Values() templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "</div><h2>Value Types Reference</h2><table class=\"reference-table\"><thead><tr><th>Type</th><th>Examples</th><th>Operations</th><th>Notes</th></tr></thead> <tbody><tr><td><code>string</code></td><td>\"hello\", \"go\" + \"lang\"</td><td>Concatenation with <code>+</code></td><td>Immutable UTF-8 encoded</td></tr><tr><td><code>int</code></td><td>1, 42, -10</td><td>+, -, *, /, %</td><td>Platform dependent size (32 or 64-bit)</td></tr><tr><td><code>float64</code></td><td>3.14, 7.0/3.0</td><td>+, -, *, /</td><td>IEEE-754 64-bit floating point</td></tr><tr><td><code>bool</code></td><td>true, false</td><td>&&, ||, !</td><td>Logical operations only</td></tr></tbody></table>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, " <h2>Value Types Reference</h2><table class=\"reference-table\"><thead><tr><th>Type</th><th>Examples</th><th>Operations</th><th>Notes</th></tr></thead> <tbody><tr><td><code>string</code></td><td>\"hello\", \"go\" + \"lang\"</td><td>Concatenation with <code>+</code></td><td>Immutable UTF-8 encoded</td></tr><tr><td><code>int</code></td><td>1, 42, -10</td><td>+, -, *, /, %</td><td>Platform dependent size (32 or 64-bit)</td></tr><tr><td><code>float64</code></td><td>3.14, 7.0/3.0</td><td>+, -, *, /</td><td>IEEE-754 64-bit floating point</td></tr><tr><td><code>bool</code></td><td>true, false</td><td>&&, ||, !</td><td>Logical operations only</td></tr></tbody></table>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

@@ -10,8 +10,8 @@ package pages
 import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
-import "github.com/whalelogic/howtogo/templates/layouts"
-import "github.com/whalelogic/howtogo/templates/components"
+import "github.com/whalelogic/howtogo/views/layouts"
+import "github.com/whalelogic/howtogo/views/components"
 
 func Constants() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
@@ -85,7 +85,7 @@ func main() {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "</code></pre></div><span class=\"output-label\">Output:</span><div class=\"code-block output-block\">")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "</code></pre></div><span class=\"output-label\">Output:</span>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -97,7 +97,7 @@ func main() {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "</div><h2>Constants Reference</h2><table class=\"reference-table\"><thead><tr><th>Constant</th><th>Type</th><th>Value</th><th>Description</th></tr></thead> <tbody><tr><td><code>s</code></td><td><code>string</code></td><td>\"constant\"</td><td>String constant with explicit type</td></tr><tr><td><code>pi</code></td><td><code>untyped float</code></td><td>3.14</td><td>Mathematical constant for π</td></tr><tr><td><code>n</code></td><td><code>untyped int</code></td><td>500000000</td><td>Large numeric constant</td></tr><tr><td><code>d</code></td><td><code>untyped float</code></td><td>3e20 / n</td><td>Computed constant expression</td></tr></tbody></table><h2>Key Points</h2><ul><li>Constants are declared with <code>const</code> and cannot be changed.</li><li>Numeric constants are high-precision until given a type.</li><li>You can use constants in expressions; the compiler folds them.</li></ul><div class=\"nav-buttons\">")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, " <h2>Constants Reference</h2><table class=\"reference-table\"><thead><tr><th>Constant</th><th>Type</th><th>Value</th><th>Description</th></tr></thead> <tbody><tr><td><code>s</code></td><td><code>string</code></td><td>\"constant\"</td><td>String constant with explicit type</td></tr><tr><td><code>pi</code></td><td><code>untyped float</code></td><td>3.14</td><td>Mathematical constant for π</td></tr><tr><td><code>n</code></td><td><code>untyped int</code></td><td>500000000</td><td>Large numeric constant</td></tr><tr><td><code>d</code></td><td><code>untyped float</code></td><td>3e20 / n</td><td>Computed constant expression</td></tr></tbody></table><h2>Key Points</h2><ul><li>Constants are declared with <code>const</code> and cannot be changed.</li><li>Numeric constants are high-precision until given a type.</li><li>You can use constants in expressions; the compiler folds them.</li></ul><div class=\"nav-buttons\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -105,7 +105,7 @@ func main() {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = components.Button("Next: Functions", "/functions").Render(ctx, templ_7745c5c3_Buffer)
+			templ_7745c5c3_Err = components.Button("Next: For", "/for").Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

@@ -1,0 +1,375 @@
+package pages
+
+import "github.com/whalelogic/howtogo/views/layouts"
+import "github.com/whalelogic/howtogo/views/components"
+
+
+templ Maps() {
+	@layouts.Base("Maps | How to Go") {
+		@components.Breadcrumb("maps", "Maps")
+		@components.CustomHeader("Maps")
+		<p>Maps are Go's built-in associative data type, also known as hash tables or dictionaries in other languages. Maps store key-value pairs.</p>
+		
+		<h2>Creating and Using Maps</h2>
+		<p>Maps must be initialized before use with <code>{ "make" }</code> or a map literal:</p>
+		<div class="code-block">
+			<pre>
+				<code class="language-go">
+					@templ.Raw(`package main
+
+import "fmt"
+
+func main() {
+    // Create a map with make
+    m := make(map[string]int)
+
+    // Set key-value pairs
+    m["k1"] = 7
+    m["k2"] = 13
+
+    fmt.Println("map:", m)
+
+    // Get a value
+    v1 := m["k1"]
+    fmt.Println("v1:", v1)
+
+    // len returns number of key-value pairs
+    fmt.Println("len:", len(m))
+
+    // Delete a key-value pair
+    delete(m, "k2")
+    fmt.Println("map:", m)
+}`)
+				</code>
+			</pre>
+		</div>
+		<span class="output-label">Output:</span>
+		@components.CodeOutput(`map: map[k1:7 k2:13]
+v1: 7
+len: 2
+map: map[k1:7]`)
+
+		<h2>Checking Key Existence</h2>
+		<p>The optional second return value indicates if the key was present:</p>
+		<div class="code-block">
+			<pre>
+				<code class="language-go">
+					@templ.Raw(`package main
+
+import "fmt"
+
+func main() {
+    m := map[string]int{"foo": 1, "bar": 2}
+    
+    // Check if key exists
+    v, exists := m["foo"]
+    fmt.Println("foo exists:", exists, "value:", v)
+    
+    v, exists = m["baz"]
+    fmt.Println("baz exists:", exists, "value:", v)
+    
+    // Common idiom
+    if val, ok := m["foo"]; ok {
+        fmt.Println("Found:", val)
+    }
+}`)
+				</code>
+			</pre>
+		</div>
+		<span class="output-label">Output:</span>
+		@components.CodeOutput(`foo exists: true value: 1
+baz exists: false value: 0
+Found: 1`)
+
+		<h2>Map Literals</h2>
+		<p>You can declare and initialize a map in one line:</p>
+		<div class="code-block">
+			<pre>
+				<code class="language-go">
+					@templ.Raw(`package main
+
+import "fmt"
+
+func main() {
+    // Initialize with values
+    n := map[string]int{
+        "foo": 1,
+        "bar": 2,
+    }
+    fmt.Println("map:", n)
+    
+    // Empty map literal
+    empty := map[string]int{}
+    fmt.Println("empty:", empty)
+}`)
+				</code>
+			</pre>
+		</div>
+		<span class="output-label">Output:</span>
+		@components.CodeOutput(`map: map[bar:2 foo:1]
+empty: map[]`)
+
+		<h2>Iterating Over Maps</h2>
+		<p>Use <code>{ "range" }</code> to iterate over key-value pairs:</p>
+		<div class="code-block">
+			<pre>
+				<code class="language-go">
+					@templ.Raw(`package main
+
+import "fmt"
+
+func main() {
+    m := map[string]string{
+        "a": "alpha",
+        "b": "beta",
+    }
+    
+    // Iterate over key-value pairs
+    for k, v := range m {
+        fmt.Printf("%s -> %s\n", k, v)
+    }
+    
+    // Iterate over keys only
+    for k := range m {
+        fmt.Println("key:", k)
+    }
+}`)
+				</code>
+			</pre>
+		</div>
+		<span class="output-label">Output:</span>
+		@components.CodeOutput(`a -> alpha
+b -> beta
+key: a
+key: b`)
+
+		<h2>Map Declaration Patterns</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Pattern</th>
+					<th>Example</th>
+					<th>Description</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td><code>{ "make(map[K]V)" }</code></td>
+					<td><code>{ "make(map[string]int)" }</code></td>
+					<td>Create empty map</td>
+				</tr>
+				<tr>
+					<td><code>{ "make(map[K]V, size)" }</code></td>
+					<td><code>{ "make(map[string]int, 10)" }</code></td>
+					<td>Create map with initial capacity hint</td>
+				</tr>
+				<tr>
+					<td><code>{ "map[K]V{}" }</code></td>
+					<td><code>{ "map[string]int{}" }</code></td>
+					<td>Empty map literal</td>
+				</tr>
+				<tr>
+					<td><code>{ "map[K]V{k:v, ...}" }</code></td>
+					<td><code>{ "map[string]int{\"a\":1, \"b\":2}" }</code></td>
+					<td>Map literal with initial values</td>
+				</tr>
+				<tr>
+					<td><code>{ "var m map[K]V" }</code></td>
+					<td><code>{ "var m map[string]int" }</code></td>
+					<td>Declare nil map (must init before use)</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<h2>Map Operations</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Operation</th>
+					<th>Syntax</th>
+					<th>Example</th>
+					<th>Description</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Set value</td>
+					<td><code>{ "m[key] = value" }</code></td>
+					<td><code>{ "m[\"x\"] = 10" }</code></td>
+					<td>Add or update key-value pair</td>
+				</tr>
+				<tr>
+					<td>Get value</td>
+					<td><code>{ "v := m[key]" }</code></td>
+					<td><code>{ "v := m[\"x\"]" }</code></td>
+					<td>Retrieve value (zero value if not exists)</td>
+				</tr>
+				<tr>
+					<td>Check existence</td>
+					<td><code>{ "v, ok := m[key]" }</code></td>
+					<td><code>{ "v, ok := m[\"x\"]" }</code></td>
+					<td>Get value and existence check</td>
+				</tr>
+				<tr>
+					<td>Delete</td>
+					<td><code>{ "delete(m, key)" }</code></td>
+					<td><code>{ "delete(m, \"x\")" }</code></td>
+					<td>Remove key-value pair</td>
+				</tr>
+				<tr>
+					<td>Length</td>
+					<td><code>len(m)</code></td>
+					<td><code>len(m)</code></td>
+					<td>Number of key-value pairs</td>
+				</tr>
+				<tr>
+					<td>Iterate</td>
+					<td><code>{ "for k, v := range m" }</code></td>
+					<td><code>{ "for k, v := range m" }</code></td>
+					<td>Loop through all pairs</td>
+				</tr>
+				<tr>
+					<td>Clear (Go 1.21+)</td>
+					<td><code>clear(m)</code></td>
+					<td><code>clear(m)</code></td>
+					<td>Remove all key-value pairs</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<h2>Map Key Types</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Category</th>
+					<th>Types</th>
+					<th>Notes</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Comparable types</td>
+					<td>bool, int, float, string, pointer, channel, interface, array</td>
+					<td>Can be used as map keys</td>
+				</tr>
+				<tr>
+					<td>Non-comparable</td>
+					<td>slice, map, function</td>
+					<td>Cannot be used as map keys</td>
+				</tr>
+				<tr>
+					<td>Struct keys</td>
+					<td>Structs with comparable fields</td>
+					<td>Must have all comparable fields</td>
+				</tr>
+				<tr>
+					<td>Array keys</td>
+					<td>Arrays with comparable elements</td>
+					<td>Size is part of type</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<h2>Map Characteristics</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Feature</th>
+					<th>Behavior</th>
+					<th>Notes</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Order</td>
+					<td>Unordered</td>
+					<td>Iteration order is random</td>
+				</tr>
+				<tr>
+					<td>Reference type</td>
+					<td>Passed by reference</td>
+					<td>Modifications visible to caller</td>
+				</tr>
+				<tr>
+					<td>Zero value</td>
+					<td>nil</td>
+					<td>Nil maps cannot be written to</td>
+				</tr>
+				<tr>
+					<td>Thread safety</td>
+					<td>Not safe</td>
+					<td>Use sync.Map or mutex for concurrency</td>
+				</tr>
+				<tr>
+					<td>Missing keys</td>
+					<td>Return zero value</td>
+					<td>Use comma-ok idiom to check</td>
+				</tr>
+				<tr>
+					<td>Deletion</td>
+					<td>Safe during iteration</td>
+					<td>Can delete while ranging</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<h2>Common Patterns</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Pattern</th>
+					<th>Code</th>
+					<th>Use Case</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Set data structure</td>
+					<td><code>{ "map[T]bool" }</code> or <code>{ "map[T]struct{}" }</code></td>
+					<td>Check membership efficiently</td>
+				</tr>
+				<tr>
+					<td>Count occurrences</td>
+					<td><code>{ "counts[item]++; // works even if key doesn't exist" }</code></td>
+					<td>Frequency counting</td>
+				</tr>
+				<tr>
+					<td>Group by key</td>
+					<td><code>{ "map[K][]V" }</code></td>
+					<td>Group values by category</td>
+				</tr>
+				<tr>
+					<td>Check and set</td>
+					<td><code>{ "if _, ok := m[k]; !ok { m[k] = v }" }</code></td>
+					<td>Set only if key doesn't exist</td>
+				</tr>
+				<tr>
+					<td>Default value</td>
+					<td><code>{ "if v, ok := m[k]; ok { return v } else { return defaultVal }" }</code></td>
+					<td>Get with fallback</td>
+				</tr>
+				<tr>
+					<td>Nested maps</td>
+					<td><code>{ "map[K1]map[K2]V" }</code></td>
+					<td>Multi-level lookup</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<h2>Key Points</h2>
+		<ul>
+			<li>Maps must be initialized with <code>{ "make" }</code> or a literal before use</li>
+			<li>Accessing a non-existent key returns the zero value of the value type</li>
+			<li>Use the comma-ok idiom to distinguish between zero values and missing keys</li>
+			<li>Map iteration order is randomized for security reasons</li>
+			<li>Maps are reference types - passing a map doesn't copy its contents</li>
+			<li>Maps are not safe for concurrent use without synchronization</li>
+			<li>Key types must be comparable - slices, maps, and functions cannot be keys</li>
+		</ul>
+
+		<div class="nav-buttons">
+			@components.Button("Previous: Slices", "/slices")
+			@components.Button("Next: Range", "/range")
+		</div>
+	}
+}

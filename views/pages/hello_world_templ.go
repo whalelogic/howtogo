@@ -9,8 +9,8 @@ import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
 import (
-	"github.com/whalelogic/howtogo/templates/components"
-	"github.com/whalelogic/howtogo/templates/layouts"
+	"github.com/whalelogic/howtogo/views/components"
+	"github.com/whalelogic/howtogo/views/layouts"
 )
 
 func HelloWorld() templ.Component {
@@ -80,7 +80,7 @@ func main() {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "</code></pre></div><span class=\"output-label\">Output:</span><div class=\"code-block output-block\">")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "</code></pre></div><span class=\"output-label\">Output:</span>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -88,7 +88,7 @@ func main() {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "</div><h2>Program Structure</h2><table class=\"reference-table\"><thead><tr><th>Component</th><th>Purpose</th><th>Required</th></tr></thead> <tbody><tr><td><code>package main</code></td><td>Declares this is an executable program</td><td>Yes (for executables)</td></tr><tr><td><code>import \"fmt\"</code></td><td>Imports the fmt package for formatted I/O</td><td>Only if using fmt functions</td></tr><tr><td><code>func main()</code></td><td>Entry point of the program</td><td>Yes (for executables)</td></tr><tr><td><code>fmt.Println()</code></td><td>Prints text followed by a newline</td><td>No</td></tr></tbody></table><h2>Common Go Commands</h2><table class=\"reference-table\"><thead><tr><th>Command</th><th>Description</th></tr></thead> <tbody><tr><td><code>go run hello.go</code></td><td>Compile and run the program directly</td></tr><tr><td><code>go build hello.go</code></td><td>Compile to an executable binary</td></tr><tr><td><code>go fmt hello.go</code></td><td>Format the code according to Go standards</td></tr><tr><td><code>go mod init myapp</code></td><td>Initialize a new Go module</td></tr></tbody></table><div class=\"nav-buttons\">")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, " <h2>Program Structure</h2><table class=\"reference-table\"><thead><tr><th>Component</th><th>Purpose</th><th>Required</th></tr></thead> <tbody><tr><td><code>package main</code></td><td>Declares this is an executable program</td><td>Yes (for executables)</td></tr><tr><td><code>import \"fmt\"</code></td><td>Imports the fmt package for formatted I/O</td><td>Only if using fmt functions</td></tr><tr><td><code>func main()</code></td><td>Entry point of the program</td><td>Yes (for executables)</td></tr><tr><td><code>fmt.Println()</code></td><td>Prints text followed by a newline</td><td>No</td></tr></tbody></table><h2>Common Go Commands</h2><table class=\"reference-table\"><thead><tr><th>Command</th><th>Description</th></tr></thead> <tbody><tr><td><code>go run hello.go</code></td><td>Compile and run the program directly</td></tr><tr><td><code>go build hello.go</code></td><td>Compile to an executable binary</td></tr><tr><td><code>go fmt hello.go</code></td><td>Format the code according to Go standards</td></tr><tr><td><code>go mod init myapp</code></td><td>Initialize a new Go module</td></tr></tbody></table><div class=\"nav-buttons\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

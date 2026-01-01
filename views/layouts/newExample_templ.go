@@ -9,7 +9,7 @@ import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
 import (
-	"github.com/whalelogic/howtogo/templates/components"
+	"github.com/whalelogic/howtogo/views/components"
 )
 
 func NewExample(title string) templ.Component {

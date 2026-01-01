@@ -1,8 +1,8 @@
 // Package pages defines the page templates.
 package pages
 
-import "github.com/whalelogic/howtogo/templates/layouts"
-import "github.com/whalelogic/howtogo/templates/components"
+import "github.com/whalelogic/howtogo/views/layouts"
+import "github.com/whalelogic/howtogo/views/components"
 
 templ Constants() {
 	@layouts.Base("Constants | How to Go") {
@@ -36,13 +36,11 @@ func main() {
 			</pre>
 		</div>
 		<span class="output-label">Output:</span>
-		<div class="code-block output-block">
-			@components.CodeOutput(`constant
+		@components.CodeOutput(`constant
 1.772004514666935
 60000000000
 -0.28470407323754404
 `)
-		</div>
 		<h2>Constants Reference</h2>
 		<table class="reference-table">
 			<thead>
@@ -88,7 +86,7 @@ func main() {
 		</ul>
 		<div class="nav-buttons">
 			@components.Button("Previous: Variables", "/variables")
-			@components.Button("Next: Functions", "/functions")
+			@components.Button("Next: For", "/for")
 		</div>
 	}
 }

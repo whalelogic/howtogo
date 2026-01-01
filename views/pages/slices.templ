@@ -1,0 +1,320 @@
+package pages
+
+import "github.com/whalelogic/howtogo/views/layouts"
+import "github.com/whalelogic/howtogo/views/components"
+
+
+templ Slices() {
+	@layouts.Base("Slices | How to Go") {
+		@components.Breadcrumb("slices", "Slices")
+		@components.CustomHeader("Slices")
+		<p>Slices are a key data type in Go, providing a more powerful interface to sequences than arrays. Unlike arrays, slices are dynamically-sized and flexible.</p>
+		
+		<h2>Creating Slices</h2>
+		<p>Slices can be created in multiple ways:</p>
+		<div class="code-block">
+			<pre>
+				<code class="language-go">
+					@templ.Raw(`package main
+
+import "fmt"
+
+func main() {
+    // Create a slice with make
+    s := make([]string, 3)
+    fmt.Println("empty:", s)
+
+    // Set and get values
+    s[0] = "a"
+    s[1] = "b"
+    s[2] = "c"
+    fmt.Println("set:", s)
+    fmt.Println("get:", s[2])
+
+    // Length of slice
+    fmt.Println("len:", len(s))
+
+    // Append to slice
+    s = append(s, "d")
+    s = append(s, "e", "f")
+    fmt.Println("appended:", s)
+
+    // Copy slice
+    c := make([]string, len(s))
+    copy(c, s)
+    fmt.Println("copied:", c)
+}`)
+				</code>
+			</pre>
+		</div>
+		<span class="output-label">Output:</span>
+		@components.CodeOutput(`empty: [  ]
+set: [a b c]
+get: c
+len: 3
+appended: [a b c d e f]
+copied: [a b c d e f]`)
+
+		<h2>Slice Operator</h2>
+		<p>Slices support a "slice" operator with the syntax <code>slice[low:high]</code>:</p>
+		<div class="code-block">
+			<pre>
+				<code class="language-go">
+					@templ.Raw(`package main
+
+import "fmt"
+
+func main() {
+    s := []string{"a", "b", "c", "d", "e", "f"}
+    
+    // Get elements from index 2 to 5
+    fmt.Println("sl1:", s[2:5])
+    
+    // Get elements up to index 5
+    fmt.Println("sl2:", s[:5])
+    
+    // Get elements from index 2 onwards
+    fmt.Println("sl3:", s[2:])
+}`)
+				</code>
+			</pre>
+		</div>
+		<span class="output-label">Output:</span>
+		@components.CodeOutput(`sl1: [c d e]
+sl2: [a b c d e]
+sl3: [c d e f]`)
+
+		<h2>Slice Literals</h2>
+		<p>You can declare and initialize a slice in one line:</p>
+		<div class="code-block">
+			<pre>
+				<code class="language-go">
+					@templ.Raw(`package main
+
+import "fmt"
+
+func main() {
+    // Slice literal
+    t := []string{"g", "h", "i"}
+    fmt.Println("slice literal:", t)
+    
+    // Multi-dimensional slice
+    twoD := make([][]int, 3)
+    for i := 0; i < 3; i++ {
+        innerLen := i + 1
+        twoD[i] = make([]int, innerLen)
+        for j := 0; j < innerLen; j++ {
+            twoD[i][j] = i + j
+        }
+    }
+    fmt.Println("2d: ", twoD)
+}`)
+				</code>
+			</pre>
+		</div>
+		<span class="output-label">Output:</span>
+		@components.CodeOutput(`slice literal: [g h i]
+2d:  [[0] [1 2] [2 3 4]]`)
+
+		<h2>Slice Declaration Patterns</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Pattern</th>
+					<th>Example</th>
+					<th>Description</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td><code>{ "make([]T, length)" }</code></td>
+					<td><code>{ "make([]int, 5)" }</code></td>
+					<td>Create slice with length, zero values</td>
+				</tr>
+				<tr>
+					<td><code>{ "make([]T, length, capacity)" }</code></td>
+					<td><code>{ "make([]int, 5, 10)" }</code></td>
+					<td>Create slice with length and capacity</td>
+				</tr>
+				<tr>
+					<td><code>{ "[]T{values}" }</code></td>
+					<td><code>{ "[]int{1, 2, 3}" }</code></td>
+					<td>Slice literal with values</td>
+				</tr>
+				<tr>
+					<td><code>{ "var s []T" }</code></td>
+					<td><code>{ "var s []int" }</code></td>
+					<td>Declare nil slice</td>
+				</tr>
+				<tr>
+					<td><code>{ "array[:]" }</code></td>
+					<td><code>{ "arr[:]" }</code></td>
+					<td>Create slice from entire array</td>
+				</tr>
+				<tr>
+					<td><code>{ "slice[low:high]" }</code></td>
+					<td><code>{ "s[1:3]" }</code></td>
+					<td>Create slice from slice (subslice)</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<h2>Slice Operations</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Operation</th>
+					<th>Syntax</th>
+					<th>Example</th>
+					<th>Description</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Length</td>
+					<td><code>len(s)</code></td>
+					<td><code>len(s)</code></td>
+					<td>Returns number of elements</td>
+				</tr>
+				<tr>
+					<td>Capacity</td>
+					<td><code>cap(s)</code></td>
+					<td><code>cap(s)</code></td>
+					<td>Returns capacity of underlying array</td>
+				</tr>
+				<tr>
+					<td>Append</td>
+					<td><code>{ "append(s, elements...)" }</code></td>
+					<td><code>{ "append(s, 1, 2, 3)" }</code></td>
+					<td>Add elements to end of slice</td>
+				</tr>
+				<tr>
+					<td>Copy</td>
+					<td><code>copy(dst, src)</code></td>
+					<td><code>copy(dst, src)</code></td>
+					<td>Copy elements from src to dst</td>
+				</tr>
+				<tr>
+					<td>Slice</td>
+					<td><code>{ "s[low:high]" }</code></td>
+					<td><code>{ "s[1:3]" }</code></td>
+					<td>Create subslice from index low to high-1</td>
+				</tr>
+				<tr>
+					<td>Iterate</td>
+					<td><code>{ "for i, v := range s" }</code></td>
+					<td><code>{ "for i, v := range s" }</code></td>
+					<td>Loop through index and value</td>
+				</tr>
+				<tr>
+					<td>Access</td>
+					<td><code>s[index]</code></td>
+					<td><code>s[0]</code></td>
+					<td>Get or set element at index</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<h2>Slice Internals</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Concept</th>
+					<th>Description</th>
+					<th>Notes</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Length</td>
+					<td>Number of elements in the slice</td>
+					<td>Can be less than or equal to capacity</td>
+				</tr>
+				<tr>
+					<td>Capacity</td>
+					<td>Size of underlying array from first element</td>
+					<td>Maximum size before reallocation</td>
+				</tr>
+				<tr>
+					<td>Pointer</td>
+					<td>Reference to first element of slice</td>
+					<td>Slices are reference types</td>
+				</tr>
+				<tr>
+					<td>Nil slice</td>
+					<td>Zero value of a slice</td>
+					<td><code>len=0, cap=0, pointer=nil</code></td>
+				</tr>
+				<tr>
+					<td>Empty slice</td>
+					<td>Slice with length 0 but allocated</td>
+					<td><code>{ "make([]T, 0)" }</code> or <code>{ "[]T{}" }</code></td>
+				</tr>
+				<tr>
+					<td>Growth</td>
+					<td>Capacity doubles when append exceeds capacity</td>
+					<td>Automatic reallocation and copy</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<h2>Common Patterns</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Pattern</th>
+					<th>Code</th>
+					<th>Use Case</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Pre-allocate</td>
+					<td><code>{ "s := make([]T, 0, capacity)" }</code></td>
+					<td>When you know approximate size</td>
+				</tr>
+				<tr>
+					<td>Append slice</td>
+					<td><code>{ "s = append(s, other...)" }</code></td>
+					<td>Concatenate two slices</td>
+				</tr>
+				<tr>
+					<td>Remove element</td>
+					<td><code>{ "s = append(s[:i], s[i+1:]...)" }</code></td>
+					<td>Remove element at index i</td>
+				</tr>
+				<tr>
+					<td>Insert element</td>
+					<td><code>{ "s = append(s[:i], append([]T{x}, s[i:]...)...)" }</code></td>
+					<td>Insert x at index i</td>
+				</tr>
+				<tr>
+					<td>Clear slice</td>
+					<td><code>{ "s = s[:0]" }</code></td>
+					<td>Keep capacity, reset length</td>
+				</tr>
+				<tr>
+					<td>Filter in place</td>
+					<td><code>{ "s = s[:0]; for _, x := range original { if keep(x) { s = append(s, x) } }" }</code></td>
+					<td>Efficient filtering</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<h2>Key Points</h2>
+		<ul>
+			<li>Slices are reference types that point to an underlying array</li>
+			<li>Modifying a slice modifies the underlying array</li>
+			<li>Multiple slices can share the same underlying array</li>
+			<li><code>{ "append" }</code> may allocate a new array if capacity is exceeded</li>
+			<li>Use <code>{ "make" }</code> with capacity when size is known for better performance</li>
+			<li>Nil slices can be appended to and work with most operations</li>
+			<li>Slicing doesn't copy data, it creates a new slice header</li>
+		</ul>
+
+		<div class="nav-buttons">
+			@components.Button("Previous: Arrays", "/arrays")
+			@components.Button("Next: Maps", "/maps")
+		</div>
+	}
+}

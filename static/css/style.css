@@ -113,7 +113,7 @@ a:hover { color: var(--color-primary-dark); text-decoration: underline; }
 }
 
 .badge-github {
-  background-color: #353535;
+  background-color: #24292e;
   color: white;
   border-color: #24292e;
   text-decoration: none;
@@ -156,15 +156,15 @@ main {
 
 /* --- Typography --- */
 h1, h2, h3, h4 {
-  font-family: var(--font-sans); /* Switched from Georgia for a cleaner tech look */
+  font-family: var(--font-sans);
   font-weight: 700;
-  color: var(--color-text-main);
+  color: var(--color-primary);
   margin-top: 0;
   line-height: 1.25;
 }
 
 h1 { font-size: 2.5rem; margin-bottom: var(--spacing-md); letter-spacing: -0.02em; }
-h2 { font-size: 1.75rem; margin-top: var(--spacing-lg); margin-bottom: var(--spacing-sm); color: var(--color-primary); }
+h2 { font-size: 1.75rem; margin-top: var(--spacing-lg); margin-bottom: var(--spacing-sm); }
 h3 { font-size: 1.25rem; margin-top: var(--spacing-md); font-weight: 600; }
 
 /* --- Section Headers --- */
@@ -187,7 +187,7 @@ h3 { font-size: 1.25rem; margin-top: var(--spacing-md); font-weight: 600; }
 .section-header-title {
   font-size: 2rem;
   font-weight: 700;
-  color: var(--color-text-main);
+  color: var(--color-primary);
   margin: 0;
   letter-spacing: -0.01em;
 }
@@ -198,21 +198,27 @@ ul { padding-left: 1.5rem; margin-bottom: var(--spacing-md); }
 li { margin-bottom: 0.25rem; }
 
 /* --- Code Blocks --- */
-/* Wrapper to handle the black box look consistently */
+/* Wrapper to handle the code block look consistently */
 .code-block {
-  background: var(--color-bg-code);
-  color: #f8f8f2;
+  background: #f5f5f5;
   border-radius: var(--radius-md);
   margin: var(--spacing-md) 0 var(--spacing-lg) 0;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
   overflow: hidden; /* For rounded corners */
+  border: 1px solid var(--color-border);
+}
+
+.code-block pre {
+  border: none;
+  background: transparent;
 }
 
 /* The actual pre tag */
 pre {
   font-family: var(--font-mono);
   font-size: 0.9rem;
-  line-height: 1.5;
+  line-height: 1.4;
+  font-weight: 400;
   padding: var(--spacing-md);
   margin: 0;
   overflow-x: auto; /* Horizontal scrollbar only when needed */
@@ -221,7 +227,9 @@ pre {
 
 /* Output block specific styling */
 .output-block {
-  background: #0d1117 !important;
+  background: #f5f5f5;
+  color: var(--color-text-main);
+  border: 1px solid var(--color-border);
 }
 
 .output-label {

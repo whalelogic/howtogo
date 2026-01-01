@@ -1,8 +1,8 @@
 package pages
 
 import (
-	"github.com/whalelogic/howtogo/templates/components"
-	"github.com/whalelogic/howtogo/templates/layouts"
+	"github.com/whalelogic/howtogo/views/components"
+	"github.com/whalelogic/howtogo/views/layouts"
 )
 
 templ HelloWorld() {
@@ -34,9 +34,7 @@ func main() {
 			</pre>
 		</div>
 		<span class="output-label">Output:</span>
-		<div class="code-block output-block">
-			@components.CodeOutput(`Hello, World!`)
-		</div>
+		@components.CodeOutput(`Hello, World!`)
 		<h2>Program Structure</h2>
 		<table class="reference-table">
 			<thead>
