@@ -3,13 +3,11 @@ package pages
 import "github.com/whalelogic/howtogo/views/layouts"
 import "github.com/whalelogic/howtogo/views/components"
 
-
 templ IfElse() {
 	@layouts.Base("If/Else | How to Go") {
 		@components.Breadcrumb("if-else", "If/Else")
-		@components.CustomHeader("If/Else")
+		@components.CustomHeader("If/Else", "Switch")
 		<p>Branching with <code>if</code> and <code>else</code> in Go is straightforward. Go doesn't require parentheses around conditions, but braces are always required.</p>
-		
 		<h2>Basic If Statement</h2>
 		<div class="code-block">
 			<pre>
@@ -30,7 +28,6 @@ func main() {
 		</div>
 		<span class="output-label">Output:</span>
 		@components.CodeOutput(`7 is odd`)
-
 		<h2>If Without Else</h2>
 		<div class="code-block">
 			<pre>
@@ -49,7 +46,6 @@ func main() {
 		</div>
 		<span class="output-label">Output:</span>
 		@components.CodeOutput(`8 is divisible by 4`)
-
 		<h2>If with Statement</h2>
 		<p>You can declare variables scoped to the if statement:</p>
 		<div class="code-block">
@@ -73,7 +69,6 @@ func main() {
 		</div>
 		<span class="output-label">Output:</span>
 		@components.CodeOutput(`9 has 1 digit`)
-
 		<h2>If/Else Reference</h2>
 		<table class="reference-table">
 			<thead>
@@ -106,7 +101,6 @@ func main() {
 				</tr>
 			</tbody>
 		</table>
-
 		<h2>Key Points</h2>
 		<ul>
 			<li>Parentheses around conditions are not used in Go</li>
@@ -114,11 +108,9 @@ func main() {
 			<li>Variables declared in if statements are scoped to that block</li>
 			<li>Go has no ternary operator - use if/else instead</li>
 		</ul>
-
 		<div class="nav-buttons">
 			@components.Button("Previous: Constants", "/constants")
 			@components.Button("Next: Switch", "/switch")
 		</div>
 	}
 }
-

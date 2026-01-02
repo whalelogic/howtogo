@@ -1,9 +1,27 @@
 package components
 
+import "strings"
 
-templ CustomHeader(s string) {
+// Original simpler version
+// templ CustomHeader(s string) {
+// 	<div class="section-header">
+// 		<span class="section-header-icon">›</span>
+// 		<h1 class="section-header-title">{ s }</h1>
+// 	</div>
+// }
+templ CustomHeader(current string, next string) {
 	<div class="section-header">
-		<span class="section-header-icon">›</span>
-		<h1 class="section-header-title">{ s }</h1>
+		<div class="header-side">
+			<span class="section-header-icon">›</span>
+			<h1 class="section-header-title">{ current }</h1>
+		</div>
+		if next != "" {
+			<div class="header-side">
+				<a href={ templ.URL("/" + strings.ToLower(strings.ReplaceAll(strings.ReplaceAll(next, " ", "-"), "/", ""))) }>
+					<h1 class="section-header-title">Next: { next }</h1>
+					<span class="section-header-icon">›</span>
+				</a>
+			</div>
+		}
 	</div>
 }

@@ -52,7 +52,7 @@ func Switch() templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = components.CustomHeader("Switch").Render(ctx, templ_7745c5c3_Buffer)
+			templ_7745c5c3_Err = components.CustomHeader("Switch", "Arrays").Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -195,7 +195,7 @@ Don't know type string`).Render(ctx, templ_7745c5c3_Buffer)
 			var templ_7745c5c3_Var3 string
 			templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs("switch val { case x: }")
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/switch.templ`, Line: 140, Col: 41}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/switch.templ`, Line: 134, Col: 41}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 			if templ_7745c5c3_Err != nil {
@@ -208,7 +208,7 @@ Don't know type string`).Render(ctx, templ_7745c5c3_Buffer)
 			var templ_7745c5c3_Var4 string
 			templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs("switch i { case 1: }")
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/switch.templ`, Line: 141, Col: 39}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/switch.templ`, Line: 135, Col: 39}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
 			if templ_7745c5c3_Err != nil {
@@ -221,7 +221,7 @@ Don't know type string`).Render(ctx, templ_7745c5c3_Buffer)
 			var templ_7745c5c3_Var5 string
 			templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs("case x, y:")
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/switch.templ`, Line: 145, Col: 29}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/switch.templ`, Line: 139, Col: 29}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
 			if templ_7745c5c3_Err != nil {
@@ -234,7 +234,7 @@ Don't know type string`).Render(ctx, templ_7745c5c3_Buffer)
 			var templ_7745c5c3_Var6 string
 			templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs("case 1, 2, 3:")
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/switch.templ`, Line: 146, Col: 32}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/switch.templ`, Line: 140, Col: 32}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
 			if templ_7745c5c3_Err != nil {
@@ -247,7 +247,7 @@ Don't know type string`).Render(ctx, templ_7745c5c3_Buffer)
 			var templ_7745c5c3_Var7 string
 			templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.JoinStringErrs("switch { case cond: }")
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/switch.templ`, Line: 150, Col: 40}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/switch.templ`, Line: 144, Col: 40}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var7))
 			if templ_7745c5c3_Err != nil {
@@ -260,7 +260,7 @@ Don't know type string`).Render(ctx, templ_7745c5c3_Buffer)
 			var templ_7745c5c3_Var8 string
 			templ_7745c5c3_Var8, templ_7745c5c3_Err = templ.JoinStringErrs("switch { case x > 5: }")
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/switch.templ`, Line: 151, Col: 41}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/switch.templ`, Line: 145, Col: 41}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var8))
 			if templ_7745c5c3_Err != nil {
@@ -273,7 +273,7 @@ Don't know type string`).Render(ctx, templ_7745c5c3_Buffer)
 			var templ_7745c5c3_Var9 string
 			templ_7745c5c3_Var9, templ_7745c5c3_Err = templ.JoinStringErrs("switch v := x.(type)")
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/switch.templ`, Line: 155, Col: 39}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/switch.templ`, Line: 149, Col: 39}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var9))
 			if templ_7745c5c3_Err != nil {
@@ -286,7 +286,7 @@ Don't know type string`).Render(ctx, templ_7745c5c3_Buffer)
 			var templ_7745c5c3_Var10 string
 			templ_7745c5c3_Var10, templ_7745c5c3_Err = templ.JoinStringErrs("switch t := i.(type)")
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/switch.templ`, Line: 156, Col: 39}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/switch.templ`, Line: 150, Col: 39}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var10))
 			if templ_7745c5c3_Err != nil {
@@ -299,7 +299,7 @@ Don't know type string`).Render(ctx, templ_7745c5c3_Buffer)
 			var templ_7745c5c3_Var11 string
 			templ_7745c5c3_Var11, templ_7745c5c3_Err = templ.JoinStringErrs("default:")
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/switch.templ`, Line: 160, Col: 27}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/switch.templ`, Line: 154, Col: 27}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var11))
 			if templ_7745c5c3_Err != nil {
@@ -312,7 +312,7 @@ Don't know type string`).Render(ctx, templ_7745c5c3_Buffer)
 			var templ_7745c5c3_Var12 string
 			templ_7745c5c3_Var12, templ_7745c5c3_Err = templ.JoinStringErrs("default: fmt.Println(\"other\")")
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/switch.templ`, Line: 161, Col: 50}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/switch.templ`, Line: 155, Col: 50}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var12))
 			if templ_7745c5c3_Err != nil {
@@ -325,7 +325,7 @@ Don't know type string`).Render(ctx, templ_7745c5c3_Buffer)
 			var templ_7745c5c3_Var13 string
 			templ_7745c5c3_Var13, templ_7745c5c3_Err = templ.JoinStringErrs("default")
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/switch.templ`, Line: 193, Col: 26}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/switch.templ`, Line: 186, Col: 26}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var13))
 			if templ_7745c5c3_Err != nil {
@@ -338,7 +338,7 @@ Don't know type string`).Render(ctx, templ_7745c5c3_Buffer)
 			var templ_7745c5c3_Var14 string
 			templ_7745c5c3_Var14, templ_7745c5c3_Err = templ.JoinStringErrs("break")
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/switch.templ`, Line: 202, Col: 53}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/switch.templ`, Line: 194, Col: 53}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var14))
 			if templ_7745c5c3_Err != nil {
@@ -351,7 +351,7 @@ Don't know type string`).Render(ctx, templ_7745c5c3_Buffer)
 			var templ_7745c5c3_Var15 string
 			templ_7745c5c3_Var15, templ_7745c5c3_Err = templ.JoinStringErrs("fallthrough")
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/switch.templ`, Line: 203, Col: 32}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/switch.templ`, Line: 195, Col: 32}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var15))
 			if templ_7745c5c3_Err != nil {
@@ -364,7 +364,7 @@ Don't know type string`).Render(ctx, templ_7745c5c3_Buffer)
 			var templ_7745c5c3_Var16 string
 			templ_7745c5c3_Var16, templ_7745c5c3_Err = templ.JoinStringErrs("default")
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/switch.templ`, Line: 207, Col: 24}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/switch.templ`, Line: 199, Col: 24}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var16))
 			if templ_7745c5c3_Err != nil {

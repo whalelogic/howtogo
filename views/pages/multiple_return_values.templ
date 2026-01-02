@@ -1,0 +1,207 @@
+package pages
+
+import "github.com/whalelogic/howtogo/views/layouts"
+import "github.com/whalelogic/howtogo/views/components"
+
+templ MultipleReturnValues() {
+	@layouts.Base("Multiple Return Values | How to Go") {
+		@components.Breadcrumb("multiple-return-values", "Multiple Return Values")
+		@components.CustomHeader("Multiple Return Values", "Variadic Functions")
+		<p>Go has built-in support for multiple return values. This feature is used extensively in idiomatic Go, especially for returning both a result and an error value from a function.</p>
+		<h2>Basic Multiple Returns</h2>
+		<p>A function can return multiple values by specifying them in parentheses:</p>
+		<div class="code-block">
+			<pre>
+				<code class="language-go">
+					@templ.Raw(`package main
+
+import "fmt"
+
+// Function returns two integers
+func vals() (int, int) {
+    return 3, 7
+}
+
+func main() {
+    // Get both return values
+    a, b := vals()
+    fmt.Println("vals:", a, b)
+    
+    // Use only one return value, discard the other
+    _, c := vals()
+    fmt.Println("only second:", c)
+}`)
+				</code>
+			</pre>
+		</div>
+		<span class="output-label">Output:</span>
+		@components.CodeOutput(`vals: 3 7
+only second: 7`)
+		<h2>Multiple Returns with Error Handling</h2>
+		<p>The most common use of multiple returns is for error handling, where functions return a value and an error:</p>
+		<div class="code-block">
+			<pre>
+				<code class="language-go">
+					@templ.Raw(`package main
+
+import (
+    "fmt"
+    "errors"
+)
+
+// Function returns result and error
+func divide(a, b float64) (float64, error) {
+    if b == 0 {
+        return 0, errors.New("cannot divide by zero")
+    }
+    return a / b, nil
+}
+
+func main() {
+    // Successful operation
+    result, err := divide(10, 2)
+    if err != nil {
+        fmt.Println("Error:", err)
+    } else {
+        fmt.Println("10 / 2 =", result)
+    }
+    
+    // Error case
+    result, err = divide(10, 0)
+    if err != nil {
+        fmt.Println("Error:", err)
+    } else {
+        fmt.Println("Result:", result)
+    }
+}`)
+				</code>
+			</pre>
+		</div>
+		<span class="output-label">Output:</span>
+		@components.CodeOutput(`10 / 2 = 5
+Error: cannot divide by zero`)
+		<h2>Multiple Return Patterns</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Pattern</th>
+					<th>Example</th>
+					<th>Use Case</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td><code>{ "(T, error)" }</code></td>
+					<td><code>{ "func read() ([]byte, error)" }</code></td>
+					<td>Most common: return value and error</td>
+				</tr>
+				<tr>
+					<td><code>{ "(T, bool)" }</code></td>
+					<td><code>{ "func lookup() (string, bool)" }</code></td>
+					<td>Return value and success indicator</td>
+				</tr>
+				<tr>
+					<td><code>{ "(T1, T2)" }</code></td>
+					<td><code>{ "func split() (int, int)" }</code></td>
+					<td>Return multiple related values</td>
+				</tr>
+				<tr>
+					<td><code>{ "(T1, T2, error)" }</code></td>
+					<td><code>{ "func parse() (int, string, error)" }</code></td>
+					<td>Multiple values with error</td>
+				</tr>
+				<tr>
+					<td><code>{ "(x, y T)" }</code></td>
+					<td><code>{ "func coords() (x, y int)" }</code></td>
+					<td>Named return values</td>
+				</tr>
+			</tbody>
+		</table>
+		<h2>Named Return Values</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Feature</th>
+					<th>Description</th>
+					<th>Example</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Declaration</td>
+					<td>Name return values in function signature</td>
+					<td><code>{ "func split() (x, y int)" }</code></td>
+				</tr>
+				<tr>
+					<td>Initialization</td>
+					<td>Named returns are initialized to zero values</td>
+					<td><code>x</code> and <code>y</code> start as 0</td>
+				</tr>
+				<tr>
+					<td>Naked return</td>
+					<td>Return without arguments returns named values</td>
+					<td><code>{ "return  // returns x, y" }</code></td>
+				</tr>
+				<tr>
+					<td>Documentation</td>
+					<td>Makes return values self-documenting</td>
+					<td><code>{ "func div() (quotient, remainder int)" }</code></td>
+				</tr>
+				<tr>
+					<td>Deferred functions</td>
+					<td>Can modify return values in defer</td>
+					<td><code>{ "defer func() { x++ }()" }</code></td>
+				</tr>
+			</tbody>
+		</table>
+		<h2>Best Practices</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Practice</th>
+					<th>Recommendation</th>
+					<th>Reason</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Error as last return</td>
+					<td>Always return error as the last value</td>
+					<td>Idiomatic Go convention</td>
+				</tr>
+				<tr>
+					<td>Blank identifier</td>
+					<td>Use <code>_</code> to ignore unwanted returns</td>
+					<td>Explicitly shows intention to discard value</td>
+				</tr>
+				<tr>
+					<td>Naked returns</td>
+					<td>Use sparingly, only in short functions</td>
+					<td>Can reduce readability in longer functions</td>
+				</tr>
+				<tr>
+					<td>Boolean vs Error</td>
+					<td>Use <code>bool</code> { "for" } existence, <code>error</code> { "for" } failures</td>
+					<td>Map lookups use bool; I/O operations use error</td>
+				</tr>
+				<tr>
+					<td>Return count</td>
+					<td>Limit to 2-3 returns when possible</td>
+					<td>Too many returns can indicate need for struct</td>
+				</tr>
+			</tbody>
+		</table>
+		<h2>Key Points</h2>
+		<ul>
+			<li>Go supports returning multiple values from a single function</li>
+			<li>The <code>(result, error)</code> pattern is idiomatic for error handling</li>
+			<li>Use blank identifier <code>_</code> to ignore return values you don't need</li>
+			<li>Named return values are initialized to zero values and can be modified before return</li>
+			<li>Naked returns (return without arguments) use named return values</li>
+			<li>Map lookups use <code>(value, ok)</code> pattern where ok indicates if key exists</li>
+			<li>Type assertions use <code>(value, ok)</code> pattern for safe type conversion</li>
+			<li>All return values must be handled or explicitly discarded</li>
+		</ul>
+		@components.Footer()
+	}
+}

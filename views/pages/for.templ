@@ -3,13 +3,11 @@ package pages
 import "github.com/whalelogic/howtogo/views/layouts"
 import "github.com/whalelogic/howtogo/views/components"
 
-
 templ For() {
 	@layouts.Base("For Loops | How to Go") {
 		@components.Breadcrumb("for", "For Loops")
-		@components.CustomHeader("For Loops")
+		@components.CustomHeader("For Loops", "If/Else")
 		<p><code>for</code> is Go's only looping construct. It's versatile and can replace while loops, do-while loops, and traditional for loops from other languages.</p>
-		
 		<h2>Classic For Loop</h2>
 		<p>The most basic form with initialization, condition, and post statement:</p>
 		<div class="code-block">
@@ -34,7 +32,6 @@ func main() {
 3
 4
 `)
-
 		<h2>For as While Loop</h2>
 		<p>Omit the init and post statements to create a while-style loop:</p>
 		<div class="code-block">
@@ -61,7 +58,6 @@ func main() {
 3
 4
 `)
-
 		<h2>Infinite Loop with Break</h2>
 		<p>Use <code>break</code> to exit an infinite loop:</p>
 		<div class="code-block">
@@ -123,7 +119,6 @@ func main() {
 				</tr>
 			</tbody>
 		</table>
-
 		<h2>Control Statements</h2>
 		<table class="reference-table">
 			<thead>
@@ -146,7 +141,6 @@ func main() {
 				</tr>
 			</tbody>
 		</table>
-
 		<h2>Key Points</h2>
 		<ul>
 			<li><code>for</code> is the only looping construct in Go</li>
@@ -155,11 +149,9 @@ func main() {
 			<li>Use <code>continue</code> to skip to the next iteration</li>
 			<li>Variables declared in the init statement are scoped to the loop</li>
 		</ul>
-
 		<div class="nav-buttons">
 			@components.Button("Previous: Constants", "/constants")
 			@components.Button("Next: If/Else", "/ifelse")
 		</div>
 	}
 }
-

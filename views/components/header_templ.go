@@ -29,7 +29,7 @@ func Header() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div class=\"home-intro\"><p><a href=\"https://go.dev\"><b>Go</b></a> is an open source programming language designed for building scalable, secure, and reliable software. It combines the performance of C with memory safety,  garbage collection, concurrency, and a <b>strong</b> type system.</p><p><strong style=\"color: #02c7ea\">How to Go</strong> is a modern, hands-on reference for the language.  It guides you from basic syntax to advanced patterns, types, and idioms using annotated example programs. Go is a great langauge to learn.🌶️</p></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div class=\"home-intro\"><p><a href=\"https://go.dev\"><b>Go</b></a> is an open source programming language designed for building scalable, secure, and reliable software. It combines the performance of C with memory safety,  garbage collection, concurrency, and a <b>strong</b> type system.</p><p><span class=\"brand-name\">How to Go</span> is a modern, hands-on reference for the language.  It guides you from basic syntax to advanced patterns, types, and idioms using annotated example programs. Go is a great langauge to learn.🌶️</p></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

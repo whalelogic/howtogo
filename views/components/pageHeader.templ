@@ -1,0 +1,17 @@
+package components
+
+// PageHeader combines the current page title (left) with the next page link (right)
+templ PageHeader(currentPage string, nextPageName string, nextPageUrl string) {
+	<div class="page-header-container">
+		<div class="section-header">
+			<span class="section-header-icon">›</span>
+			<h1 class="section-header-title">{ currentPage }</h1>
+		</div>
+		if nextPageName != "" && nextPageUrl != "" {
+			<a href={ templ.URL(nextPageUrl) } class="section-next">
+				<h2 class="section-next-title">{ nextPageName }</h2>
+				<span class="section-next-icon">›</span>
+			</a>
+		}
+	</div>
+}

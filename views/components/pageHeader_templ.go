@@ -8,17 +8,8 @@ package components
 import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
-import "strings"
-
-// Original simpler version
-//
-//	templ CustomHeader(s string) {
-//		<div class="section-header">
-//			<span class="section-header-icon">›</span>
-//			<h1 class="section-header-title">{ s }</h1>
-//		</div>
-//	}
-func CustomHeader(current string, next string) templ.Component {
+// PageHeader combines the current page title (left) with the next page link (right)
+func PageHeader(currentPage string, nextPageName string, nextPageUrl string) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -39,14 +30,14 @@ func CustomHeader(current string, next string) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div class=\"section-header\"><div class=\"header-side\"><span class=\"section-header-icon\">›</span><h1 class=\"section-header-title\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div class=\"page-header-container\"><div class=\"section-header\"><span class=\"section-header-icon\">›</span><h1 class=\"section-header-title\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var2 string
-		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(current)
+		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(currentPage)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/components/customHeader.templ`, Line: 16, Col: 45}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/components/pageHeader.templ`, Line: 8, Col: 49}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
 		if templ_7745c5c3_Err != nil {
@@ -56,34 +47,34 @@ func CustomHeader(current string, next string) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		if next != "" {
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "<div class=\"header-side\"><a href=\"")
+		if nextPageName != "" && nextPageUrl != "" {
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "<a href=\"")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var3 templ.SafeURL
-			templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinURLErrs(templ.URL("/" + strings.ToLower(strings.ReplaceAll(strings.ReplaceAll(next, " ", "-"), "/", ""))))
+			templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinURLErrs(templ.URL(nextPageUrl))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/components/customHeader.templ`, Line: 20, Col: 111}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/components/pageHeader.templ`, Line: 11, Col: 35}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "\"><h1 class=\"section-header-title\">Next: ")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "\" class=\"section-next\"><h2 class=\"section-next-title\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var4 string
-			templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(next)
+			templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(nextPageName)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/components/customHeader.templ`, Line: 21, Col: 50}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/components/pageHeader.templ`, Line: 12, Col: 49}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "</h1><span class=\"section-header-icon\">›</span></a></div>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "</h2><span class=\"section-next-icon\">›</span></a>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

@@ -3,13 +3,11 @@ package pages
 import "github.com/whalelogic/howtogo/views/layouts"
 import "github.com/whalelogic/howtogo/views/components"
 
-
 templ Switch() {
 	@layouts.Base("Switch | How to Go") {
 		@components.Breadcrumb("switch", "Switch")
-		@components.CustomHeader("Switch")
+		@components.CustomHeader("Switch", "Arrays")
 		<p>Switch statements express conditionals across many branches. Go's switch is more powerful than in many other languages, with flexible matching and automatic break behavior.</p>
-		
 		<h2>Basic Switch</h2>
 		<p>The most basic switch compares a value against multiple cases:</p>
 		<div class="code-block">
@@ -39,7 +37,6 @@ func main() {
 		</div>
 		<span class="output-label">Output:</span>
 		@components.CodeOutput(`Write 2 as two`)
-
 		<h2>Multiple Expressions in Case</h2>
 		<p>You can use multiple expressions in a case statement, separated by commas:</p>
 		<div class="code-block">
@@ -65,7 +62,6 @@ func main() {
 		</div>
 		<span class="output-label">Output:</span>
 		@components.CodeOutput(`It's a weekday`)
-
 		<h2>Switch Without Expression</h2>
 		<p>A switch without an expression is an alternate way to express if/else logic:</p>
 		<div class="code-block">
@@ -92,7 +88,6 @@ func main() {
 		</div>
 		<span class="output-label">Output:</span>
 		@components.CodeOutput(`It's after noon`)
-
 		<h2>Type Switch</h2>
 		<p>A type switch compares types instead of values, useful for working with interfaces:</p>
 		<div class="code-block">
@@ -125,7 +120,6 @@ func main() {
 		@components.CodeOutput(`I'm a bool
 I'm an int
 Don't know type string`)
-
 		<h2>Switch Patterns</h2>
 		<table class="reference-table">
 			<thead>
@@ -163,7 +157,6 @@ Don't know type string`)
 				</tr>
 			</tbody>
 		</table>
-
 		<h2>Switch vs Other Languages</h2>
 		<table class="reference-table">
 			<thead>
@@ -196,7 +189,6 @@ Don't know type string`)
 				</tr>
 			</tbody>
 		</table>
-
 		<h2>Key Points</h2>
 		<ul>
 			<li>Cases break automatically - no <code>{ "break" }</code> statement needed</li>
@@ -206,7 +198,6 @@ Don't know type string`)
 			<li>Type switches let you determine the concrete type of an interface value</li>
 			<li><code>{ "default" }</code> case is optional and can appear anywhere</li>
 		</ul>
-
 		<div class="nav-buttons">
 			@components.Button("Previous: If/Else", "/ifelse")
 			@components.Button("Next: Arrays", "/arrays")

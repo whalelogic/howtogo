@@ -52,7 +52,7 @@ func Maps() templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = components.CustomHeader("Maps").Render(ctx, templ_7745c5c3_Buffer)
+			templ_7745c5c3_Err = components.CustomHeader("Maps", "Range").Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -63,7 +63,7 @@ func Maps() templ.Component {
 			var templ_7745c5c3_Var3 string
 			templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs("make")
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/maps.templ`, Line: 14, Col: 60}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/maps.templ`, Line: 12, Col: 60}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 			if templ_7745c5c3_Err != nil {
@@ -187,7 +187,7 @@ empty: map[]`).Render(ctx, templ_7745c5c3_Buffer)
 			var templ_7745c5c3_Var4 string
 			templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs("range")
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/maps.templ`, Line: 113, Col: 24}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/maps.templ`, Line: 108, Col: 24}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
 			if templ_7745c5c3_Err != nil {
@@ -238,7 +238,7 @@ key: b`).Render(ctx, templ_7745c5c3_Buffer)
 			var templ_7745c5c3_Var5 string
 			templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs("make(map[K]V)")
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/maps.templ`, Line: 157, Col: 32}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/maps.templ`, Line: 151, Col: 32}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
 			if templ_7745c5c3_Err != nil {
@@ -251,7 +251,7 @@ key: b`).Render(ctx, templ_7745c5c3_Buffer)
 			var templ_7745c5c3_Var6 string
 			templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs("make(map[string]int)")
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/maps.templ`, Line: 158, Col: 39}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/maps.templ`, Line: 152, Col: 39}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
 			if templ_7745c5c3_Err != nil {
@@ -264,7 +264,7 @@ key: b`).Render(ctx, templ_7745c5c3_Buffer)
 			var templ_7745c5c3_Var7 string
 			templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.JoinStringErrs("make(map[K]V, size)")
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/maps.templ`, Line: 162, Col: 38}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/maps.templ`, Line: 156, Col: 38}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var7))
 			if templ_7745c5c3_Err != nil {
@@ -277,7 +277,7 @@ key: b`).Render(ctx, templ_7745c5c3_Buffer)
 			var templ_7745c5c3_Var8 string
 			templ_7745c5c3_Var8, templ_7745c5c3_Err = templ.JoinStringErrs("make(map[string]int, 10)")
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/maps.templ`, Line: 163, Col: 43}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/maps.templ`, Line: 157, Col: 43}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var8))
 			if templ_7745c5c3_Err != nil {
@@ -290,7 +290,7 @@ key: b`).Render(ctx, templ_7745c5c3_Buffer)
 			var templ_7745c5c3_Var9 string
 			templ_7745c5c3_Var9, templ_7745c5c3_Err = templ.JoinStringErrs("map[K]V{}")
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/maps.templ`, Line: 167, Col: 28}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/maps.templ`, Line: 161, Col: 28}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var9))
 			if templ_7745c5c3_Err != nil {
@@ -303,7 +303,7 @@ key: b`).Render(ctx, templ_7745c5c3_Buffer)
 			var templ_7745c5c3_Var10 string
 			templ_7745c5c3_Var10, templ_7745c5c3_Err = templ.JoinStringErrs("map[string]int{}")
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/maps.templ`, Line: 168, Col: 35}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/maps.templ`, Line: 162, Col: 35}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var10))
 			if templ_7745c5c3_Err != nil {
@@ -316,7 +316,7 @@ key: b`).Render(ctx, templ_7745c5c3_Buffer)
 			var templ_7745c5c3_Var11 string
 			templ_7745c5c3_Var11, templ_7745c5c3_Err = templ.JoinStringErrs("map[K]V{k:v, ...}")
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/maps.templ`, Line: 172, Col: 36}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/maps.templ`, Line: 166, Col: 36}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var11))
 			if templ_7745c5c3_Err != nil {
@@ -329,7 +329,7 @@ key: b`).Render(ctx, templ_7745c5c3_Buffer)
 			var templ_7745c5c3_Var12 string
 			templ_7745c5c3_Var12, templ_7745c5c3_Err = templ.JoinStringErrs("map[string]int{\"a\":1, \"b\":2}")
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/maps.templ`, Line: 173, Col: 51}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/maps.templ`, Line: 167, Col: 51}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var12))
 			if templ_7745c5c3_Err != nil {
@@ -342,7 +342,7 @@ key: b`).Render(ctx, templ_7745c5c3_Buffer)
 			var templ_7745c5c3_Var13 string
 			templ_7745c5c3_Var13, templ_7745c5c3_Err = templ.JoinStringErrs("var m map[K]V")
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/maps.templ`, Line: 177, Col: 32}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/maps.templ`, Line: 171, Col: 32}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var13))
 			if templ_7745c5c3_Err != nil {
@@ -355,7 +355,7 @@ key: b`).Render(ctx, templ_7745c5c3_Buffer)
 			var templ_7745c5c3_Var14 string
 			templ_7745c5c3_Var14, templ_7745c5c3_Err = templ.JoinStringErrs("var m map[string]int")
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/maps.templ`, Line: 178, Col: 39}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/maps.templ`, Line: 172, Col: 39}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var14))
 			if templ_7745c5c3_Err != nil {
@@ -368,7 +368,7 @@ key: b`).Render(ctx, templ_7745c5c3_Buffer)
 			var templ_7745c5c3_Var15 string
 			templ_7745c5c3_Var15, templ_7745c5c3_Err = templ.JoinStringErrs("m[key] = value")
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/maps.templ`, Line: 197, Col: 33}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/maps.templ`, Line: 190, Col: 33}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var15))
 			if templ_7745c5c3_Err != nil {
@@ -381,7 +381,7 @@ key: b`).Render(ctx, templ_7745c5c3_Buffer)
 			var templ_7745c5c3_Var16 string
 			templ_7745c5c3_Var16, templ_7745c5c3_Err = templ.JoinStringErrs("m[\"x\"] = 10")
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/maps.templ`, Line: 198, Col: 32}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/maps.templ`, Line: 191, Col: 32}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var16))
 			if templ_7745c5c3_Err != nil {
@@ -394,7 +394,7 @@ key: b`).Render(ctx, templ_7745c5c3_Buffer)
 			var templ_7745c5c3_Var17 string
 			templ_7745c5c3_Var17, templ_7745c5c3_Err = templ.JoinStringErrs("v := m[key]")
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/maps.templ`, Line: 203, Col: 30}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/maps.templ`, Line: 196, Col: 30}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var17))
 			if templ_7745c5c3_Err != nil {
@@ -407,7 +407,7 @@ key: b`).Render(ctx, templ_7745c5c3_Buffer)
 			var templ_7745c5c3_Var18 string
 			templ_7745c5c3_Var18, templ_7745c5c3_Err = templ.JoinStringErrs("v := m[\"x\"]")
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/maps.templ`, Line: 204, Col: 32}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/maps.templ`, Line: 197, Col: 32}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var18))
 			if templ_7745c5c3_Err != nil {
@@ -420,7 +420,7 @@ key: b`).Render(ctx, templ_7745c5c3_Buffer)
 			var templ_7745c5c3_Var19 string
 			templ_7745c5c3_Var19, templ_7745c5c3_Err = templ.JoinStringErrs("v, ok := m[key]")
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/maps.templ`, Line: 209, Col: 34}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/maps.templ`, Line: 202, Col: 34}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var19))
 			if templ_7745c5c3_Err != nil {
@@ -433,7 +433,7 @@ key: b`).Render(ctx, templ_7745c5c3_Buffer)
 			var templ_7745c5c3_Var20 string
 			templ_7745c5c3_Var20, templ_7745c5c3_Err = templ.JoinStringErrs("v, ok := m[\"x\"]")
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/maps.templ`, Line: 210, Col: 36}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/maps.templ`, Line: 203, Col: 36}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var20))
 			if templ_7745c5c3_Err != nil {
@@ -446,7 +446,7 @@ key: b`).Render(ctx, templ_7745c5c3_Buffer)
 			var templ_7745c5c3_Var21 string
 			templ_7745c5c3_Var21, templ_7745c5c3_Err = templ.JoinStringErrs("delete(m, key)")
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/maps.templ`, Line: 215, Col: 33}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/maps.templ`, Line: 208, Col: 33}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var21))
 			if templ_7745c5c3_Err != nil {
@@ -459,7 +459,7 @@ key: b`).Render(ctx, templ_7745c5c3_Buffer)
 			var templ_7745c5c3_Var22 string
 			templ_7745c5c3_Var22, templ_7745c5c3_Err = templ.JoinStringErrs("delete(m, \"x\")")
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/maps.templ`, Line: 216, Col: 35}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/maps.templ`, Line: 209, Col: 35}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var22))
 			if templ_7745c5c3_Err != nil {
@@ -472,7 +472,7 @@ key: b`).Render(ctx, templ_7745c5c3_Buffer)
 			var templ_7745c5c3_Var23 string
 			templ_7745c5c3_Var23, templ_7745c5c3_Err = templ.JoinStringErrs("for k, v := range m")
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/maps.templ`, Line: 227, Col: 38}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/maps.templ`, Line: 220, Col: 38}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var23))
 			if templ_7745c5c3_Err != nil {
@@ -485,7 +485,7 @@ key: b`).Render(ctx, templ_7745c5c3_Buffer)
 			var templ_7745c5c3_Var24 string
 			templ_7745c5c3_Var24, templ_7745c5c3_Err = templ.JoinStringErrs("for k, v := range m")
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/maps.templ`, Line: 228, Col: 38}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/maps.templ`, Line: 221, Col: 38}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var24))
 			if templ_7745c5c3_Err != nil {
@@ -498,7 +498,7 @@ key: b`).Render(ctx, templ_7745c5c3_Buffer)
 			var templ_7745c5c3_Var25 string
 			templ_7745c5c3_Var25, templ_7745c5c3_Err = templ.JoinStringErrs("map[T]bool")
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/maps.templ`, Line: 328, Col: 29}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/maps.templ`, Line: 318, Col: 29}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var25))
 			if templ_7745c5c3_Err != nil {
@@ -511,7 +511,7 @@ key: b`).Render(ctx, templ_7745c5c3_Buffer)
 			var templ_7745c5c3_Var26 string
 			templ_7745c5c3_Var26, templ_7745c5c3_Err = templ.JoinStringErrs("map[T]struct{}")
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/maps.templ`, Line: 328, Col: 66}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/maps.templ`, Line: 318, Col: 66}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var26))
 			if templ_7745c5c3_Err != nil {
@@ -524,7 +524,7 @@ key: b`).Render(ctx, templ_7745c5c3_Buffer)
 			var templ_7745c5c3_Var27 string
 			templ_7745c5c3_Var27, templ_7745c5c3_Err = templ.JoinStringErrs("counts[item]++; // works even if key doesn't exist")
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/maps.templ`, Line: 333, Col: 69}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/maps.templ`, Line: 323, Col: 69}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var27))
 			if templ_7745c5c3_Err != nil {
@@ -537,7 +537,7 @@ key: b`).Render(ctx, templ_7745c5c3_Buffer)
 			var templ_7745c5c3_Var28 string
 			templ_7745c5c3_Var28, templ_7745c5c3_Err = templ.JoinStringErrs("map[K][]V")
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/maps.templ`, Line: 338, Col: 28}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/maps.templ`, Line: 328, Col: 28}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var28))
 			if templ_7745c5c3_Err != nil {
@@ -550,7 +550,7 @@ key: b`).Render(ctx, templ_7745c5c3_Buffer)
 			var templ_7745c5c3_Var29 string
 			templ_7745c5c3_Var29, templ_7745c5c3_Err = templ.JoinStringErrs("if _, ok := m[k]; !ok { m[k] = v }")
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/maps.templ`, Line: 343, Col: 53}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/maps.templ`, Line: 333, Col: 53}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var29))
 			if templ_7745c5c3_Err != nil {
@@ -563,7 +563,7 @@ key: b`).Render(ctx, templ_7745c5c3_Buffer)
 			var templ_7745c5c3_Var30 string
 			templ_7745c5c3_Var30, templ_7745c5c3_Err = templ.JoinStringErrs("if v, ok := m[k]; ok { return v } else { return defaultVal }")
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/maps.templ`, Line: 348, Col: 79}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/maps.templ`, Line: 338, Col: 79}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var30))
 			if templ_7745c5c3_Err != nil {
@@ -576,7 +576,7 @@ key: b`).Render(ctx, templ_7745c5c3_Buffer)
 			var templ_7745c5c3_Var31 string
 			templ_7745c5c3_Var31, templ_7745c5c3_Err = templ.JoinStringErrs("map[K1]map[K2]V")
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/maps.templ`, Line: 353, Col: 34}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/maps.templ`, Line: 343, Col: 34}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var31))
 			if templ_7745c5c3_Err != nil {
@@ -589,7 +589,7 @@ key: b`).Render(ctx, templ_7745c5c3_Buffer)
 			var templ_7745c5c3_Var32 string
 			templ_7745c5c3_Var32, templ_7745c5c3_Err = templ.JoinStringErrs("make")
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/maps.templ`, Line: 361, Col: 51}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/maps.templ`, Line: 350, Col: 51}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var32))
 			if templ_7745c5c3_Err != nil {

@@ -1,0 +1,269 @@
+package pages
+
+import "github.com/whalelogic/howtogo/views/layouts"
+import "github.com/whalelogic/howtogo/views/components"
+
+templ Pointers() {
+	@layouts.Base("Pointers | How to Go") {
+		@components.Breadcrumb("pointers", "Pointers")
+		@components.CustomHeader("Pointers", "Strings and Runes")
+		<p>Go supports pointers, allowing you to pass references to values and records within your program. Pointers are useful for large structs or when you need to modify a value in a function.</p>
+		<h2>Basic Pointer Operations</h2>
+		<p>Pointers hold the memory address of a value. Use <code>&</code> to get a pointer and <code>*</code> to dereference:</p>
+		<div class="code-block">
+			<pre>
+				<code class="language-go">
+					@templ.Raw(`package main
+
+import "fmt"
+
+func main() {
+    i := 42
+    
+    // Get pointer to i with &
+    p := &i
+    
+    fmt.Println("Value of i:", i)
+    fmt.Println("Address of i:", p)
+    fmt.Println("Value at pointer:", *p)
+    
+    // Modify value through pointer
+    *p = 21
+    fmt.Println("New value of i:", i)
+    
+    // Zero value of pointer is nil
+    var ptr *int
+    fmt.Println("Nil pointer:", ptr)
+}`)
+				</code>
+			</pre>
+		</div>
+		<span class="output-label">Output:</span>
+		@components.CodeOutput(`Value of i: 42
+Address of i: 0xc000012028
+Value at pointer: 42
+New value of i: 21
+Nil pointer: <nil>`)
+		<h2>Pointers in Functions</h2>
+		<p>Pass pointers to functions to allow them to modify the original value:</p>
+		<div class="code-block">
+			<pre>
+				<code class="language-go">
+					@templ.Raw(`package main
+
+import "fmt"
+
+// Function with value parameter (copy)
+func zeroValue(val int) {
+    val = 0
+}
+
+// Function with pointer parameter (reference)
+func zeroPointer(ptr *int) {
+    *ptr = 0
+}
+
+func main() {
+    i := 1
+    fmt.Println("Initial:", i)
+    
+    // Pass by value - doesn't modify original
+    zeroValue(i)
+    fmt.Println("After zeroValue:", i)
+    
+    // Pass by reference - modifies original
+    zeroPointer(&i)
+    fmt.Println("After zeroPointer:", i)
+}`)
+				</code>
+			</pre>
+		</div>
+		<span class="output-label">Output:</span>
+		@components.CodeOutput(`Initial: 1
+After zeroValue: 1
+After zeroPointer: 0`)
+		<h2>Pointer Syntax</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Operator</th>
+					<th>Syntax</th>
+					<th>Description</th>
+					<th>Example</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Address-of</td>
+					<td><code>&</code></td>
+					<td>Get pointer to a variable</td>
+					<td><code>{ "p := &x" }</code></td>
+				</tr>
+				<tr>
+					<td>Dereference</td>
+					<td><code>*</code></td>
+					<td>Access value at pointer</td>
+					<td><code>{ "val := *p" }</code></td>
+				</tr>
+				<tr>
+					<td>Type Declaration</td>
+					<td><code>*T</code></td>
+					<td>Declare pointer to type T</td>
+					<td><code>{ "var p *int" }</code></td>
+				</tr>
+				<tr>
+					<td>Nil Check</td>
+					<td><code>{ "p == nil" }</code></td>
+					<td>Check if pointer is nil</td>
+					<td><code>{ "if p != nil { }" }</code></td>
+				</tr>
+				<tr>
+					<td>New Function</td>
+					<td><code>new(T)</code></td>
+					<td>Allocate memory, return pointer</td>
+					<td><code>{ "p := new(int)" }</code></td>
+				</tr>
+			</tbody>
+		</table>
+		<h2>Pointer Characteristics</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Feature</th>
+					<th>Description</th>
+					<th>Notes</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Zero Value</td>
+					<td>Nil for all pointer types</td>
+					<td>Dereferencing nil causes panic</td>
+				</tr>
+				<tr>
+					<td>Memory Address</td>
+					<td>Pointers store memory addresses</td>
+					<td>Typically displayed in hexadecimal</td>
+				</tr>
+				<tr>
+					<td>Type Safety</td>
+					<td>Pointers are typed</td>
+					<td><code>*int</code> different from <code>*string</code></td>
+				</tr>
+				<tr>
+					<td>No Arithmetic</td>
+					<td>Go doesn't support pointer arithmetic</td>
+					<td>Unlike C/C++, can't do <code>ptr++</code></td>
+				</tr>
+				<tr>
+					<td>Automatic Deref</td>
+					<td>Struct field access auto-dereferences</td>
+					<td><code>p.field</code> instead of <code>(*p).field</code></td>
+				</tr>
+				<tr>
+					<td>Pass by Value</td>
+					<td>Go passes everything by value</td>
+					<td>Pointers let you "pass by reference"</td>
+				</tr>
+			</tbody>
+		</table>
+		<h2>Common Pointer Patterns</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Pattern</th>
+					<th>Code</th>
+					<th>Use Case</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Modify in Function</td>
+					<td><code>{ "func update(p *int) { *p = 10 }" }</code></td>
+					<td>Change original value in function</td>
+				</tr>
+				<tr>
+					<td>Struct Pointer</td>
+					<td><code>{ "func (p *Person) SetAge(age int)" }</code></td>
+					<td>Method that modifies receiver</td>
+				</tr>
+				<tr>
+					<td>Optional Value</td>
+					<td><code>{ "var config *Config" }</code></td>
+					<td>Nil indicates absence of value</td>
+				</tr>
+				<tr>
+					<td>Large Struct</td>
+					<td><code>{ "func process(data *LargeData)" }</code></td>
+					<td>Avoid copying large structures</td>
+				</tr>
+				<tr>
+					<td>Linked Structures</td>
+					<td><code>{ "type Node struct { Next *Node }" }</code></td>
+					<td>Build linked lists, trees, graphs</td>
+				</tr>
+				<tr>
+					<td>Factory Function</td>
+					<td><code>{ "func NewPerson() *Person" }</code></td>
+					<td>Return pointer to new struct</td>
+				</tr>
+			</tbody>
+		</table>
+		<h2>Pointers vs Values</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Aspect</th>
+					<th>Value</th>
+					<th>Pointer</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Memory</td>
+					<td>Copies entire value</td>
+					<td>Copies memory address only</td>
+				</tr>
+				<tr>
+					<td>Modification</td>
+					<td>Cannot modify original</td>
+					<td>Can modify original value</td>
+				</tr>
+				<tr>
+					<td>Nil Check</td>
+					<td>Not applicable</td>
+					<td>Must check for nil</td>
+				</tr>
+				<tr>
+					<td>Performance</td>
+					<td>Fast for small types</td>
+					<td>Better for large structs</td>
+				</tr>
+				<tr>
+					<td>Semantics</td>
+					<td>Copy/independent value</td>
+					<td>Shared/referenced value</td>
+				</tr>
+				<tr>
+					<td>Safety</td>
+					<td>Always safe to use</td>
+					<td>Risk of nil pointer panic</td>
+				</tr>
+			</tbody>
+		</table>
+		<h2>Key Points</h2>
+		<ul>
+			<li>Pointers store memory addresses of values</li>
+			<li>Use <code>&</code> to get a pointer to a variable</li>
+			<li>Use <code>*</code> to dereference a pointer and access its value</li>
+			<li>Zero value of a pointer is <code>nil</code></li>
+			<li>Dereferencing a nil pointer causes a runtime panic</li>
+			<li>Go does not support pointer arithmetic (unlike C/C++)</li>
+			<li>Pointers enable functions to modify arguments</li>
+			<li>Use pointers for large structs to avoid copying overhead</li>
+			<li>Methods with pointer receivers can modify the receiver</li>
+			<li>Struct field access through pointers is automatically dereferenced</li>
+		</ul>
+		@components.Footer()
+	}
+}

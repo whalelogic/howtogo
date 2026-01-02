@@ -1,0 +1,8 @@
+package components
+
+templ NextPageLink(pageName string, pageUrl string) {
+	<a href={ templ.URL(pageUrl) } class="next-page-link">
+		<span class="next-page-title">{ pageName }</span>
+		<span class="next-page-icon">›</span>
+	</a>
+}

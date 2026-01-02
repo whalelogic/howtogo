@@ -1,0 +1,186 @@
+package pages
+
+import "github.com/whalelogic/howtogo/views/layouts"
+import "github.com/whalelogic/howtogo/views/components"
+
+templ Functions() {
+	@layouts.Base("Functions | How to Go") {
+		@components.Breadcrumb("functions", "Functions")
+		@components.CustomHeader("Functions", "Multiple Return Values")
+		<p>Functions are central to Go. They allow you to organize code into reusable blocks that can accept parameters and return values. Go supports various function patterns including multiple return values and variadic parameters.</p>
+		<h2>Basic Function Declaration</h2>
+		<p>Functions are declared using the <code>func</code> keyword, followed by the name, parameters, and return type:</p>
+		<div class="code-block">
+			<pre>
+				<code class="language-go">
+					@templ.Raw(`package main
+
+import "fmt"
+
+// Function that takes two ints and returns their sum
+func plus(a int, b int) int {
+    return a + b
+}
+
+// When parameters are of the same type, you can omit type for all but last
+func plusPlus(a, b, c int) int {
+    return a + b + c
+}
+
+func main() {
+    res := plus(1, 2)
+    fmt.Println("1+2 =", res)
+
+    res = plusPlus(1, 2, 3)
+    fmt.Println("1+2+3 =", res)
+}`)
+				</code>
+			</pre>
+		</div>
+		<span class="output-label">Output:</span>
+		@components.CodeOutput(`1+2 = 3
+1+2+3 = 6`)
+		<h2>Functions as Values</h2>
+		<p>Functions are first-class values in Go and can be assigned to variables, passed as arguments, and returned from other functions:</p>
+		<div class="code-block">
+			<pre>
+				<code class="language-go">
+					@templ.Raw(`package main
+
+import "fmt"
+
+func compute(fn func(int, int) int) int {
+    return fn(3, 4)
+}
+
+func main() {
+    // Assign function to variable
+    add := func(a, b int) int {
+        return a + b
+    }
+    
+    multiply := func(a, b int) int {
+        return a * b
+    }
+    
+    fmt.Println("Add:", compute(add))
+    fmt.Println("Multiply:", compute(multiply))
+}`)
+				</code>
+			</pre>
+		</div>
+		<span class="output-label">Output:</span>
+		@components.CodeOutput(`Add: 7
+Multiply: 12`)
+		<h2>Function Declaration Patterns</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Pattern</th>
+					<th>Example</th>
+					<th>Description</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td><code>{ "func name(param type) returnType" }</code></td>
+					<td><code>{ "func add(x int) int" }</code></td>
+					<td>Single parameter, single return</td>
+				</tr>
+				<tr>
+					<td><code>{ "func name(p1, p2 type)" }</code></td>
+					<td><code>{ "func add(x, y int)" }</code></td>
+					<td>Multiple params of same type</td>
+				</tr>
+				<tr>
+					<td><code>{ "func name(p1 t1, p2 t2)" }</code></td>
+					<td><code>{ "func fn(x int, y string)" }</code></td>
+					<td>Multiple params, different types</td>
+				</tr>
+				<tr>
+					<td><code>{ "func name() (r1, r2 type)" }</code></td>
+					<td><code>{ "func vals() (int, int)" }</code></td>
+					<td>Multiple return values</td>
+				</tr>
+				<tr>
+					<td><code>{ "func name() (x, y int)" }</code></td>
+					<td><code>{ "func split() (x, y int)" }</code></td>
+					<td>Named return values</td>
+				</tr>
+				<tr>
+					<td><code>{ "func name(vals ...type)" }</code></td>
+					<td><code>{ "func sum(nums ...int)" }</code></td>
+					<td>Variadic function (accepts variable args)</td>
+				</tr>
+				<tr>
+					<td><code>{ "func() { }" }</code></td>
+					<td><code>{ "fn := func() { fmt.Println() }" }</code></td>
+					<td>Anonymous function (function literal)</td>
+				</tr>
+			</tbody>
+		</table>
+		<h2>Function Characteristics</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Feature</th>
+					<th>Description</th>
+					<th>Example</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>First-class values</td>
+					<td>Functions can be assigned to variables</td>
+					<td><code>{ "fn := func() { }" }</code></td>
+				</tr>
+				<tr>
+					<td>Higher-order functions</td>
+					<td>Functions can accept/return functions</td>
+					<td><code>{ "func process(fn func(int) int)" }</code></td>
+				</tr>
+				<tr>
+					<td>Closures</td>
+					<td>Functions can capture variables from outer scope</td>
+					<td><code>{ "func() int { return x }" }</code></td>
+				</tr>
+				<tr>
+					<td>Multiple returns</td>
+					<td>Functions can return multiple values</td>
+					<td><code>{ "func vals() (int, string)" }</code></td>
+				</tr>
+				<tr>
+					<td>Named returns</td>
+					<td>Return values can be named and initialized</td>
+					<td><code>{ "func split() (x, y int)" }</code></td>
+				</tr>
+				<tr>
+					<td>Variadic parameters</td>
+					<td>Functions can accept variable arguments</td>
+					<td><code>{ "func sum(nums ...int)" }</code></td>
+				</tr>
+				<tr>
+					<td>Deferred execution</td>
+					<td>Functions can be deferred until surrounding function returns</td>
+					<td><code>{ "defer cleanup()" }</code></td>
+				</tr>
+			</tbody>
+		</table>
+		<h2>Key Points</h2>
+		<ul>
+			<li>Functions are defined with the <code>func</code> keyword</li>
+			<li>Parameters of the same type can share a type declaration</li>
+			<li>Functions can return multiple values (common for returning value and error)</li>
+			<li>Named return values are automatically initialized to zero values</li>
+			<li>Functions are first-class citizens and can be passed around like values</li>
+			<li>Go does not support function overloading</li>
+			<li>All parameters are passed by value (copies), use pointers for pass-by-reference behavior</li>
+			<li>Unused parameters can be replaced with <code>_</code> (blank identifier)</li>
+		</ul>
+		<div class="nav-buttons">
+			@components.Button("Previous: Range", "/range")
+			@components.Button("Next: Multiple Return Values", "/multiple-return-values")
+		</div>
+		@components.Footer()
+	}
+}

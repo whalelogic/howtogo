@@ -3,7 +3,6 @@ package pages
 import "github.com/whalelogic/howtogo/views/layouts"
 import "github.com/whalelogic/howtogo/views/components"
 
-
 var code string = `package main
 
 import "fmt"
@@ -20,7 +19,7 @@ func main() {
 templ Values() {
 	@layouts.Base("Values | How to Go") {
 		@components.Breadcrumb("values", "Values")
-		@components.CustomHeader("Values")
+		@components.CustomHeader("Values", "Variables")
 		<p><b>Values</b> in Go cover numbers, strings, booleans, and compound types. They are the building blocks you combine to model data.</p>
 		<div class="code-block">
 			<pre>
@@ -68,7 +67,7 @@ templ Values() {
 				</tr>
 			</tbody>
 		</table>
-		@components.CustomHeader("Key Points")
+		@components.CustomHeader("Key Points", "")
 		<ul>
 			<li>Strings concatenate with <code>+</code>; numbers use arithmetic operators.</li>
 			<li>Booleans support the usual logical operators.</li>

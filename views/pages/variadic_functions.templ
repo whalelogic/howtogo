@@ -1,0 +1,211 @@
+package pages
+
+import "github.com/whalelogic/howtogo/views/layouts"
+import "github.com/whalelogic/howtogo/views/components"
+
+templ VariadicFunctions() {
+	@layouts.Base("Variadic Functions | How to Go") {
+		@components.Breadcrumb("variadic-functions", "Variadic Functions")
+		@components.CustomHeader("Variadic Functions", "Closures")
+		<p>Variadic functions can be called with any number of trailing arguments. They are useful when you need to work with an arbitrary number of parameters of the same type.</p>
+		<h2>Basic Variadic Function</h2>
+		<p>Use <code>...</code> before the type to indicate a variadic parameter. The function receives a slice of that type:</p>
+		<div class="code-block">
+			<pre>
+				<code class="language-go">
+					@templ.Raw(`package main
+
+import "fmt"
+
+// Variadic function that sums any number of ints
+func sum(nums ...int) int {
+    total := 0
+    // nums is a slice within the function
+    for _, num := range nums {
+        total += num
+    }
+    return total
+}
+
+func main() {
+    // Call with varying numbers of arguments
+    fmt.Println(sum(1, 2))
+    fmt.Println(sum(1, 2, 3))
+    fmt.Println(sum(1, 2, 3, 4, 5))
+    
+    // Can also call with no arguments
+    fmt.Println(sum())
+}`)
+				</code>
+			</pre>
+		</div>
+		<span class="output-label">Output:</span>
+		@components.CodeOutput(`3
+6
+15
+0`)
+		<h2>Variadic with Slice Expansion</h2>
+		<p>If you have a slice, you can pass it to a variadic function using <code>...</code> syntax:</p>
+		<div class="code-block">
+			<pre>
+				<code class="language-go">
+					@templ.Raw(`package main
+
+import "fmt"
+
+func sum(nums ...int) int {
+    total := 0
+    for _, num := range nums {
+        total += num
+    }
+    return total
+}
+
+func main() {
+    // Create a slice
+    numbers := []int{1, 2, 3, 4}
+    
+    // Expand slice into variadic arguments
+    result := sum(numbers...)
+    fmt.Println("Sum of slice:", result)
+    
+    // Can also mix individual args with slice
+    moreNumbers := []int{5, 6}
+    result = sum(moreNumbers...)
+    fmt.Println("Sum of more numbers:", result)
+}`)
+				</code>
+			</pre>
+		</div>
+		<span class="output-label">Output:</span>
+		@components.CodeOutput(`Sum of slice: 10
+Sum of more numbers: 11`)
+		<h2>Variadic Function Patterns</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Pattern</th>
+					<th>Example</th>
+					<th>Description</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td><code>{ "func(args ...T)" }</code></td>
+					<td><code>{ "func sum(nums ...int)" }</code></td>
+					<td>Accept any number of T type args</td>
+				</tr>
+				<tr>
+					<td><code>{ "func(a T, args ...T)" }</code></td>
+					<td><code>{ "func join(sep string, strs ...string)" }</code></td>
+					<td>Required param + variadic params</td>
+				</tr>
+				<tr>
+					<td><code>{ "func(args ...interface{})" }</code></td>
+					<td><code>{ "fmt.Println(a ...interface{})" }</code></td>
+					<td>Accept any type of arguments</td>
+				</tr>
+				<tr>
+					<td><code>{ "func(args ...T) R" }</code></td>
+					<td><code>{ "func max(nums ...int) int" }</code></td>
+					<td>Variadic with return value</td>
+				</tr>
+				<tr>
+					<td><code>{ "funcName(slice...)" }</code></td>
+					<td><code>{ "sum(numbers...)" }</code></td>
+					<td>Expand slice to variadic args</td>
+				</tr>
+			</tbody>
+		</table>
+		<h2>Variadic Function Characteristics</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Feature</th>
+					<th>Description</th>
+					<th>Example</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Internal Type</td>
+					<td>Variadic params are received as a slice</td>
+					<td><code>{ "nums ...int" }</code> becomes <code>{ "[]int" }</code></td>
+				</tr>
+				<tr>
+					<td>Position</td>
+					<td>Must be the last parameter</td>
+					<td><code>{ "func(name string, nums ...int)" }</code></td>
+				</tr>
+				<tr>
+					<td>Zero Arguments</td>
+					<td>Can be called with no arguments</td>
+					<td><code>{ "sum()" }</code> works, nums will be empty slice</td>
+				</tr>
+				<tr>
+					<td>Slice Expansion</td>
+					<td>Slices can be expanded with <code>...</code></td>
+					<td><code>{ "sum(slice...)" }</code></td>
+				</tr>
+				<tr>
+					<td>One Variadic</td>
+					<td>Only one variadic parameter allowed</td>
+					<td>Can't have <code>{ "func(a ...int, b ...string)" }</code></td>
+				</tr>
+			</tbody>
+		</table>
+		<h2>Common Use Cases</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Use Case</th>
+					<th>Function</th>
+					<th>Description</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Formatted Output</td>
+					<td><code>{ "fmt.Println(a ...interface{})" }</code></td>
+					<td>Print any number of values</td>
+				</tr>
+				<tr>
+					<td>String Joining</td>
+					<td><code>{ "func join(sep string, strs ...string)" }</code></td>
+					<td>Concatenate multiple strings</td>
+				</tr>
+				<tr>
+					<td>Aggregation</td>
+					<td><code>{ "func max(nums ...int) int" }</code></td>
+					<td>Find maximum of variable numbers</td>
+				</tr>
+				<tr>
+					<td>Append</td>
+					<td><code>append(slice, elems...)</code></td>
+					<td>Add multiple elements to slice</td>
+				</tr>
+				<tr>
+					<td>Error Formatting</td>
+					<td><code>{ "fmt.Errorf(format, args ...interface{})" }</code></td>
+					<td>Format error with multiple values</td>
+				</tr>
+			</tbody>
+		</table>
+		<h2>Key Points</h2>
+		<ul>
+			<li>Variadic parameters allow functions to accept any number of arguments</li>
+			<li>Declared with <code>...</code> before the type: <code>{ "args ...T" }</code></li>
+			<li>Must be the last parameter in the function signature</li>
+			<li>Inside the function, variadic parameters are treated as a slice</li>
+			<li>Call with individual arguments or expand a slice with <code>slice...</code></li>
+			<li>Can be called with zero arguments (empty slice)</li>
+			<li>Only one variadic parameter is allowed per function</li>
+			<li>Common in standard library functions like <code>fmt.Println</code> and <code>append</code></li>
+		</ul>
+		<div class="nav-buttons">
+			@components.Button("Previous: Multiple Return Values", "/multiple-return-values")
+			@components.Button("Next: Closures", "/closures")
+		</div>
+		@components.Footer()
+	}
+}

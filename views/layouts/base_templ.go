@@ -51,7 +51,7 @@ func Base(title string) templ.Component {
 		var templ_7745c5c3_Var3 string
 		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(title)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/layouts/base.templ`, Line: 22, Col: 44}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/layouts/base.templ`, Line: 20, Col: 44}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 		if templ_7745c5c3_Err != nil {
@@ -64,13 +64,13 @@ func Base(title string) templ.Component {
 		var templ_7745c5c3_Var4 string
 		templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(title)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/layouts/base.templ`, Line: 29, Col: 49}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/layouts/base.templ`, Line: 26, Col: 49}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "\"><meta property=\"twitter:description\" content=\"Learn Go in 2025 with hands-on examples. A comprehensive guide covering variables, functions, concurrency, and more.\"><meta property=\"twitter:image\" content=\"https://howtogo.dev/icons/devicon-master/icons/go/go-original.svg\"><!-- Favicon --><link rel=\"icon\" type=\"image/x-icon\" href=\"/favicon.ico\"><link rel=\"stylesheet\" href=\"/css/style.css\"><link rel=\"stylesheet\" href=\"https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap\"><link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/base16/summerfruit-light.min.css\"><script src=\"//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js\"></script><script>hljs.highlightAll();</script><!-- JSON-LD Structured Data --><script type=\"application/ld+json\">\n            {\n              \"@context\": \"https://schema.org\",\n              \"@type\": \"WebSite\",\n              \"name\": \"How to Go\",\n              \"url\": \"https://howtogo.dev\",\n              \"description\": \"Learn Go programming with hands-on examples\",\n              \"author\": {\n                \"@type\": \"Organization\",\n                \"name\": \"WhaleLogic\"\n              },\n              \"programmingLanguage\": {\n                \"@type\": \"ComputerLanguage\",\n                \"name\": \"Go\"\n              }\n            }\n            </script></head><body><div class=\"container\"><h2 align=\"center\" class=\"site-title\"><a href=\"/\"><img src=\"/icons/devicon-master/icons/go/go-original.svg\" alt=\"Go Gopher\" class=\"gopher-icon\"> How to Go</a></h2><main>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "\"><meta property=\"twitter:description\" content=\"Learn Go in 2025 with hands-on examples. A comprehensive guide covering variables, functions, concurrency, and more.\"><meta property=\"twitter:image\" content=\"https://howtogo.dev/icons/devicon-master/icons/go/go-original.svg\"><!-- Favicon --><link rel=\"icon\" type=\"image/x-icon\" href=\"/favicon.ico\"><link rel=\"stylesheet\" href=\"/css/style.css\"><link rel=\"stylesheet\" href=\"https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500;700&display=swap\"><link rel=\"stylesheet\" href=\"https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap\"><link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/base16/google-light.min.css\"><script src=\"//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js\"></script><script>hljs.highlightAll();</script><!-- JSON-LD Structured Data --><script type=\"application/ld+json\">\n            {\n              \"@context\": \"https://schema.org\",\n              \"@type\": \"WebSite\",\n              \"name\": \"How to Go\",\n              \"url\": \"https://howtogo.dev\",\n              \"description\": \"Learn Go programming with hands-on examples\",\n              \"author\": {\n                \"@type\": \"Organization\",\n                \"name\": \"WhaleLogic\"\n              },\n              \"programmingLanguage\": {\n                \"@type\": \"ComputerLanguage\",\n                \"name\": \"Go\"\n              }\n            }\n            </script></head><body><div class=\"container\"><h2 align=\"center\" class=\"site-title\"><a href=\"/\"><img src=\"/icons/devicon-master/icons/go/go-original.svg\" alt=\"Go Gopher\" class=\"gopher-icon\"> How to Go</a></h2><main>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

@@ -6,9 +6,10 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"github.com/whalelogic/howtogo/views/pages"
-	"github.com/a-h/templ"
 	"log"
+
+	"github.com/a-h/templ"
+	"github.com/whalelogic/howtogo/views/pages"
 )
 
 func render(c *gin.Context, status int, component templ.Component) {
@@ -66,3 +67,30 @@ func MapsHandler(c *gin.Context) {
 	render(c, http.StatusOK, pages.Maps())
 }
 
+func RangeHandler(c *gin.Context) {
+	render(c, http.StatusOK, pages.Range())
+}
+
+func FunctionsHandler(c *gin.Context) {
+	render(c, http.StatusOK, pages.Functions())
+}
+
+func MultipleReturnValuesHandler(c *gin.Context) {
+	render(c, http.StatusOK, pages.MultipleReturnValues())
+}
+
+func VariadicFunctionsHandler(c *gin.Context) {
+	render(c, http.StatusOK, pages.VariadicFunctions())
+}
+
+func ClosuresHandler(c *gin.Context) {
+	render(c, http.StatusOK, pages.Closures())
+}
+
+func RecursionHandler(c *gin.Context) {
+	render(c, http.StatusOK, pages.Recursion())
+}
+
+func PointersHandler(c *gin.Context) {
+	render(c, http.StatusOK, pages.Pointers())
+}

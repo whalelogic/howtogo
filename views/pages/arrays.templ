@@ -3,16 +3,15 @@ package pages
 import "github.com/whalelogic/howtogo/views/layouts"
 import "github.com/whalelogic/howtogo/views/components"
 
-
 templ Arrays() {
-    @layouts.Base("Arrays | How to Go") {
-    @components.Breadcrumb("arrays", "Arrays")
-    @components.CustomHeader("Arrays")
-    <p>Arrays in Go are fixed-size collections of elements of the same type. They are useful for storing a known number of items. Here's an example of how to declare and use an array in Go:</p>
-    <div class="code-block">
-      <pre>
-        <code class="language-go">
-          @templ.Raw(`package main
+	@layouts.Base("Arrays | How to Go") {
+		@components.Breadcrumb("arrays", "Arrays")
+		@components.CustomHeader("Arrays", "Slices")
+		<p>Arrays in Go are fixed-size collections of elements of the same type. They are useful for storing a known number of items. Here's an example of how to declare and use an array in Go:</p>
+		<div class="code-block">
+			<pre>
+				<code class="language-go">
+					@templ.Raw(`package main
 import "fmt"
 func main() {
   // Declare an array of integers with a size of 5
@@ -35,158 +34,154 @@ func main() {
   // Get the length of the array
   fmt.Println("Length of array:", len(numbers))
 }`)
-        </code>
-      </pre>
-    </div>
-    <span class="output-label">Output:</span>
-    @components.CodeOutput(`Array: [10 20 30 40 50]
+				</code>
+			</pre>
+		</div>
+		<span class="output-label">Output:</span>
+		@components.CodeOutput(`Array: [10 20 30 40 50]
 First element: 10
 Second element: 20
 Length of array: 5`)
-    <h2>Array Declaration Patterns</h2>
-    <table class="reference-table">
-      <thead>
-        <tr>
-          <th>Pattern</th>
-          <th>Example</th>
-          <th>Description</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><code>var name [size]type</code></td>
-          <td><code>var a [5]int</code></td>
-          <td>Declare array with zero values</td>
-        </tr>
-        <tr>
-          <td><code>{ "[size]type{values}" }</code></td>
-          <td><code>{ "[3]int{1, 2, 3}" }</code></td>
-          <td>Declare and initialize with values</td>
-        </tr>
-        <tr>
-          <td><code>{ "[...]type{values}" }</code></td>
-          <td><code>{ "[...]int{1, 2, 3, 4}" }</code></td>
-          <td>Size inferred from values</td>
-        </tr>
-        <tr>
-          <td><code>{ "[size]type{index: value}" }</code></td>
-          <td><code>{ "[5]int{2: 10, 4: 20}" }</code></td>
-          <td>Initialize specific indices</td>
-        </tr>
-        <tr>
-          <td><code>[size][size]type</code></td>
-          <td><code>{ "[3][2]int{{1,2},{3,4},{5,6}}" }</code></td>
-          <td>Multi-dimensional arrays</td>
-        </tr>
-      </tbody>
-    </table>
-
-    <h2>Array Operations</h2>
-    <table class="reference-table">
-      <thead>
-        <tr>
-          <th>Operation</th>
-          <th>Syntax</th>
-          <th>Example</th>
-          <th>Description</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Access element</td>
-          <td><code>array[index]</code></td>
-          <td><code>a[0]</code></td>
-          <td>Get or set element at index</td>
-        </tr>
-        <tr>
-          <td>Get length</td>
-          <td><code>len(array)</code></td>
-          <td><code>len(a)</code></td>
-          <td>Returns the number of elements</td>
-        </tr>
-        <tr>
-          <td>Iterate</td>
-          <td><code>{ "for i, v := range array" }</code></td>
-          <td><code>{ "for i, v := range a" }</code></td>
-          <td>Loop through index and value</td>
-        </tr>
-        <tr>
-          <td>Compare</td>
-          <td><code>array1 == array2</code></td>
-          <td><code>a == b</code></td>
-          <td>Arrays of same type/size are comparable</td>
-        </tr>
-        <tr>
-          <td>Copy</td>
-          <td><code>b := a</code></td>
-          <td><code>b := a</code></td>
-          <td>Creates a copy (value type)</td>
-        </tr>
-        <tr>
-          <td>Pass to function</td>
-          <td><code>{ "func(arr [5]int)" }</code></td>
-          <td><code>process(a)</code></td>
-          <td>Passed by value (copied)</td>
-        </tr>
-      </tbody>
-    </table>
-
-    <h2>Array vs Slice</h2>
-    <table class="reference-table">
-      <thead>
-        <tr>
-          <th>Feature</th>
-          <th>Array</th>
-          <th>Slice</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Size</td>
-          <td>Fixed at compile time</td>
-          <td>Dynamic, can grow/shrink</td>
-        </tr>
-        <tr>
-          <td>Declaration</td>
-          <td><code>[5]int</code></td>
-          <td><code>[]int</code></td>
-        </tr>
-        <tr>
-          <td>Memory</td>
-          <td>Value type (copied)</td>
-          <td>Reference type (points to array)</td>
-        </tr>
-        <tr>
-          <td>Type identity</td>
-          <td>Size is part of type</td>
-          <td>Size not part of type</td>
-        </tr>
-        <tr>
-          <td>Use case</td>
-          <td>Known, fixed number of elements</td>
-          <td>Variable number of elements</td>
-        </tr>
-        <tr>
-          <td>Performance</td>
-          <td>Stack allocated, predictable</td>
-          <td>Heap allocated, flexible</td>
-        </tr>
-      </tbody>
-    </table>
-
-    <h2>Key Points</h2>
-    <ul>
-      <li>Array size is fixed and part of its type: <code>[3]int</code> and <code>[4]int</code> are different types</li>
-      <li>Arrays are value types - assignment and function parameters create copies</li>
-      <li>Use <code>[...]</code> to let compiler infer size from initialization</li>
-      <li>Zero value of array elements depends on the element type</li>
-      <li>Slices are almost always preferred over arrays for flexibility</li>
-      <li>Arrays are useful for fixed-size buffers or when you need value semantics</li>
-    </ul>
-
-    <div class="nav-buttons">
-      @components.Button("Previous: Switch", "/switch")
-      @components.Button("Next: Slices", "/slices")
-    </div>
-  }
+		<h2>Array Declaration Patterns</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Pattern</th>
+					<th>Example</th>
+					<th>Description</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td><code>var name [size]type</code></td>
+					<td><code>var a [5]int</code></td>
+					<td>Declare array with zero values</td>
+				</tr>
+				<tr>
+					<td><code>{ "[size]type{values}" }</code></td>
+					<td><code>{ "[3]int{1, 2, 3}" }</code></td>
+					<td>Declare and initialize with values</td>
+				</tr>
+				<tr>
+					<td><code>{ "[...]type{values}" }</code></td>
+					<td><code>{ "[...]int{1, 2, 3, 4}" }</code></td>
+					<td>Size inferred from values</td>
+				</tr>
+				<tr>
+					<td><code>{ "[size]type{index: value}" }</code></td>
+					<td><code>{ "[5]int{2: 10, 4: 20}" }</code></td>
+					<td>Initialize specific indices</td>
+				</tr>
+				<tr>
+					<td><code>[size][size]type</code></td>
+					<td><code>{ "[3][2]int{{1,2},{3,4},{5,6}}" }</code></td>
+					<td>Multi-dimensional arrays</td>
+				</tr>
+			</tbody>
+		</table>
+		<h2>Array Operations</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Operation</th>
+					<th>Syntax</th>
+					<th>Example</th>
+					<th>Description</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Access element</td>
+					<td><code>array[index]</code></td>
+					<td><code>a[0]</code></td>
+					<td>Get or set element at index</td>
+				</tr>
+				<tr>
+					<td>Get length</td>
+					<td><code>len(array)</code></td>
+					<td><code>len(a)</code></td>
+					<td>Returns the number of elements</td>
+				</tr>
+				<tr>
+					<td>Iterate</td>
+					<td><code>{ "for i, v := range array" }</code></td>
+					<td><code>{ "for i, v := range a" }</code></td>
+					<td>Loop through index and value</td>
+				</tr>
+				<tr>
+					<td>Compare</td>
+					<td><code>array1 == array2</code></td>
+					<td><code>a == b</code></td>
+					<td>Arrays of same type/size are comparable</td>
+				</tr>
+				<tr>
+					<td>Copy</td>
+					<td><code>b := a</code></td>
+					<td><code>b := a</code></td>
+					<td>Creates a copy (value type)</td>
+				</tr>
+				<tr>
+					<td>Pass to function</td>
+					<td><code>{ "func(arr [5]int)" }</code></td>
+					<td><code>process(a)</code></td>
+					<td>Passed by value (copied)</td>
+				</tr>
+			</tbody>
+		</table>
+		<h2>Array vs Slice</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Feature</th>
+					<th>Array</th>
+					<th>Slice</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Size</td>
+					<td>Fixed at compile time</td>
+					<td>Dynamic, can grow/shrink</td>
+				</tr>
+				<tr>
+					<td>Declaration</td>
+					<td><code>[5]int</code></td>
+					<td><code>[]int</code></td>
+				</tr>
+				<tr>
+					<td>Memory</td>
+					<td>Value type (copied)</td>
+					<td>Reference type (points to array)</td>
+				</tr>
+				<tr>
+					<td>Type identity</td>
+					<td>Size is part of type</td>
+					<td>Size not part of type</td>
+				</tr>
+				<tr>
+					<td>Use case</td>
+					<td>Known, fixed number of elements</td>
+					<td>Variable number of elements</td>
+				</tr>
+				<tr>
+					<td>Performance</td>
+					<td>Stack allocated, predictable</td>
+					<td>Heap allocated, flexible</td>
+				</tr>
+			</tbody>
+		</table>
+		<h2>Key Points</h2>
+		<ul>
+			<li>Array size is fixed and part of its type: <code>[3]int</code> and <code>[4]int</code> are different types</li>
+			<li>Arrays are value types - assignment and function parameters create copies</li>
+			<li>Use <code>[...]</code> to let compiler infer size from initialization</li>
+			<li>Zero value of array elements depends on the element type</li>
+			<li>Slices are almost always preferred over arrays for flexibility</li>
+			<li>Arrays are useful for fixed-size buffers or when you need value semantics</li>
+		</ul>
+		<div class="nav-buttons">
+			@components.Button("Previous: Switch", "/switch")
+			@components.Button("Next: Slices", "/slices")
+		</div>
+	}
 }

@@ -65,7 +65,7 @@ func Values() templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = components.CustomHeader("Values").Render(ctx, templ_7745c5c3_Buffer)
+			templ_7745c5c3_Err = components.CustomHeader("Values", "Variables").Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -89,7 +89,7 @@ func Values() templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = components.CustomHeader("Key Points").Render(ctx, templ_7745c5c3_Buffer)
+			templ_7745c5c3_Err = components.CustomHeader("Key Points", "").Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

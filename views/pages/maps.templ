@@ -3,13 +3,11 @@ package pages
 import "github.com/whalelogic/howtogo/views/layouts"
 import "github.com/whalelogic/howtogo/views/components"
 
-
 templ Maps() {
 	@layouts.Base("Maps | How to Go") {
 		@components.Breadcrumb("maps", "Maps")
-		@components.CustomHeader("Maps")
+		@components.CustomHeader("Maps", "Range")
 		<p>Maps are Go's built-in associative data type, also known as hash tables or dictionaries in other languages. Maps store key-value pairs.</p>
-		
 		<h2>Creating and Using Maps</h2>
 		<p>Maps must be initialized before use with <code>{ "make" }</code> or a map literal:</p>
 		<div class="code-block">
@@ -48,7 +46,6 @@ func main() {
 v1: 7
 len: 2
 map: map[k1:7]`)
-
 		<h2>Checking Key Existence</h2>
 		<p>The optional second return value indicates if the key was present:</p>
 		<div class="code-block">
@@ -80,7 +77,6 @@ func main() {
 		@components.CodeOutput(`foo exists: true value: 1
 baz exists: false value: 0
 Found: 1`)
-
 		<h2>Map Literals</h2>
 		<p>You can declare and initialize a map in one line:</p>
 		<div class="code-block">
@@ -108,7 +104,6 @@ func main() {
 		<span class="output-label">Output:</span>
 		@components.CodeOutput(`map: map[bar:2 foo:1]
 empty: map[]`)
-
 		<h2>Iterating Over Maps</h2>
 		<p>Use <code>{ "range" }</code> to iterate over key-value pairs:</p>
 		<div class="code-block">
@@ -142,7 +137,6 @@ func main() {
 b -> beta
 key: a
 key: b`)
-
 		<h2>Map Declaration Patterns</h2>
 		<table class="reference-table">
 			<thead>
@@ -180,7 +174,6 @@ key: b`)
 				</tr>
 			</tbody>
 		</table>
-
 		<h2>Map Operations</h2>
 		<table class="reference-table">
 			<thead>
@@ -236,7 +229,6 @@ key: b`)
 				</tr>
 			</tbody>
 		</table>
-
 		<h2>Map Key Types</h2>
 		<table class="reference-table">
 			<thead>
@@ -269,7 +261,6 @@ key: b`)
 				</tr>
 			</tbody>
 		</table>
-
 		<h2>Map Characteristics</h2>
 		<table class="reference-table">
 			<thead>
@@ -312,7 +303,6 @@ key: b`)
 				</tr>
 			</tbody>
 		</table>
-
 		<h2>Common Patterns</h2>
 		<table class="reference-table">
 			<thead>
@@ -355,7 +345,6 @@ key: b`)
 				</tr>
 			</tbody>
 		</table>
-
 		<h2>Key Points</h2>
 		<ul>
 			<li>Maps must be initialized with <code>{ "make" }</code> or a literal before use</li>
@@ -366,7 +355,6 @@ key: b`)
 			<li>Maps are not safe for concurrent use without synchronization</li>
 			<li>Key types must be comparable - slices, maps, and functions cannot be keys</li>
 		</ul>
-
 		<div class="nav-buttons">
 			@components.Button("Previous: Slices", "/slices")
 			@components.Button("Next: Range", "/range")

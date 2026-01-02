@@ -3,13 +3,11 @@ package pages
 import "github.com/whalelogic/howtogo/views/layouts"
 import "github.com/whalelogic/howtogo/views/components"
 
-
 templ Slices() {
 	@layouts.Base("Slices | How to Go") {
 		@components.Breadcrumb("slices", "Slices")
-		@components.CustomHeader("Slices")
+		@components.CustomHeader("Slices", "Maps")
 		<p>Slices are a key data type in Go, providing a more powerful interface to sequences than arrays. Unlike arrays, slices are dynamically-sized and flexible.</p>
-		
 		<h2>Creating Slices</h2>
 		<p>Slices can be created in multiple ways:</p>
 		<div class="code-block">
@@ -54,7 +52,6 @@ get: c
 len: 3
 appended: [a b c d e f]
 copied: [a b c d e f]`)
-
 		<h2>Slice Operator</h2>
 		<p>Slices support a "slice" operator with the syntax <code>slice[low:high]</code>:</p>
 		<div class="code-block">
@@ -83,7 +80,6 @@ func main() {
 		@components.CodeOutput(`sl1: [c d e]
 sl2: [a b c d e]
 sl3: [c d e f]`)
-
 		<h2>Slice Literals</h2>
 		<p>You can declare and initialize a slice in one line:</p>
 		<div class="code-block">
@@ -115,7 +111,6 @@ func main() {
 		<span class="output-label">Output:</span>
 		@components.CodeOutput(`slice literal: [g h i]
 2d:  [[0] [1 2] [2 3 4]]`)
-
 		<h2>Slice Declaration Patterns</h2>
 		<table class="reference-table">
 			<thead>
@@ -158,7 +153,6 @@ func main() {
 				</tr>
 			</tbody>
 		</table>
-
 		<h2>Slice Operations</h2>
 		<table class="reference-table">
 			<thead>
@@ -214,7 +208,6 @@ func main() {
 				</tr>
 			</tbody>
 		</table>
-
 		<h2>Slice Internals</h2>
 		<table class="reference-table">
 			<thead>
@@ -257,7 +250,6 @@ func main() {
 				</tr>
 			</tbody>
 		</table>
-
 		<h2>Common Patterns</h2>
 		<table class="reference-table">
 			<thead>
@@ -300,7 +292,6 @@ func main() {
 				</tr>
 			</tbody>
 		</table>
-
 		<h2>Key Points</h2>
 		<ul>
 			<li>Slices are reference types that point to an underlying array</li>
@@ -311,7 +302,6 @@ func main() {
 			<li>Nil slices can be appended to and work with most operations</li>
 			<li>Slicing doesn't copy data, it creates a new slice header</li>
 		</ul>
-
 		<div class="nav-buttons">
 			@components.Button("Previous: Arrays", "/arrays")
 			@components.Button("Next: Maps", "/maps")

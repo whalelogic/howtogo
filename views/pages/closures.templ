@@ -1,0 +1,226 @@
+package pages
+
+import "github.com/whalelogic/howtogo/views/layouts"
+import "github.com/whalelogic/howtogo/views/components"
+
+templ Closures() {
+	@layouts.Base("Closures | How to Go") {
+		@components.Breadcrumb("closures", "Closures")
+		@components.CustomHeader("Closures", "Recursion")
+		<p>Go supports anonymous functions which can form closures. A closure is a function value that references variables from outside its body. The function may access and assign to the referenced variables.</p>
+		<h2>Basic Closure</h2>
+		<p>This example shows a closure that captures and modifies a variable from its outer scope:</p>
+		<div class="code-block">
+			<pre>
+				<code class="language-go">
+					@templ.Raw(`package main
+
+import "fmt"
+
+// Returns a function that generates sequential integers
+func intSeq() func() int {
+    i := 0
+    return func() int {
+        i++  // Closure captures and modifies i
+        return i
+    }
+}
+
+func main() {
+    // Create a new integer sequence generator
+    nextInt := intSeq()
+    
+    // Each call increments and returns i
+    fmt.Println(nextInt())
+    fmt.Println(nextInt())
+    fmt.Println(nextInt())
+    
+    // New closure has its own state
+    newInts := intSeq()
+    fmt.Println(newInts())
+}`)
+				</code>
+			</pre>
+		</div>
+		<span class="output-label">Output:</span>
+		@components.CodeOutput(`1
+2
+3
+1`)
+		<h2>Closure as Function Argument</h2>
+		<p>Closures are often used as arguments to higher-order functions or for callbacks:</p>
+		<div class="code-block">
+			<pre>
+				<code class="language-go">
+					@templ.Raw(`package main
+
+import "fmt"
+
+func filter(nums []int, predicate func(int) bool) []int {
+    result := []int{}
+    for _, num := range nums {
+        if predicate(num) {
+            result = append(result, num)
+        }
+    }
+    return result
+}
+
+func main() {
+    numbers := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
+    
+    // Closure that captures threshold value
+    threshold := 5
+    greaterThan := func(n int) bool {
+        return n > threshold
+    }
+    
+    filtered := filter(numbers, greaterThan)
+    fmt.Println("Greater than", threshold, ":", filtered)
+    
+    // Inline closure
+    evens := filter(numbers, func(n int) bool {
+        return n%2 == 0
+    })
+    fmt.Println("Even numbers:", evens)
+}`)
+				</code>
+			</pre>
+		</div>
+		<span class="output-label">Output:</span>
+		@components.CodeOutput(`Greater than 5 : [6 7 8 9 10]
+Even numbers: [2 4 6 8 10]`)
+		<h2>Closure Patterns</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Pattern</th>
+					<th>Example</th>
+					<th>Description</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Function Generator</td>
+					<td><code>{ "func() func() int" }</code></td>
+					<td>Return a closure with state</td>
+				</tr>
+				<tr>
+					<td>Inline Closure</td>
+					<td><code>{ "func(n int) bool { return n > 0 }" }</code></td>
+					<td>Anonymous function capturing outer variables</td>
+				</tr>
+				<tr>
+					<td>Callback</td>
+					<td><code>{ "onClick(func() { ... })" }</code></td>
+					<td>Pass closure as callback function</td>
+				</tr>
+				<tr>
+					<td>Encapsulation</td>
+					<td><code>{ "func() (get, set func())" }</code></td>
+					<td>Return multiple closures sharing state</td>
+				</tr>
+				<tr>
+					<td>Deferred Closure</td>
+					<td><code>{ "defer func() { ... }()" }</code></td>
+					<td>Capture variables for deferred execution</td>
+				</tr>
+			</tbody>
+		</table>
+		<h2>Closure Characteristics</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Feature</th>
+					<th>Description</th>
+					<th>Behavior</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Variable Capture</td>
+					<td>Closures capture variables by reference</td>
+					<td>Changes persist across calls</td>
+				</tr>
+				<tr>
+					<td>Independent State</td>
+					<td>Each closure has its own state</td>
+					<td>Multiple closures don't share captured vars</td>
+				</tr>
+				<tr>
+					<td>Lifetime</td>
+					<td>Captured variables live as long as closure exists</td>
+					<td>Prevents garbage collection of captured vars</td>
+				</tr>
+				<tr>
+					<td>Anonymous</td>
+					<td>Closures are typically anonymous functions</td>
+					<td>Defined without a name</td>
+				</tr>
+				<tr>
+					<td>First-class</td>
+					<td>Can be assigned, passed, returned</td>
+					<td>Treated like any other value</td>
+				</tr>
+			</tbody>
+		</table>
+		<h2>Common Use Cases</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Use Case</th>
+					<th>Pattern</th>
+					<th>Purpose</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Iterators</td>
+					<td>Function returning closure with state</td>
+					<td>Generate sequential values</td>
+				</tr>
+				<tr>
+					<td>Event Handlers</td>
+					<td>Closure capturing context</td>
+					<td>React to events with specific context</td>
+				</tr>
+				<tr>
+					<td>Configuration</td>
+					<td>Factory function with parameters</td>
+					<td>Create customized functions</td>
+				</tr>
+				<tr>
+					<td>Goroutines</td>
+					<td>Launch goroutine with closure</td>
+					<td>Concurrent execution with captured state</td>
+				</tr>
+				<tr>
+					<td>Deferred Cleanup</td>
+					<td><code>{ "defer" }</code> with closure</td>
+					<td>Resource cleanup with current state</td>
+				</tr>
+				<tr>
+					<td>Functional Programming</td>
+					<td>Map, filter, reduce patterns</td>
+					<td>Transform collections with custom logic</td>
+				</tr>
+			</tbody>
+		</table>
+		<h2>Key Points</h2>
+		<ul>
+			<li>Closures are anonymous functions that capture variables from their surrounding scope</li>
+			<li>Captured variables are referenced, not copied (changes persist)</li>
+			<li>Each closure instance maintains its own set of captured variables</li>
+			<li>Closures extend the lifetime of captured variables</li>
+			<li>Useful for callbacks, iterators, and maintaining state without explicit structs</li>
+			<li>Common in goroutines to capture loop variables correctly</li>
+			<li>Be careful with loop variables in closures - they may need explicit copies</li>
+			<li>Closures enable functional programming patterns in Go</li>
+		</ul>
+		<div class="nav-buttons">
+			@components.Button("Previous: Variadic Functions", "/variadic-functions")
+			@components.Button("Next: Recursion", "/recursion")
+		</div>
+		@components.Footer()
+	}
+}
