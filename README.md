@@ -118,6 +118,13 @@ how-to-go/
 ├─ assets/               
 │
 └─ README.md
+```
+
+## Screenshots
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/92ae5dc6-b19f-4e3d-a855-673b280c12fd" width="45%" />
+  <img src="https://github.com/user-attachments/assets/0e094107-42f1-4422-8a15-1f9021ea12e2" width="45%" /> 
+</p>
 
 ## Author
 
