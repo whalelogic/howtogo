@@ -15,6 +15,7 @@ func main() {
 	}
 
 	r.Static("/css", "./static/css")
+	r.Static("/js", "./static/js")
 	r.Static("/icons", "./static/icons")
 	r.StaticFile("/favicon.ico", "./favicon.ico")
 	r.StaticFile("/robots.txt", "./static/robots.txt")

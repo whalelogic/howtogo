@@ -5,21 +5,20 @@
   --color-text-main: #2a2a2f;
   --color-text-muted: #666666;
   --color-bg-body: #fdfdfd;
-  --color-bg-code: #1e1e1e; /* Matches the dark theme in your image */
+  --color-bg-code: #1e1e1e;
   --color-border: #e0e0e0;
 
   /* Spacing & Layout */
-  --spacing-sm: 0.5rem;   /* 8px */
-  --spacing-md: 1rem;     /* 16px */
-  --spacing-lg: 2rem;     /* 32px */
-  --spacing-xl: 4rem;     /* 64px */
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 2rem;
+  --spacing-xl: 4rem;
   --container-width: 860px;
   --radius-md: 8px;
 
   /* Typography */
-  /* Adjust Ubuntu font back to a google font maybe */
-  --font-sans: "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  --font-mono: "Roboto Mono", "Fira Code", Consolas, "Roboto Mono", monospace;
+  --font-sans: "Google Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  --font-mono: "Google Sans Mono", "JetBrains Mono", Consolas, "Roboto Mono", monospace;
 }
 
 /* --- Reset & Base --- */
@@ -27,7 +26,8 @@
 
 body {
   font-family: var(--font-sans);
-  font-size: 16px; /* Increased from 14px for modern readability standards */
+  font-size: 16px;
+  font-weight: 400;
   line-height: 1.6;
   color: var(--color-text-main);
   background: var(--color-bg-body);
@@ -36,8 +36,16 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-a { color: var(--color-primary); text-decoration: none; transition: color 0.2s; }
-a:hover { color: var(--color-primary-dark); text-decoration: underline; }
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+a:hover {
+  color: var(--color-primary-dark);
+  text-decoration: underline;
+}
 
 /* --- Layout Container --- */
 /* Replaces div#intro and .example fixed widths */
@@ -57,39 +65,20 @@ a:hover { color: var(--color-primary-dark); text-decoration: underline; }
   border-bottom: 1px solid var(--color-border);
 }
 
-.breadcrumbs {
+.breadcrumbs,
+.badges {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+}
+
+.breadcrumbs {
   font-size: 0.9rem;
   color: var(--color-text-muted);
 }
 
-.breadcrumbs a {
-  color: var(--color-primary);
-}
-
-.breadcrumbs a:hover {
-  text-decoration: underline;
-}
-
 .breadcrumb-separator {
   color: var(--color-text-muted);
-}
-
-.badges {
-  display: flex;
-  gap: 0.5rem;
-  align-items: center;
-}
-
-.badges img {
-  height: 20px;
-  transition: opacity 0.2s;
-}
-
-.badges a:hover img {
-  opacity: 0.8;
 }
 
 main {
@@ -111,7 +100,8 @@ main {
   color: #202930;
 }
 
-.site-title a:hover {
+.site-title a:hover,
+.header-side:last-child a:hover {
   text-decoration: none;
 }
 
@@ -123,17 +113,31 @@ main {
 
 /* --- Typography --- */
 h1, h2, h3, h4 {
-  font-family: var(--font-sans);
-  font-weight: 600;
   color: #202930;
   margin-top: 0;
   line-height: 1.25;
-
+  font-weight: 600;
 }
 
-h1 { font-size: 2.0rem; margin-bottom: var(--spacing-md); letter-spacing: -0.02em; }
-h2 { font-size: 1.75rem; margin-top: var(--spacing-lg); margin-bottom: var(--spacing-sm); }
-h3 { font-size: 1.25rem; margin-top: var(--spacing-md); font-weight: 600; }
+h1 {
+  font-size: 2.0rem;
+  font-weight: 700;
+  margin-bottom: var(--spacing-md);
+  letter-spacing: -0.02em;
+}
+
+h2 {
+  font-size: 1.75rem;
+  font-weight: 600;
+  margin-top: var(--spacing-lg);
+  margin-bottom: var(--spacing-sm);
+}
+
+h3 {
+  font-size: 1.25rem;
+  font-weight: 500;
+  margin-top: var(--spacing-md);
+}
 
 /* --- Section Headers --- */
 /* --- Section Header --- */
@@ -153,14 +157,11 @@ h3 { font-size: 1.25rem; margin-top: var(--spacing-md); font-weight: 600; }
 }
 
 .header-side:last-child a {
-  text-decoration: none;
   display: flex;
   align-items: center;
   gap: 0.5rem;
-}
-
-.header-side:last-child a:hover {
-  opacity: 0.7;
+  opacity: 1;
+  transition: opacity 0.2s;
 }
 
 .section-header-icon {
@@ -171,27 +172,36 @@ h3 { font-size: 1.25rem; margin-top: var(--spacing-md); font-weight: 600; }
 }
 
 .section-header-title {
-  font-size: 2rem;
-  font-weight: 700;
-  color: #202930;
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: var(--color-text-main);
   margin: 0;
   letter-spacing: -0.01em;
 }
 
-p { margin-bottom: var(--spacing-md); max-width: 70ch; /* Optimal reading length */ }
+p {
+  margin-bottom: var(--spacing-md);
+  max-width: 70ch;
+}
 
-ul { padding-left: 1.5rem; margin-bottom: var(--spacing-md); }
-li { margin-bottom: 0.25rem; }
+ul {
+  padding-left: 1.5rem;
+  margin-bottom: var(--spacing-md);
+}
+
+li {
+  margin-bottom: 0.25rem;
+}
 
 /* --- Code Blocks --- */
-/* Wrapper to handle the code block look consistently */
 .code-block {
   background: #f5f5f5;
   border-radius: var(--radius-md);
   margin: var(--spacing-md) 0 var(--spacing-lg) 0;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-  overflow: hidden; /* For rounded corners */
+  overflow: hidden;
   border: 1px solid var(--color-border);
+  position: relative;
 }
 
 .code-block pre {
@@ -199,7 +209,6 @@ li { margin-bottom: 0.25rem; }
   background: transparent;
 }
 
-/* The actual pre tag */
 pre {
   font-family: var(--font-mono);
   font-size: 0.9rem;
@@ -207,11 +216,10 @@ pre {
   font-weight: 400;
   padding: var(--spacing-md);
   margin: 0;
-  overflow-x: auto; /* Horizontal scrollbar only when needed */
+  overflow-x: auto;
   white-space: pre;
 }
 
-/* Output block specific styling */
 .output-block {
   background: #f5f5f5;
   color: var(--color-text-main);
@@ -243,7 +251,6 @@ pre {
 .btn {
   display: inline-block;
   padding: 10px 18px;
-  margin: 0;
   border-radius: 6px;
   font-weight: 500;
   font-size: 0.95rem;
@@ -255,24 +262,36 @@ pre {
 
 .btn-primary {
   display: inline-block;
-  background-color: var(--color-primary);
-  color: white !important;
   padding: 10px 18px;
-  margin: 0;
   border-radius: 6px;
   font-weight: 500;
   font-size: 0.95rem;
-  text-decoration: none;
   transition: all 0.15s ease;
+  text-decoration: none;
+  border: none;
   cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: var(--color-primary);
+  color: white !important;
 }
 
 .btn-primary:hover {
   background-color: var(--color-primary-dark);
   text-decoration: none;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
 }
 
 .btn-secondary {
+  display: inline-block;
+  padding: 10px 18px;
+  border-radius: 6px;
+  font-weight: 500;
+  font-size: 0.95rem;
+  transition: all 0.15s ease;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   background-color: #f5f5f5;
   color: var(--color-text-main) !important;
 }
@@ -280,6 +299,7 @@ pre {
 .btn-secondary:hover {
   background-color: #e8e8e8;
   text-decoration: none;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
 }
 
 /* --- Tables --- */
@@ -327,11 +347,9 @@ pre {
 
 .home-intro p {
   max-width: none;
-  margin-left: auto;
-  margin-right: auto;
+  margin: 0 auto;
 }
 
-/* --- Shields Badges --- */
 .shields {
   display: flex;
   justify-content: center;
@@ -341,82 +359,70 @@ pre {
   flex-wrap: wrap;
 }
 
-.shields img {
+.shields img,
+.badges img {
   height: 20px;
   transition: opacity 0.2s;
 }
 
-.shields a:hover img {
+.shields a:hover img,
+.badges a:hover img {
   opacity: 0.8;
 }
 
-ul.examples { 
-  list-style: none; 
-  padding: 0; 
+ul.examples {
+  list-style: none;
+  padding: 0;
   margin: 0 auto;
   text-align: center;
   max-width: 600px;
 }
 
-ul.examples li { 
-  margin-bottom: 2px; 
-  margin-left: 0;
+ul.examples li {
+  margin-bottom: 1px;
 }
 
-ul.examples li a { 
-  display: inline-block; 
-  padding: none; 
-  color: var(--color-text-main); 
-  font-size: 1rem; 
-  font-weight: 400; 
+ul.examples li a {
+  display: inline-block;
+  color: var(--color-text-main);
+  font-size: 1.1rem;
+  transition: background 0.2s, box-shadow 0.2s;
 }
 
 ul.examples li a:hover,
-ul.examples li a:focus,
-ul.examples li a:focus-visible { 
-  background: transparent; 
-  text-decoration: underline; 
-  outline: none; 
-  box-shadow: none !important; 
+ul.examples li a:focus {
+  background: transparent;
+  text-decoration: underline;
+  outline: none;
+  box-shadow: none;
 }
 
 /* --- Footer --- */
-footer {
+footer,
+p.footer {
   margin-top: var(--spacing-xl);
   padding: var(--spacing-lg) 0;
   border-top: 1px solid var(--color-border);
   color: var(--color-text-muted);
   font-size: 0.875rem;
   text-align: center;
+  max-width: none;
 }
 
-/* Legacy footer class support */
-p.footer {
-  margin-top: 60px;
-  max-width: none; !important
+p.footer a {
   color: var(--color-text-muted);
-  font-size: 13px;
-  text-align: center;
-  border-top: 1px solid var(--color-border);
-  padding-top: 20px;
-}
-
-p.footer a { 
-  color: var(--color-text-muted); 
-  text-decoration: underline; 
-  text-align: center;
+  text-decoration: underline;
 }
 
 .brand-name {
-    color: #02c7ea; /* Go Blue */
-    font-weight: bold;
-    font-style: italic; /* Only if you really want it italicized */
+  color: #02c7ea;
+  font-weight: 600;
+  font-style: italic;
 }
 
-
-.gh-link img { 
-  vertical-align: middle; 
-  margin-right: 6px; 
+.gh-link img {
+  vertical-align: middle;
+  margin-right: 6px;
 }
 
 /* --- Mobile Responsiveness --- */
@@ -425,14 +431,67 @@ p.footer a {
     --spacing-lg: 1.5rem;
     --spacing-xl: 3rem;
   }
-  
-  h1 { font-size: 2rem; }
-  h2 { font-size: 1.5rem; }
-  
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+
   .nav-buttons {
     flex-direction: column;
     gap: var(--spacing-md);
   }
-  
-  .btn { width: 100%; justify-content: center; }
+
+  .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+.clipboard-btn {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 4px 8px;
+  cursor: pointer;
+  opacity: 1;
+  transition: background 0.2s;
+}
+
+.clipboard-btn:hover {
+  background: #f0f0f0;
+}
+
+.clipboard-btn img {
+  width: 16px;
+  height: 18px;
+  display: block;
+}
+
+#back-to-top {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 50px;
+  height: 50px;
+  background: var(--color-primary);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  font-size: 24px;
+  cursor: pointer;
+  display: none;
+  transition: background 0.3s;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+#back-to-top:hover {
+  background: var(--color-primary-dark);
 }

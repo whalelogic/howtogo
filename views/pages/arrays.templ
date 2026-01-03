@@ -3,15 +3,8 @@ package pages
 import "github.com/whalelogic/howtogo/views/layouts"
 import "github.com/whalelogic/howtogo/views/components"
 
-templ Arrays() {
-	@layouts.Base("Arrays | How to Go") {
-		@components.Breadcrumb("arrays", "Arrays")
-		@components.CustomHeader("Arrays", "Slices")
-		<p>Arrays in Go are fixed-size collections of elements of the same type. They are useful for storing a known number of items. Here's an example of how to declare and use an array in Go:</p>
-		<div class="code-block">
-			<pre>
-				<code class="language-go">
-					@templ.Raw(`package main
+
+var codeString = `package main
 import "fmt"
 func main() {
   // Declare an array of integers with a size of 5
@@ -33,10 +26,16 @@ func main() {
 
   // Get the length of the array
   fmt.Println("Length of array:", len(numbers))
-}`)
-				</code>
-			</pre>
-		</div>
+}`
+
+
+templ Arrays() {
+	@layouts.Base("Arrays | How to Go") {
+		@components.Breadcrumb("arrays", "Arrays")
+		@components.CustomHeader("Arrays", "Slices")
+		<p>Arrays in Go are fixed-size collections of elements of the same type. They are useful for storing a known number of items. The <b>table</b> below contains information on patterns, characteristics, operations and more!</p>
+        <h3>Declaring and Using an Array</h3>
+        @components.CodeBlock(codeString)
 		<span class="output-label">Output:</span>
 		@components.CodeOutput(`Array: [10 20 30 40 50]
 First element: 10

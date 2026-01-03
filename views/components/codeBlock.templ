@@ -1,0 +1,23 @@
+package components
+
+
+// Must enclose all code in backticks for proper formatting
+
+// Then use like so: 
+
+// var c = `package main`
+// @components.CodeBlock(c)
+
+
+
+templ CodeBlock(code string) {
+    <div class="code-block">
+      <pre>
+        <code class="language-go">
+          @templ.Raw(code)
+        </code>
+      </pre>
+    </div>
+}
+
+

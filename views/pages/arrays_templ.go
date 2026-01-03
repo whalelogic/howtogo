@@ -11,6 +11,30 @@ import templruntime "github.com/a-h/templ/runtime"
 import "github.com/whalelogic/howtogo/views/layouts"
 import "github.com/whalelogic/howtogo/views/components"
 
+var codeString = `package main
+import "fmt"
+func main() {
+  // Declare an array of integers with a size of 5
+  var numbers [5]int
+
+  // Initialize the array with values
+  numbers[0] = 10
+  numbers[1] = 20
+  numbers[2] = 30
+  numbers[3] = 40
+  numbers[4] = 50
+
+  // Print the array
+  fmt.Println("Array:", numbers)
+
+  // Access individual elements
+  fmt.Println("First element:", numbers[0])
+  fmt.Println("Second element:", numbers[1])
+
+  // Get the length of the array
+  fmt.Println("Length of array:", len(numbers))
+}`
+
 func Arrays() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
@@ -56,37 +80,15 @@ func Arrays() templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, " <p>Arrays in Go are fixed-size collections of elements of the same type. They are useful for storing a known number of items. Here's an example of how to declare and use an array in Go:</p><div class=\"code-block\"><pre><code class=\"language-go\">")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, " <p>Arrays in Go are fixed-size collections of elements of the same type. They are useful for storing a known number of items. The <b>table</b> below contains information on patterns, characteristics, operations and more!</p><h3>Declaring and Using an Array</h3>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templ.Raw(`package main
-import "fmt"
-func main() {
-  // Declare an array of integers with a size of 5
-  var numbers [5]int
-
-  // Initialize the array with values
-  numbers[0] = 10
-  numbers[1] = 20
-  numbers[2] = 30
-  numbers[3] = 40
-  numbers[4] = 50
-
-  // Print the array
-  fmt.Println("Array:", numbers)
-
-  // Access individual elements
-  fmt.Println("First element:", numbers[0])
-  fmt.Println("Second element:", numbers[1])
-
-  // Get the length of the array
-  fmt.Println("Length of array:", len(numbers))
-}`).Render(ctx, templ_7745c5c3_Buffer)
+			templ_7745c5c3_Err = components.CodeBlock(codeString).Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "</code></pre></div><span class=\"output-label\">Output:</span>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, " <span class=\"output-label\">Output:</span>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -104,7 +106,7 @@ Length of array: 5`).Render(ctx, templ_7745c5c3_Buffer)
 			var templ_7745c5c3_Var3 string
 			templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs("[size]type{values}")
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/arrays.templ`, Line: 61, Col: 37}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/arrays.templ`, Line: 60, Col: 37}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 			if templ_7745c5c3_Err != nil {
@@ -117,7 +119,7 @@ Length of array: 5`).Render(ctx, templ_7745c5c3_Buffer)
 			var templ_7745c5c3_Var4 string
 			templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs("[3]int{1, 2, 3}")
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/arrays.templ`, Line: 62, Col: 34}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/arrays.templ`, Line: 61, Col: 34}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
 			if templ_7745c5c3_Err != nil {
@@ -130,7 +132,7 @@ Length of array: 5`).Render(ctx, templ_7745c5c3_Buffer)
 			var templ_7745c5c3_Var5 string
 			templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs("[...]type{values}")
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/arrays.templ`, Line: 66, Col: 36}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/arrays.templ`, Line: 65, Col: 36}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
 			if templ_7745c5c3_Err != nil {
@@ -143,7 +145,7 @@ Length of array: 5`).Render(ctx, templ_7745c5c3_Buffer)
 			var templ_7745c5c3_Var6 string
 			templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs("[...]int{1, 2, 3, 4}")
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/arrays.templ`, Line: 67, Col: 39}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/arrays.templ`, Line: 66, Col: 39}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
 			if templ_7745c5c3_Err != nil {
@@ -156,7 +158,7 @@ Length of array: 5`).Render(ctx, templ_7745c5c3_Buffer)
 			var templ_7745c5c3_Var7 string
 			templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.JoinStringErrs("[size]type{index: value}")
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/arrays.templ`, Line: 71, Col: 43}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/arrays.templ`, Line: 70, Col: 43}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var7))
 			if templ_7745c5c3_Err != nil {
@@ -169,7 +171,7 @@ Length of array: 5`).Render(ctx, templ_7745c5c3_Buffer)
 			var templ_7745c5c3_Var8 string
 			templ_7745c5c3_Var8, templ_7745c5c3_Err = templ.JoinStringErrs("[5]int{2: 10, 4: 20}")
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/arrays.templ`, Line: 72, Col: 39}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/arrays.templ`, Line: 71, Col: 39}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var8))
 			if templ_7745c5c3_Err != nil {
@@ -182,7 +184,7 @@ Length of array: 5`).Render(ctx, templ_7745c5c3_Buffer)
 			var templ_7745c5c3_Var9 string
 			templ_7745c5c3_Var9, templ_7745c5c3_Err = templ.JoinStringErrs("[3][2]int{{1,2},{3,4},{5,6}}")
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/arrays.templ`, Line: 77, Col: 47}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/arrays.templ`, Line: 76, Col: 47}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var9))
 			if templ_7745c5c3_Err != nil {
@@ -195,7 +197,7 @@ Length of array: 5`).Render(ctx, templ_7745c5c3_Buffer)
 			var templ_7745c5c3_Var10 string
 			templ_7745c5c3_Var10, templ_7745c5c3_Err = templ.JoinStringErrs("for i, v := range array")
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/arrays.templ`, Line: 107, Col: 42}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/arrays.templ`, Line: 106, Col: 42}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var10))
 			if templ_7745c5c3_Err != nil {
@@ -208,7 +210,7 @@ Length of array: 5`).Render(ctx, templ_7745c5c3_Buffer)
 			var templ_7745c5c3_Var11 string
 			templ_7745c5c3_Var11, templ_7745c5c3_Err = templ.JoinStringErrs("for i, v := range a")
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/arrays.templ`, Line: 108, Col: 38}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/arrays.templ`, Line: 107, Col: 38}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var11))
 			if templ_7745c5c3_Err != nil {
@@ -221,7 +223,7 @@ Length of array: 5`).Render(ctx, templ_7745c5c3_Buffer)
 			var templ_7745c5c3_Var12 string
 			templ_7745c5c3_Var12, templ_7745c5c3_Err = templ.JoinStringErrs("func(arr [5]int)")
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/arrays.templ`, Line: 125, Col: 35}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/arrays.templ`, Line: 124, Col: 35}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var12))
 			if templ_7745c5c3_Err != nil {
