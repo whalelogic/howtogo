@@ -126,6 +126,12 @@ how-to-go/
   <img src="https://github.com/user-attachments/assets/0e094107-42f1-4422-8a15-1f9021ea12e2" width="45%" /> 
 </p>
 
+## Contributing
+
+Issues are listed in /ref/issues/issues.md
+
+More issues are welcome using the standard Github "New Issue" protocol.
+
 ## Author
 
 Created by Keith — Computer Science student, Army Veteran, cloud engineer, and backend developer. Passionate about clarity, correctness, and high-performance systems.
