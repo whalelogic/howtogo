@@ -130,7 +130,7 @@ how-to-go/
 
 Issues are listed in /ref/issues/issues.md
 
-More issues are welcome using the standard Github "New Issue" protocol.
+More issues are welcome just creating an Issue. 
 
 ## Author
 
