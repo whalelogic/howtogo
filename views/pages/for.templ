@@ -8,6 +8,13 @@ templ For() {
 		@components.Breadcrumb("for", "For Loops")
 		@components.CustomHeader("For Loops", "If/Else")
 		<p><code>for</code> is Go's only looping construct. It's versatile and can replace while loops, do-while loops, and traditional for loops from other languages.</p>
+		@components.KeyPoints([]string{
+			"<code>for</code> is the only looping construct in Go",
+			"All three components (init, condition, post) are optional",
+			"Use <code>break</code> to exit a loop early",
+			"Use <code>continue</code> to skip to the next iteration",
+			"Variables declared in the init statement are scoped to the loop",
+		})
 		<h2>Classic For Loop</h2>
 		<p>The most basic form with initialization, condition, and post statement:</p>
 		<div class="code-block">
@@ -141,14 +148,6 @@ func main() {
 				</tr>
 			</tbody>
 		</table>
-		<h2>Key Points</h2>
-		<ul>
-			<li><code>for</code> is the only looping construct in Go</li>
-			<li>All three components (init, condition, post) are optional</li>
-			<li>Use <code>break</code> to exit a loop early</li>
-			<li>Use <code>continue</code> to skip to the next iteration</li>
-			<li>Variables declared in the init statement are scoped to the loop</li>
-		</ul>
 		<div class="nav-buttons">
 			@components.Button("Previous: Constants", "/constants")
 			@components.Button("Next: If/Else", "/ifelse")

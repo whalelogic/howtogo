@@ -80,7 +80,22 @@ func Arrays() templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, " <p>Arrays in Go are fixed-size collections of elements of the same type. They are useful for storing a known number of items. The <b>table</b> below contains information on patterns, characteristics, operations and more!</p><h3>Declaring and Using an Array</h3>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, " <p>Arrays in Go are fixed-size collections of elements of the same type. They are useful for storing a known number of items. The <b>table</b> below contains information on patterns, characteristics, operations and more!</p>")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = components.KeyPoints([]string{
+				"Array size is fixed and part of its type: <code>[3]int</code> and <code>[4]int</code> are different types",
+				"Arrays are value types - assignment and function parameters create copies",
+				"Use <code>[...]</code> to let compiler infer size from initialization",
+				"Zero value of array elements depends on the element type",
+				"Slices are almost always preferred over arrays for flexibility",
+				"Arrays are useful for fixed-size buffers or when you need value semantics",
+			}).Render(ctx, templ_7745c5c3_Buffer)
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, " <h3>Declaring and Using an Array</h3>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -88,7 +103,7 @@ func Arrays() templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, " <span class=\"output-label\">Output:</span>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, " <span class=\"output-label\">Output:</span>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -99,137 +114,137 @@ Length of array: 5`).Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, " <h2>Array Declaration Patterns</h2><table class=\"reference-table\"><thead><tr><th>Pattern</th><th>Example</th><th>Description</th></tr></thead> <tbody><tr><td><code>var name [size]type</code></td><td><code>var a [5]int</code></td><td>Declare array with zero values</td></tr><tr><td><code>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, " <h2>Array Declaration Patterns</h2><table class=\"reference-table\"><thead><tr><th>Pattern</th><th>Example</th><th>Description</th></tr></thead> <tbody><tr><td><code>var name [size]type</code></td><td><code>var a [5]int</code></td><td>Declare array with zero values</td></tr><tr><td><code>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var3 string
 			templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs("[size]type{values}")
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/arrays.templ`, Line: 60, Col: 37}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/arrays.templ`, Line: 68, Col: 37}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "</code></td><td><code>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "</code></td><td><code>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var4 string
 			templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs("[3]int{1, 2, 3}")
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/arrays.templ`, Line: 61, Col: 34}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/arrays.templ`, Line: 69, Col: 34}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "</code></td><td>Declare and initialize with values</td></tr><tr><td><code>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "</code></td><td>Declare and initialize with values</td></tr><tr><td><code>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var5 string
 			templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs("[...]type{values}")
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/arrays.templ`, Line: 65, Col: 36}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/arrays.templ`, Line: 73, Col: 36}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "</code></td><td><code>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "</code></td><td><code>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var6 string
 			templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs("[...]int{1, 2, 3, 4}")
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/arrays.templ`, Line: 66, Col: 39}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/arrays.templ`, Line: 74, Col: 39}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "</code></td><td>Size inferred from values</td></tr><tr><td><code>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "</code></td><td>Size inferred from values</td></tr><tr><td><code>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var7 string
 			templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.JoinStringErrs("[size]type{index: value}")
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/arrays.templ`, Line: 70, Col: 43}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/arrays.templ`, Line: 78, Col: 43}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var7))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "</code></td><td><code>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 10, "</code></td><td><code>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var8 string
 			templ_7745c5c3_Var8, templ_7745c5c3_Err = templ.JoinStringErrs("[5]int{2: 10, 4: 20}")
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/arrays.templ`, Line: 71, Col: 39}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/arrays.templ`, Line: 79, Col: 39}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var8))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 10, "</code></td><td>Initialize specific indices</td></tr><tr><td><code>[size][size]type</code></td><td><code>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 11, "</code></td><td>Initialize specific indices</td></tr><tr><td><code>[size][size]type</code></td><td><code>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var9 string
 			templ_7745c5c3_Var9, templ_7745c5c3_Err = templ.JoinStringErrs("[3][2]int{{1,2},{3,4},{5,6}}")
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/arrays.templ`, Line: 76, Col: 47}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/arrays.templ`, Line: 84, Col: 47}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var9))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 11, "</code></td><td>Multi-dimensional arrays</td></tr></tbody></table><h2>Array Operations</h2><table class=\"reference-table\"><thead><tr><th>Operation</th><th>Syntax</th><th>Example</th><th>Description</th></tr></thead> <tbody><tr><td>Access element</td><td><code>array[index]</code></td><td><code>a[0]</code></td><td>Get or set element at index</td></tr><tr><td>Get length</td><td><code>len(array)</code></td><td><code>len(a)</code></td><td>Returns the number of elements</td></tr><tr><td>Iterate</td><td><code>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 12, "</code></td><td>Multi-dimensional arrays</td></tr></tbody></table><h2>Array Operations</h2><table class=\"reference-table\"><thead><tr><th>Operation</th><th>Syntax</th><th>Example</th><th>Description</th></tr></thead> <tbody><tr><td>Access element</td><td><code>array[index]</code></td><td><code>a[0]</code></td><td>Get or set element at index</td></tr><tr><td>Get length</td><td><code>len(array)</code></td><td><code>len(a)</code></td><td>Returns the number of elements</td></tr><tr><td>Iterate</td><td><code>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var10 string
 			templ_7745c5c3_Var10, templ_7745c5c3_Err = templ.JoinStringErrs("for i, v := range array")
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/arrays.templ`, Line: 106, Col: 42}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/arrays.templ`, Line: 114, Col: 42}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var10))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 12, "</code></td><td><code>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 13, "</code></td><td><code>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var11 string
 			templ_7745c5c3_Var11, templ_7745c5c3_Err = templ.JoinStringErrs("for i, v := range a")
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/arrays.templ`, Line: 107, Col: 38}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/arrays.templ`, Line: 115, Col: 38}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var11))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 13, "</code></td><td>Loop through index and value</td></tr><tr><td>Compare</td><td><code>array1 == array2</code></td><td><code>a == b</code></td><td>Arrays of same type/size are comparable</td></tr><tr><td>Copy</td><td><code>b := a</code></td><td><code>b := a</code></td><td>Creates a copy (value type)</td></tr><tr><td>Pass to function</td><td><code>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 14, "</code></td><td>Loop through index and value</td></tr><tr><td>Compare</td><td><code>array1 == array2</code></td><td><code>a == b</code></td><td>Arrays of same type/size are comparable</td></tr><tr><td>Copy</td><td><code>b := a</code></td><td><code>b := a</code></td><td>Creates a copy (value type)</td></tr><tr><td>Pass to function</td><td><code>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var12 string
 			templ_7745c5c3_Var12, templ_7745c5c3_Err = templ.JoinStringErrs("func(arr [5]int)")
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/arrays.templ`, Line: 124, Col: 35}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/arrays.templ`, Line: 132, Col: 35}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var12))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 14, "</code></td><td><code>process(a)</code></td><td>Passed by value (copied)</td></tr></tbody></table><h2>Array vs Slice</h2><table class=\"reference-table\"><thead><tr><th>Feature</th><th>Array</th><th>Slice</th></tr></thead> <tbody><tr><td>Size</td><td>Fixed at compile time</td><td>Dynamic, can grow/shrink</td></tr><tr><td>Declaration</td><td><code>[5]int</code></td><td><code>[]int</code></td></tr><tr><td>Memory</td><td>Value type (copied)</td><td>Reference type (points to array)</td></tr><tr><td>Type identity</td><td>Size is part of type</td><td>Size not part of type</td></tr><tr><td>Use case</td><td>Known, fixed number of elements</td><td>Variable number of elements</td></tr><tr><td>Performance</td><td>Stack allocated, predictable</td><td>Heap allocated, flexible</td></tr></tbody></table><h2>Key Points</h2><ul><li>Array size is fixed and part of its type: <code>[3]int</code> and <code>[4]int</code> are different types</li><li>Arrays are value types - assignment and function parameters create copies</li><li>Use <code>[...]</code> to let compiler infer size from initialization</li><li>Zero value of array elements depends on the element type</li><li>Slices are almost always preferred over arrays for flexibility</li><li>Arrays are useful for fixed-size buffers or when you need value semantics</li></ul><div class=\"nav-buttons\">")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 15, "</code></td><td><code>process(a)</code></td><td>Passed by value (copied)</td></tr></tbody></table><h2>Array vs Slice</h2><table class=\"reference-table\"><thead><tr><th>Feature</th><th>Array</th><th>Slice</th></tr></thead> <tbody><tr><td>Size</td><td>Fixed at compile time</td><td>Dynamic, can grow/shrink</td></tr><tr><td>Declaration</td><td><code>[5]int</code></td><td><code>[]int</code></td></tr><tr><td>Memory</td><td>Value type (copied)</td><td>Reference type (points to array)</td></tr><tr><td>Type identity</td><td>Size is part of type</td><td>Size not part of type</td></tr><tr><td>Use case</td><td>Known, fixed number of elements</td><td>Variable number of elements</td></tr><tr><td>Performance</td><td>Stack allocated, predictable</td><td>Heap allocated, flexible</td></tr></tbody></table><div class=\"nav-buttons\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -241,7 +256,7 @@ Length of array: 5`).Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 15, "</div>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 16, "</div>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

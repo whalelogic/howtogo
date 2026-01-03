@@ -58,7 +58,19 @@ func Constants() templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, " <p>Constants hold values that do not change. They are great for configuration, sizes, and enumerations. One common use for constants is declaring an <code style=\"color: red; font-weight: 500;\">API_KEY</code>. </p><div class=\"code-block\"><pre><code class=\"language-go\">")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, " <p>Constants hold values that do not change. They are great for configuration, sizes, and enumerations. One common use for constants is declaring an <code style=\"color: red; font-weight: 500;\">API_KEY</code>. </p>")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = components.KeyPoints([]string{
+				"Constants are declared with <code>const</code> and cannot be changed.",
+				"Numeric constants are high-precision until given a type.",
+				"You can use constants in expressions; the compiler folds them.",
+			}).Render(ctx, templ_7745c5c3_Buffer)
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, " <div class=\"code-block\"><pre><code class=\"language-go\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -85,7 +97,7 @@ func main() {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "</code></pre></div><span class=\"output-label\">Output:</span>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "</code></pre></div><span class=\"output-label\">Output:</span>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -97,7 +109,7 @@ func main() {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, " <h2>Constants Reference</h2><table class=\"reference-table\"><thead><tr><th>Constant</th><th>Type</th><th>Value</th><th>Description</th></tr></thead> <tbody><tr><td><code>s</code></td><td><code>string</code></td><td>\"constant\"</td><td>String constant with explicit type</td></tr><tr><td><code>pi</code></td><td><code>untyped float</code></td><td>3.14</td><td>Mathematical constant for π</td></tr><tr><td><code>n</code></td><td><code>untyped int</code></td><td>500000000</td><td>Large numeric constant</td></tr><tr><td><code>d</code></td><td><code>untyped float</code></td><td>3e20 / n</td><td>Computed constant expression</td></tr></tbody></table><h2>Key Points</h2><ul><li>Constants are declared with <code>const</code> and cannot be changed.</li><li>Numeric constants are high-precision until given a type.</li><li>You can use constants in expressions; the compiler folds them.</li></ul><div class=\"nav-buttons\">")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, " <h2>Constants Reference</h2><table class=\"reference-table\"><thead><tr><th>Constant</th><th>Type</th><th>Value</th><th>Description</th></tr></thead> <tbody><tr><td><code>s</code></td><td><code>string</code></td><td>\"constant\"</td><td>String constant with explicit type</td></tr><tr><td><code>pi</code></td><td><code>untyped float</code></td><td>3.14</td><td>Mathematical constant for π</td></tr><tr><td><code>n</code></td><td><code>untyped int</code></td><td>500000000</td><td>Large numeric constant</td></tr><tr><td><code>d</code></td><td><code>untyped float</code></td><td>3e20 / n</td><td>Computed constant expression</td></tr></tbody></table><div class=\"nav-buttons\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -109,7 +121,7 @@ func main() {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "</div>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "</div>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

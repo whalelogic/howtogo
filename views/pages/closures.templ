@@ -8,6 +8,16 @@ templ Closures() {
 		@components.Breadcrumb("closures", "Closures")
 		@components.CustomHeader("Closures", "Recursion")
 		<p>Go supports anonymous functions which can form closures. A closure is a function value that references variables from outside its body. The function may access and assign to the referenced variables.</p>
+		@components.KeyPoints([]string{
+			"Closures are anonymous functions that capture variables from their surrounding scope",
+			"Captured variables are referenced, not copied (changes persist)",
+			"Each closure instance maintains its own set of captured variables",
+			"Closures extend the lifetime of captured variables",
+			"Useful for callbacks, iterators, and maintaining state without explicit structs",
+			"Common in goroutines to capture loop variables correctly",
+			"Be careful with loop variables in closures - they may need explicit copies",
+			"Closures enable functional programming patterns in Go",
+		})
 		<h2>Basic Closure</h2>
 		<p>This example shows a closure that captures and modifies a variable from its outer scope:</p>
 		<div class="code-block">
@@ -206,17 +216,6 @@ Even numbers: [2 4 6 8 10]`)
 				</tr>
 			</tbody>
 		</table>
-		<h2>Key Points</h2>
-		<ul>
-			<li>Closures are anonymous functions that capture variables from their surrounding scope</li>
-			<li>Captured variables are referenced, not copied (changes persist)</li>
-			<li>Each closure instance maintains its own set of captured variables</li>
-			<li>Closures extend the lifetime of captured variables</li>
-			<li>Useful for callbacks, iterators, and maintaining state without explicit structs</li>
-			<li>Common in goroutines to capture loop variables correctly</li>
-			<li>Be careful with loop variables in closures - they may need explicit copies</li>
-			<li>Closures enable functional programming patterns in Go</li>
-		</ul>
 		<div class="nav-buttons">
 			@components.Button("Previous: Variadic Functions", "/variadic-functions")
 			@components.Button("Next: Recursion", "/recursion")

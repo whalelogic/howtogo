@@ -8,6 +8,12 @@ templ IfElse() {
 		@components.Breadcrumb("if-else", "If/Else")
 		@components.CustomHeader("If/Else", "Switch")
 		<p>Branching with <code>if</code> and <code>else</code> in Go is straightforward. Go doesn't require parentheses around conditions, but braces are always required.</p>
+		@components.KeyPoints([]string{
+			"Parentheses around conditions are not used in Go",
+			"Braces <code>{ }</code> are always required, even for single statements",
+			"Variables declared in if statements are scoped to that block",
+			"Go has no ternary operator - use if/else instead",
+		})
 		<h2>Basic If Statement</h2>
 		<div class="code-block">
 			<pre>
@@ -101,13 +107,6 @@ func main() {
 				</tr>
 			</tbody>
 		</table>
-		<h2>Key Points</h2>
-		<ul>
-			<li>Parentheses around conditions are not used in Go</li>
-			<li>Braces <code>{ "{ }" }</code> are always required, even for single statements</li>
-			<li>Variables declared in if statements are scoped to that block</li>
-			<li>Go has no ternary operator - use if/else instead</li>
-		</ul>
 		<div class="nav-buttons">
 			@components.Button("Previous: Constants", "/constants")
 			@components.Button("Next: Switch", "/switch")

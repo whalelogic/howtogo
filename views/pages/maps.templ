@@ -8,6 +8,15 @@ templ Maps() {
 		@components.Breadcrumb("maps", "Maps")
 		@components.CustomHeader("Maps", "Range")
 		<p>Maps are Go's built-in associative data type, also known as hash tables or dictionaries in other languages. Maps store key-value pairs.</p>
+		@components.KeyPoints([]string{
+			"Maps must be initialized with <code>make</code> or a literal before use",
+			"Accessing a non-existent key returns the zero value of the value type",
+			"Use the comma-ok idiom to distinguish between zero values and missing keys",
+			"Map iteration order is randomized for security reasons",
+			"Maps are reference types - passing a map doesn't copy its contents",
+			"Maps are not safe for concurrent use without synchronization",
+			"Key types must be comparable - slices, maps, and functions cannot be keys",
+		})
 		<h2>Creating and Using Maps</h2>
 		<p>Maps must be initialized before use with <code>{ "make" }</code> or a map literal:</p>
 		<div class="code-block">
@@ -345,16 +354,6 @@ key: b`)
 				</tr>
 			</tbody>
 		</table>
-		<h2>Key Points</h2>
-		<ul>
-			<li>Maps must be initialized with <code>{ "make" }</code> or a literal before use</li>
-			<li>Accessing a non-existent key returns the zero value of the value type</li>
-			<li>Use the comma-ok idiom to distinguish between zero values and missing keys</li>
-			<li>Map iteration order is randomized for security reasons</li>
-			<li>Maps are reference types - passing a map doesn't copy its contents</li>
-			<li>Maps are not safe for concurrent use without synchronization</li>
-			<li>Key types must be comparable - slices, maps, and functions cannot be keys</li>
-		</ul>
 		<div class="nav-buttons">
 			@components.Button("Previous: Slices", "/slices")
 			@components.Button("Next: Range", "/range")

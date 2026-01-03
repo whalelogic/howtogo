@@ -8,6 +8,16 @@ templ Functions() {
 		@components.Breadcrumb("functions", "Functions")
 		@components.CustomHeader("Functions", "Multiple Return Values")
 		<p>Functions are central to Go. They allow you to organize code into reusable blocks that can accept parameters and return values. Go supports various function patterns including multiple return values and variadic parameters.</p>
+		@components.KeyPoints([]string{
+			"Functions are defined with the <code>func</code> keyword",
+			"Parameters of the same type can share a type declaration",
+			"Functions can return multiple values (common for returning value and error)",
+			"Named return values are automatically initialized to zero values",
+			"Functions are first-class citizens and can be passed around like values",
+			"Go does not support function overloading",
+			"All parameters are passed by value (copies), use pointers for pass-by-reference behavior",
+			"Unused parameters can be replaced with <code>_</code> (blank identifier)",
+		})
 		<h2>Basic Function Declaration</h2>
 		<p>Functions are declared using the <code>func</code> keyword, followed by the name, parameters, and return type:</p>
 		<div class="code-block">
@@ -166,17 +176,6 @@ Multiply: 12`)
 				</tr>
 			</tbody>
 		</table>
-		<h2>Key Points</h2>
-		<ul>
-			<li>Functions are defined with the <code>func</code> keyword</li>
-			<li>Parameters of the same type can share a type declaration</li>
-			<li>Functions can return multiple values (common for returning value and error)</li>
-			<li>Named return values are automatically initialized to zero values</li>
-			<li>Functions are first-class citizens and can be passed around like values</li>
-			<li>Go does not support function overloading</li>
-			<li>All parameters are passed by value (copies), use pointers for pass-by-reference behavior</li>
-			<li>Unused parameters can be replaced with <code>_</code> (blank identifier)</li>
-		</ul>
 		<div class="nav-buttons">
 			@components.Button("Previous: Range", "/range")
 			@components.Button("Next: Multiple Return Values", "/multiple-return-values")

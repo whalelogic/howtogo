@@ -56,7 +56,20 @@ func Variables() templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, " <p>Variables let you name values. Go uses explicit <code>var</code> declarations or short-hand <code style=\"color: red;\">:=</code> inside functions.</p><div class=\"code-block\"><pre><code class=\"language-go\">")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, " <p>Variables let you name values. Go uses explicit <code>var</code> declarations or short-hand <code style=\"color: red;\">:=</code> inside functions.</p>")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = components.KeyPoints([]string{
+				"<code>var</code> allows explicit types or inferred types from the initializer.",
+				"<code>:=</code> is only valid inside functions; it infers the type.",
+				"Multiple assignment is common for parallel declarations.",
+				"Uninitialized variables have their type's zero value, never undefined.",
+			}).Render(ctx, templ_7745c5c3_Buffer)
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, " <div class=\"code-block\"><pre><code class=\"language-go\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -83,7 +96,7 @@ func main() {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "</code></pre></div><span class=\"output-label\">Output:</span>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "</code></pre></div><span class=\"output-label\">Output:</span>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -95,7 +108,7 @@ short`).Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, " <h2>Variable Declaration Syntax</h2><table class=\"reference-table\"><thead><tr><th>Declaration</th><th>Example</th><th>Scope</th><th>Description</th></tr></thead> <tbody><tr><td><code>var name type</code></td><td><code>var x int</code></td><td>Package or Function</td><td>Explicit type, zero value initialized</td></tr><tr><td><code>var name = value</code></td><td><code>var x = 10</code></td><td>Package or Function</td><td>Type inferred from value</td></tr><tr><td><code>name := value</code></td><td><code>x := 10</code></td><td>Function only</td><td>Short declaration, type inferred</td></tr><tr><td><code>var a, b type</code></td><td><code>var x, y int</code></td><td>Package or Function</td><td>Multiple variables, same type</td></tr></tbody></table><h2>Zero Values</h2><table class=\"reference-table\"><thead><tr><th>Type</th><th>Zero Value</th></tr></thead> <tbody><tr><td><code>int, int8, int16, int32, int64</code></td><td>0</td></tr><tr><td><code>float32, float64</code></td><td>0.0</td></tr><tr><td><code>bool</code></td><td>false</td></tr><tr><td><code>string</code></td><td>\"\" (empty string)</td></tr><tr><td>Pointers, slices, maps, channels, functions, interfaces</td><td>nil</td></tr></tbody></table><h2>Key Points</h2><ul><li><code>var</code> allows explicit types or inferred types from the initializer.</li><li><code>:=</code> is only valid inside functions; it infers the type.</li><li>Multiple assignment is common for parallel declarations.</li><li>Uninitialized variables have their type's zero value, never undefined.</li></ul><div class=\"nav-buttons\">")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, " <h2>Variable Declaration Syntax</h2><table class=\"reference-table\"><thead><tr><th>Declaration</th><th>Example</th><th>Scope</th><th>Description</th></tr></thead> <tbody><tr><td><code>var name type</code></td><td><code>var x int</code></td><td>Package or Function</td><td>Explicit type, zero value initialized</td></tr><tr><td><code>var name = value</code></td><td><code>var x = 10</code></td><td>Package or Function</td><td>Type inferred from value</td></tr><tr><td><code>name := value</code></td><td><code>x := 10</code></td><td>Function only</td><td>Short declaration, type inferred</td></tr><tr><td><code>var a, b type</code></td><td><code>var x, y int</code></td><td>Package or Function</td><td>Multiple variables, same type</td></tr></tbody></table><h2>Zero Values</h2><table class=\"reference-table\"><thead><tr><th>Type</th><th>Zero Value</th></tr></thead> <tbody><tr><td><code>int, int8, int16, int32, int64</code></td><td>0</td></tr><tr><td><code>float32, float64</code></td><td>0.0</td></tr><tr><td><code>bool</code></td><td>false</td></tr><tr><td><code>string</code></td><td>\"\" (empty string)</td></tr><tr><td>Pointers, slices, maps, channels, functions, interfaces</td><td>nil</td></tr></tbody></table><div class=\"nav-buttons\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -107,7 +120,7 @@ short`).Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "</div>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "</div>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

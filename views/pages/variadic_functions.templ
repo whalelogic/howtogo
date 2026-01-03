@@ -8,6 +8,16 @@ templ VariadicFunctions() {
 		@components.Breadcrumb("variadic-functions", "Variadic Functions")
 		@components.CustomHeader("Variadic Functions", "Closures")
 		<p>Variadic functions can be called with any number of trailing arguments. They are useful when you need to work with an arbitrary number of parameters of the same type.</p>
+		@components.KeyPoints([]string{
+			"Variadic parameters allow functions to accept any number of arguments",
+			"Declared with <code>...</code> before the type: <code>args ...T</code>",
+			"Must be the last parameter in the function signature",
+			"Inside the function, variadic parameters are treated as a slice",
+			"Call with individual arguments or expand a slice with <code>slice...</code>",
+			"Can be called with zero arguments (empty slice)",
+			"Only one variadic parameter is allowed per function",
+			"Common in standard library functions like <code>fmt.Println</code> and <code>append</code>",
+		})
 		<h2>Basic Variadic Function</h2>
 		<p>Use <code>...</code> before the type to indicate a variadic parameter. The function receives a slice of that type:</p>
 		<div class="code-block">
@@ -191,17 +201,6 @@ Sum of more numbers: 11`)
 				</tr>
 			</tbody>
 		</table>
-		<h2>Key Points</h2>
-		<ul>
-			<li>Variadic parameters allow functions to accept any number of arguments</li>
-			<li>Declared with <code>...</code> before the type: <code>{ "args ...T" }</code></li>
-			<li>Must be the last parameter in the function signature</li>
-			<li>Inside the function, variadic parameters are treated as a slice</li>
-			<li>Call with individual arguments or expand a slice with <code>slice...</code></li>
-			<li>Can be called with zero arguments (empty slice)</li>
-			<li>Only one variadic parameter is allowed per function</li>
-			<li>Common in standard library functions like <code>fmt.Println</code> and <code>append</code></li>
-		</ul>
 		<div class="nav-buttons">
 			@components.Button("Previous: Multiple Return Values", "/multiple-return-values")
 			@components.Button("Next: Closures", "/closures")

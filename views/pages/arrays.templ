@@ -34,6 +34,14 @@ templ Arrays() {
 		@components.Breadcrumb("arrays", "Arrays")
 		@components.CustomHeader("Arrays", "Slices")
 		<p>Arrays in Go are fixed-size collections of elements of the same type. They are useful for storing a known number of items. The <b>table</b> below contains information on patterns, characteristics, operations and more!</p>
+		@components.KeyPoints([]string{
+			"Array size is fixed and part of its type: <code>[3]int</code> and <code>[4]int</code> are different types",
+			"Arrays are value types - assignment and function parameters create copies",
+			"Use <code>[...]</code> to let compiler infer size from initialization",
+			"Zero value of array elements depends on the element type",
+			"Slices are almost always preferred over arrays for flexibility",
+			"Arrays are useful for fixed-size buffers or when you need value semantics",
+		})
         <h3>Declaring and Using an Array</h3>
         @components.CodeBlock(codeString)
 		<span class="output-label">Output:</span>
@@ -169,15 +177,6 @@ Length of array: 5`)
 				</tr>
 			</tbody>
 		</table>
-		<h2>Key Points</h2>
-		<ul>
-			<li>Array size is fixed and part of its type: <code>[3]int</code> and <code>[4]int</code> are different types</li>
-			<li>Arrays are value types - assignment and function parameters create copies</li>
-			<li>Use <code>[...]</code> to let compiler infer size from initialization</li>
-			<li>Zero value of array elements depends on the element type</li>
-			<li>Slices are almost always preferred over arrays for flexibility</li>
-			<li>Arrays are useful for fixed-size buffers or when you need value semantics</li>
-		</ul>
 		<div class="nav-buttons">
 			@components.Button("Previous: Switch", "/switch")
 			@components.Button("Next: Slices", "/slices")

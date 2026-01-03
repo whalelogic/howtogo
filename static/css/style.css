@@ -302,41 +302,112 @@ pre {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
 }
 
+/* --- Key Points Box --- */
+.key-points-box {
+  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+  border-left: 4px solid var(--color-primary);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md) var(--spacing-lg);
+  margin: var(--spacing-lg) 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.key-points-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-primary-dark);
+  margin-top: 0;
+  margin-bottom: var(--spacing-md);
+}
+
+.key-points-icon {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.key-points-list {
+  margin: 0;
+  padding-left: 1.5rem;
+  list-style-type: disc;
+}
+
+.key-points-list li {
+  margin-bottom: 0.5rem;
+  line-height: 1.6;
+  color: var(--color-text-main);
+}
+
+.key-points-list li:last-child {
+  margin-bottom: 0;
+}
+
+.key-points-list code {
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  color: var(--color-primary-dark);
+  border: 1px solid rgba(42, 201, 249, 0.2);
+}
+
 /* --- Tables --- */
 .reference-table {
   width: 100%;
   border-collapse: collapse;
   margin: 2rem 0;
   font-size: 0.95rem;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
 .reference-table thead {
   background-color: var(--color-primary);
   color: white;
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
 
 .reference-table th {
-  padding: 0.5rem 1rem;
+  padding: 0.75rem 1rem;
   text-align: left;
   font-weight: 600;
+  letter-spacing: 0.02em;
 }
 
 .reference-table td {
-  padding: 0.5rem 1rem;
+  padding: 0.75rem 1rem;
   border-bottom: 1px solid var(--color-border);
+  vertical-align: top;
+}
+
+.reference-table tbody tr:nth-child(even) {
+  background-color: #fafafa;
 }
 
 .reference-table tbody tr:hover {
-  background-color: #f5f5f5;
+  background-color: #f0f9ff;
+  transition: background-color 0.2s ease;
 }
 
 .reference-table code {
   background-color: #f0f0f0;
-  padding: 2px 6px;
-  border-radius: 3px;
+  padding: 3px 7px;
+  border-radius: 4px;
   font-family: var(--font-mono);
-  font-size: 0.9em;
+  font-size: 0.88em;
   color: var(--color-text-main);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.reference-table tbody tr:nth-child(even) code {
+  background-color: #f5f5f5;
 }
 
 /* --- Example list on home --- */
@@ -445,9 +516,52 @@ p.footer a {
     gap: var(--spacing-md);
   }
 
-  .btn {
+  .btn,
+  .btn-primary,
+  .btn-secondary {
     width: 100%;
     justify-content: center;
+    text-align: center;
+  }
+
+  .key-points-box {
+    padding: var(--spacing-md);
+  }
+
+  .key-points-title {
+    font-size: 1.1rem;
+  }
+
+  .reference-table {
+    font-size: 0.85rem;
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .reference-table thead {
+    display: table-header-group;
+  }
+
+  .reference-table th,
+  .reference-table td {
+    padding: 0.5rem;
+    white-space: nowrap;
+  }
+
+  .reference-table code {
+    font-size: 0.8em;
+  }
+
+  .page-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-sm);
+  }
+
+  .breadcrumbs,
+  .badges {
+    flex-wrap: wrap;
   }
 }
 

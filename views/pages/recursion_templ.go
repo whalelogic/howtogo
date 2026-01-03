@@ -56,7 +56,24 @@ func Recursion() templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, " <p>Recursion is a technique where a function calls itself to solve a problem by breaking it down into smaller subproblems. Go supports recursive functions naturally, making it useful for problems that have a recursive structure.</p><h2>Classic Recursion: Factorial</h2><p>The factorial function is a classic example of recursion. It calculates n! = n * (n-1) * ... * 1:</p><div class=\"code-block\"><pre><code class=\"language-go\">")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, " <p>Recursion is a technique where a function calls itself to solve a problem by breaking it down into smaller subproblems. Go supports recursive functions naturally, making it useful for problems that have a recursive structure.</p>")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = components.KeyPoints([]string{
+				"Recursion involves a function calling itself to solve smaller instances of a problem",
+				"Must have a base case to prevent infinite recursion",
+				"Each recursive call should make progress toward the base case",
+				"Go doesn't optimize tail recursion - consider iterative alternatives for deep recursion",
+				"Stack overflow can occur with too many recursive calls",
+				"Memoization can dramatically improve performance for overlapping subproblems",
+				"Natural fit for tree/graph traversal, divide-and-conquer algorithms",
+				"Can be less efficient than iteration due to function call overhead",
+			}).Render(ctx, templ_7745c5c3_Buffer)
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, " <h2>Classic Recursion: Factorial</h2><p>The factorial function is a classic example of recursion. It calculates n! = n * (n-1) * ... * 1:</p><div class=\"code-block\"><pre><code class=\"language-go\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -82,7 +99,7 @@ func main() {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "</code></pre></div><span class=\"output-label\">Output:</span>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "</code></pre></div><span class=\"output-label\">Output:</span>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -92,7 +109,7 @@ func main() {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, " <h2>Fibonacci Sequence</h2><p>Another classic recursive example is calculating Fibonacci numbers:</p><div class=\"code-block\"><pre><code class=\"language-go\">")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, " <h2>Fibonacci Sequence</h2><p>Another classic recursive example is calculating Fibonacci numbers:</p><div class=\"code-block\"><pre><code class=\"language-go\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -135,7 +152,7 @@ func main() {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "</code></pre></div><span class=\"output-label\">Output:</span>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "</code></pre></div><span class=\"output-label\">Output:</span>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -155,33 +172,33 @@ fib(40) with memo: 102334155`).Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, " <h2>Recursion Components</h2><table class=\"reference-table\"><thead><tr><th>Component</th><th>Description</th><th>Example</th></tr></thead> <tbody><tr><td>Base Case</td><td>Condition that stops recursion</td><td><code>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, " <h2>Recursion Components</h2><table class=\"reference-table\"><thead><tr><th>Component</th><th>Description</th><th>Example</th></tr></thead> <tbody><tr><td>Base Case</td><td>Condition that stops recursion</td><td><code>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var3 string
 			templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs("if n == 0 { return 1 }")
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/recursion.templ`, Line: 113, Col: 41}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/recursion.templ`, Line: 123, Col: 41}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "</code></td></tr><tr><td>Recursive Case</td><td>Function calls itself with modified args</td><td><code>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "</code></td></tr><tr><td>Recursive Case</td><td>Function calls itself with modified args</td><td><code>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var4 string
 			templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs("return n * factorial(n-1)")
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/recursion.templ`, Line: 118, Col: 44}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/recursion.templ`, Line: 128, Col: 44}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "</code></td></tr><tr><td>Progress</td><td>Each call moves toward base case</td><td>n decreases: n → n-1 → n-2 → ... → 0</td></tr><tr><td>Return Value</td><td>Results combine back up the call stack</td><td>5! = 5 * 4! = 5 * 24 = 120</td></tr></tbody></table><h2>Recursion Patterns</h2><table class=\"reference-table\"><thead><tr><th>Pattern</th><th>Description</th><th>Use Case</th></tr></thead> <tbody><tr><td>Linear Recursion</td><td>One recursive call per invocation</td><td>Factorial, sum of list</td></tr><tr><td>Binary Recursion</td><td>Two recursive calls per invocation</td><td>Fibonacci, binary tree traversal</td></tr><tr><td>Tail Recursion</td><td>Recursive call is last operation</td><td>Optimizable by compiler (not in Go)</td></tr><tr><td>Mutual Recursion</td><td>Functions call each other recursively</td><td>State machines, parsers</td></tr><tr><td>Memoization</td><td>Cache results to avoid recomputation</td><td>Dynamic programming problems</td></tr></tbody></table><h2>Recursion vs Iteration</h2><table class=\"reference-table\"><thead><tr><th>Aspect</th><th>Recursion</th><th>Iteration</th></tr></thead> <tbody><tr><td>Code Clarity</td><td>Often simpler and more elegant</td><td>Can be more verbose</td></tr><tr><td>Memory Usage</td><td>Uses call stack (can overflow)</td><td>Constant memory for loops</td></tr><tr><td>Performance</td><td>Function call overhead</td><td>Generally faster</td></tr><tr><td>Problem Fit</td><td>Natural for tree/graph problems</td><td>Better for sequential processing</td></tr><tr><td>Tail Optimization</td><td>Not optimized in Go</td><td>N/A</td></tr></tbody></table><h2>Best Practices</h2><table class=\"reference-table\"><thead><tr><th>Practice</th><th>Recommendation</th><th>Reason</th></tr></thead> <tbody><tr><td>Base Case</td><td>Always define clear base case(s)</td><td>Prevents infinite recursion and stack overflow</td></tr><tr><td>Progress</td><td>Ensure each call moves toward base case</td><td>Guarantees termination</td></tr><tr><td>Depth Limit</td><td>Consider maximum recursion depth</td><td>Go's stack size is limited</td></tr><tr><td>Memoization</td><td>Cache results for overlapping subproblems</td><td>Improves performance dramatically</td></tr><tr><td>Tail Recursion</td><td>Convert to iteration in Go</td><td>Go doesn't optimize tail calls</td></tr><tr><td>Testing</td><td>Test with small inputs first</td><td>Debug recursion logic before scaling</td></tr></tbody></table><h2>Key Points</h2><ul><li>Recursion involves a function calling itself to solve smaller instances of a problem</li><li>Must have a base case to prevent infinite recursion</li><li>Each recursive call should make progress toward the base case</li><li>Go doesn't optimize tail recursion - consider iterative alternatives for deep recursion</li><li>Stack overflow can occur with too many recursive calls</li><li>Memoization can dramatically improve performance for overlapping subproblems</li><li>Natural fit for tree/graph traversal, divide-and-conquer algorithms</li><li>Can be less efficient than iteration due to function call overhead</li></ul><div class=\"nav-buttons\">")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "</code></td></tr><tr><td>Progress</td><td>Each call moves toward base case</td><td>n decreases: n → n-1 → n-2 → ... → 0</td></tr><tr><td>Return Value</td><td>Results combine back up the call stack</td><td>5! = 5 * 4! = 5 * 24 = 120</td></tr></tbody></table><h2>Recursion Patterns</h2><table class=\"reference-table\"><thead><tr><th>Pattern</th><th>Description</th><th>Use Case</th></tr></thead> <tbody><tr><td>Linear Recursion</td><td>One recursive call per invocation</td><td>Factorial, sum of list</td></tr><tr><td>Binary Recursion</td><td>Two recursive calls per invocation</td><td>Fibonacci, binary tree traversal</td></tr><tr><td>Tail Recursion</td><td>Recursive call is last operation</td><td>Optimizable by compiler (not in Go)</td></tr><tr><td>Mutual Recursion</td><td>Functions call each other recursively</td><td>State machines, parsers</td></tr><tr><td>Memoization</td><td>Cache results to avoid recomputation</td><td>Dynamic programming problems</td></tr></tbody></table><h2>Recursion vs Iteration</h2><table class=\"reference-table\"><thead><tr><th>Aspect</th><th>Recursion</th><th>Iteration</th></tr></thead> <tbody><tr><td>Code Clarity</td><td>Often simpler and more elegant</td><td>Can be more verbose</td></tr><tr><td>Memory Usage</td><td>Uses call stack (can overflow)</td><td>Constant memory for loops</td></tr><tr><td>Performance</td><td>Function call overhead</td><td>Generally faster</td></tr><tr><td>Problem Fit</td><td>Natural for tree/graph problems</td><td>Better for sequential processing</td></tr><tr><td>Tail Optimization</td><td>Not optimized in Go</td><td>N/A</td></tr></tbody></table><h2>Best Practices</h2><table class=\"reference-table\"><thead><tr><th>Practice</th><th>Recommendation</th><th>Reason</th></tr></thead> <tbody><tr><td>Base Case</td><td>Always define clear base case(s)</td><td>Prevents infinite recursion and stack overflow</td></tr><tr><td>Progress</td><td>Ensure each call moves toward base case</td><td>Guarantees termination</td></tr><tr><td>Depth Limit</td><td>Consider maximum recursion depth</td><td>Go's stack size is limited</td></tr><tr><td>Memoization</td><td>Cache results for overlapping subproblems</td><td>Improves performance dramatically</td></tr><tr><td>Tail Recursion</td><td>Convert to iteration in Go</td><td>Go doesn't optimize tail calls</td></tr><tr><td>Testing</td><td>Test with small inputs first</td><td>Debug recursion logic before scaling</td></tr></tbody></table><div class=\"nav-buttons\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -193,7 +210,7 @@ fib(40) with memo: 102334155`).Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "</div>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 10, "</div>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

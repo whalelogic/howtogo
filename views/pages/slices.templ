@@ -8,6 +8,15 @@ templ Slices() {
 		@components.Breadcrumb("slices", "Slices")
 		@components.CustomHeader("Slices", "Maps")
 		<p>Slices are a key data type in Go, providing a more powerful interface to sequences than arrays. Unlike arrays, slices are dynamically-sized and flexible.</p>
+		@components.KeyPoints([]string{
+			"Slices are reference types that point to an underlying array",
+			"Modifying a slice modifies the underlying array",
+			"Multiple slices can share the same underlying array",
+			"<code>append</code> may allocate a new array if capacity is exceeded",
+			"Use <code>make</code> with capacity when size is known for better performance",
+			"Nil slices can be appended to and work with most operations",
+			"Slicing doesn't copy data, it creates a new slice header",
+		})
 		<h2>Creating Slices</h2>
 		<p>Slices can be created in multiple ways:</p>
 		<div class="code-block">
@@ -292,16 +301,6 @@ func main() {
 				</tr>
 			</tbody>
 		</table>
-		<h2>Key Points</h2>
-		<ul>
-			<li>Slices are reference types that point to an underlying array</li>
-			<li>Modifying a slice modifies the underlying array</li>
-			<li>Multiple slices can share the same underlying array</li>
-			<li><code>{ "append" }</code> may allocate a new array if capacity is exceeded</li>
-			<li>Use <code>{ "make" }</code> with capacity when size is known for better performance</li>
-			<li>Nil slices can be appended to and work with most operations</li>
-			<li>Slicing doesn't copy data, it creates a new slice header</li>
-		</ul>
 		<div class="nav-buttons">
 			@components.Button("Previous: Arrays", "/arrays")
 			@components.Button("Next: Maps", "/maps")

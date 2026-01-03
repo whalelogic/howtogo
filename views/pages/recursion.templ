@@ -8,6 +8,16 @@ templ Recursion() {
 		@components.Breadcrumb("recursion", "Recursion")
 		@components.CustomHeader("Recursion", "Pointers")
 		<p>Recursion is a technique where a function calls itself to solve a problem by breaking it down into smaller subproblems. Go supports recursive functions naturally, making it useful for problems that have a recursive structure.</p>
+		@components.KeyPoints([]string{
+			"Recursion involves a function calling itself to solve smaller instances of a problem",
+			"Must have a base case to prevent infinite recursion",
+			"Each recursive call should make progress toward the base case",
+			"Go doesn't optimize tail recursion - consider iterative alternatives for deep recursion",
+			"Stack overflow can occur with too many recursive calls",
+			"Memoization can dramatically improve performance for overlapping subproblems",
+			"Natural fit for tree/graph traversal, divide-and-conquer algorithms",
+			"Can be less efficient than iteration due to function call overhead",
+		})
 		<h2>Classic Recursion: Factorial</h2>
 		<p>The factorial function is a classic example of recursion. It calculates n! = n * (n-1) * ... * 1:</p>
 		<div class="code-block">
@@ -245,17 +255,6 @@ fib(40) with memo: 102334155`)
 				</tr>
 			</tbody>
 		</table>
-		<h2>Key Points</h2>
-		<ul>
-			<li>Recursion involves a function calling itself to solve smaller instances of a problem</li>
-			<li>Must have a base case to prevent infinite recursion</li>
-			<li>Each recursive call should make progress toward the base case</li>
-			<li>Go doesn't optimize tail recursion - consider iterative alternatives for deep recursion</li>
-			<li>Stack overflow can occur with too many recursive calls</li>
-			<li>Memoization can dramatically improve performance for overlapping subproblems</li>
-			<li>Natural fit for tree/graph traversal, divide-and-conquer algorithms</li>
-			<li>Can be less efficient than iteration due to function call overhead</li>
-		</ul>
 		<div class="nav-buttons">
 			@components.Button("Previous: Closures", "/closures")
 			@components.Button("Next: Pointers", "/pointers")

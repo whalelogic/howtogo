@@ -21,6 +21,12 @@ templ Values() {
 		@components.Breadcrumb("values", "Values")
 		@components.CustomHeader("Values", "Variables")
 		<p><b>Values</b> in Go cover numbers, strings, booleans, and compound types. They are the building blocks you combine to model data.</p>
+		@components.KeyPoints([]string{
+			"Strings concatenate with <code>+</code>; numbers use arithmetic operators.",
+			"Booleans support the usual logical operators.",
+			"Literals default to untyped until used in context.",
+			"Go is statically typed - type conversions must be explicit.",
+		})
 		<div class="code-block">
 			<pre>
 				<code class="language-go">
@@ -67,13 +73,6 @@ templ Values() {
 				</tr>
 			</tbody>
 		</table>
-		@components.CustomHeader("Key Points", "")
-		<ul>
-			<li>Strings concatenate with <code>+</code>; numbers use arithmetic operators.</li>
-			<li>Booleans support the usual logical operators.</li>
-			<li>Literals default to untyped until used in context.</li>
-			<li>Go is statically typed - type conversions must be explicit.</li>
-		</ul>
 		<div class="nav-buttons">
 			@components.Button("Previous: Intro", "/hello-world")
 			@components.Button("Next: Variables", "/variables")

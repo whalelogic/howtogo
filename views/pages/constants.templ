@@ -9,6 +9,11 @@ templ Constants() {
 		@components.Breadcrumb("constants", "Constants")
 		@components.CustomHeader("Constants", "For")
 		<p>Constants hold values that do not change. They are great for configuration, sizes, and enumerations. One common use for constants is declaring an <code style="color: red; font-weight: 500;">API_KEY</code>. </p>
+		@components.KeyPoints([]string{
+			"Constants are declared with <code>const</code> and cannot be changed.",
+			"Numeric constants are high-precision until given a type.",
+			"You can use constants in expressions; the compiler folds them.",
+		})
 		<div class="code-block">
 			<pre>
 				<code class="language-go">
@@ -78,12 +83,6 @@ func main() {
 				</tr>
 			</tbody>
 		</table>
-		<h2>Key Points</h2>
-		<ul>
-			<li>Constants are declared with <code>const</code> and cannot be changed.</li>
-			<li>Numeric constants are high-precision until given a type.</li>
-			<li>You can use constants in expressions; the compiler folds them.</li>
-		</ul>
 		<div class="nav-buttons">
 			@components.Button("Previous: Variables", "/variables")
 			@components.Button("Next: For", "/for")

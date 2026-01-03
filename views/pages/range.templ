@@ -8,6 +8,14 @@ templ Range() {
 		@components.Breadcrumb("range", "Range")
 		@components.CustomHeader("Range", "Functions")
 		<p>Range iterates over elements in a variety of data structures. It's commonly used with for loops to iterate over slices, arrays, maps, strings, and channels.</p>
+		@components.KeyPoints([]string{
+			"Range creates copies of values, not references to the original elements",
+			"Use <code>_</code> to ignore values you don't need (blank identifier)",
+			"Map iteration order is randomized for security reasons",
+			"Range on a nil slice or map is safe and produces zero iterations",
+			"Modifying a slice during range iteration can lead to unexpected behavior",
+			"For strings, the first value is the byte index, not character index",
+		})
 		<h2>Range Over Slices</h2>
 		<p>Range provides both the index and value for each element:</p>
 		<div class="code-block">
@@ -164,15 +172,6 @@ key: b
 				</tr>
 			</tbody>
 		</table>
-		<h2>Key Points</h2>
-		<ul>
-			<li>Range creates copies of values, not references to the original elements</li>
-			<li>Use <code>{ "_" }</code> to ignore values you don't need (blank identifier)</li>
-			<li>Map iteration order is randomized for security reasons</li>
-			<li>Range on a nil slice or map is safe and produces zero iterations</li>
-			<li>Modifying a slice during range iteration can lead to unexpected behavior</li>
-			<li>For strings, the first value is the byte index, not character index</li>
-		</ul>
 		<div class="nav-buttons">
 			@components.Button("Previous: Maps", "/maps")
 			@components.Button("Next: Functions", "/functions")

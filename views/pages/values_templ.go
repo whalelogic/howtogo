@@ -69,7 +69,20 @@ func Values() templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, " <p><b>Values</b> in Go cover numbers, strings, booleans, and compound types. They are the building blocks you combine to model data.</p><div class=\"code-block\"><pre><code class=\"language-go\">")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, " <p><b>Values</b> in Go cover numbers, strings, booleans, and compound types. They are the building blocks you combine to model data.</p>")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = components.KeyPoints([]string{
+				"Strings concatenate with <code>+</code>; numbers use arithmetic operators.",
+				"Booleans support the usual logical operators.",
+				"Literals default to untyped until used in context.",
+				"Go is statically typed - type conversions must be explicit.",
+			}).Render(ctx, templ_7745c5c3_Buffer)
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, " <div class=\"code-block\"><pre><code class=\"language-go\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -77,7 +90,7 @@ func Values() templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "</code></pre></div><span class=\"output-label\">Output:</span>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "</code></pre></div><span class=\"output-label\">Output:</span>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -85,15 +98,7 @@ func Values() templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, " <h2>Value Types Reference</h2><table class=\"reference-table\"><thead><tr><th>Type</th><th>Examples</th><th>Operations</th><th>Notes</th></tr></thead> <tbody><tr><td><code>string</code></td><td>\"hello\", \"go\" + \"lang\"</td><td>Concatenation with <code>+</code></td><td>Immutable UTF-8 encoded</td></tr><tr><td><code>int</code></td><td>1, 42, -10</td><td>+, -, *, /, %</td><td>Platform dependent size (32 or 64-bit)</td></tr><tr><td><code>float64</code></td><td>3.14, 7.0/3.0</td><td>+, -, *, /</td><td>IEEE-754 64-bit floating point</td></tr><tr><td><code>bool</code></td><td>true, false</td><td>&&, ||, !</td><td>Logical operations only</td></tr></tbody></table>")
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-			templ_7745c5c3_Err = components.CustomHeader("Key Points", "").Render(ctx, templ_7745c5c3_Buffer)
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, " <ul><li>Strings concatenate with <code>+</code>; numbers use arithmetic operators.</li><li>Booleans support the usual logical operators.</li><li>Literals default to untyped until used in context.</li><li>Go is statically typed - type conversions must be explicit.</li></ul><div class=\"nav-buttons\">")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, " <h2>Value Types Reference</h2><table class=\"reference-table\"><thead><tr><th>Type</th><th>Examples</th><th>Operations</th><th>Notes</th></tr></thead> <tbody><tr><td><code>string</code></td><td>\"hello\", \"go\" + \"lang\"</td><td>Concatenation with <code>+</code></td><td>Immutable UTF-8 encoded</td></tr><tr><td><code>int</code></td><td>1, 42, -10</td><td>+, -, *, /, %</td><td>Platform dependent size (32 or 64-bit)</td></tr><tr><td><code>float64</code></td><td>3.14, 7.0/3.0</td><td>+, -, *, /</td><td>IEEE-754 64-bit floating point</td></tr><tr><td><code>bool</code></td><td>true, false</td><td>&&, ||, !</td><td>Logical operations only</td></tr></tbody></table><div class=\"nav-buttons\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

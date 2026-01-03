@@ -8,6 +8,16 @@ templ MultipleReturnValues() {
 		@components.Breadcrumb("multiple-return-values", "Multiple Return Values")
 		@components.CustomHeader("Multiple Return Values", "Variadic Functions")
 		<p>Go has built-in support for multiple return values. This feature is used extensively in idiomatic Go, especially for returning both a result and an error value from a function.</p>
+		@components.KeyPoints([]string{
+			"Go supports returning multiple values from a single function",
+			"The <code>(result, error)</code> pattern is idiomatic for error handling",
+			"Use blank identifier <code>_</code> to ignore return values you don't need",
+			"Named return values are initialized to zero values and can be modified before return",
+			"Naked returns (return without arguments) use named return values",
+			"Map lookups use <code>(value, ok)</code> pattern where ok indicates if key exists",
+			"Type assertions use <code>(value, ok)</code> pattern for safe type conversion",
+			"All return values must be handled or explicitly discarded",
+		})
 		<h2>Basic Multiple Returns</h2>
 		<p>A function can return multiple values by specifying them in parentheses:</p>
 		<div class="code-block">
@@ -191,17 +201,6 @@ Error: cannot divide by zero`)
 				</tr>
 			</tbody>
 		</table>
-		<h2>Key Points</h2>
-		<ul>
-			<li>Go supports returning multiple values from a single function</li>
-			<li>The <code>(result, error)</code> pattern is idiomatic for error handling</li>
-			<li>Use blank identifier <code>_</code> to ignore return values you don't need</li>
-			<li>Named return values are initialized to zero values and can be modified before return</li>
-			<li>Naked returns (return without arguments) use named return values</li>
-			<li>Map lookups use <code>(value, ok)</code> pattern where ok indicates if key exists</li>
-			<li>Type assertions use <code>(value, ok)</code> pattern for safe type conversion</li>
-			<li>All return values must be handled or explicitly discarded</li>
-		</ul>
 		@components.Footer()
 	}
 }

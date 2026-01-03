@@ -56,7 +56,26 @@ func Pointers() templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, " <p>Go supports pointers, allowing you to pass references to values and records within your program. Pointers are useful for large structs or when you need to modify a value in a function.</p><h2>Basic Pointer Operations</h2><p>Pointers hold the memory address of a value. Use <code>&</code> to get a pointer and <code>*</code> to dereference:</p><div class=\"code-block\"><pre><code class=\"language-go\">")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, " <p>Go supports pointers, allowing you to pass references to values and records within your program. Pointers are useful for large structs or when you need to modify a value in a function.</p>")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = components.KeyPoints([]string{
+				"Pointers store memory addresses of values",
+				"Use <code>&</code> to get a pointer to a variable",
+				"Use <code>*</code> to dereference a pointer and access its value",
+				"Zero value of a pointer is <code>nil</code>",
+				"Dereferencing a nil pointer causes a runtime panic",
+				"Go does not support pointer arithmetic (unlike C/C++)",
+				"Pointers enable functions to modify arguments",
+				"Use pointers for large structs to avoid copying overhead",
+				"Methods with pointer receivers can modify the receiver",
+				"Struct field access through pointers is automatically dereferenced",
+			}).Render(ctx, templ_7745c5c3_Buffer)
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, " <h2>Basic Pointer Operations</h2><p>Pointers hold the memory address of a value. Use <code>&</code> to get a pointer and <code>*</code> to dereference:</p><div class=\"code-block\"><pre><code class=\"language-go\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -85,7 +104,7 @@ func main() {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "</code></pre></div><span class=\"output-label\">Output:</span>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "</code></pre></div><span class=\"output-label\">Output:</span>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -97,7 +116,7 @@ Nil pointer: <nil>`).Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, " <h2>Pointers in Functions</h2><p>Pass pointers to functions to allow them to modify the original value:</p><div class=\"code-block\"><pre><code class=\"language-go\">")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, " <h2>Pointers in Functions</h2><p>Pass pointers to functions to allow them to modify the original value:</p><div class=\"code-block\"><pre><code class=\"language-go\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -130,7 +149,7 @@ func main() {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "</code></pre></div><span class=\"output-label\">Output:</span>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "</code></pre></div><span class=\"output-label\">Output:</span>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -140,163 +159,163 @@ After zeroPointer: 0`).Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, " <h2>Pointer Syntax</h2><table class=\"reference-table\"><thead><tr><th>Operator</th><th>Syntax</th><th>Description</th><th>Example</th></tr></thead> <tbody><tr><td>Address-of</td><td><code>&</code></td><td>Get pointer to a variable</td><td><code>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, " <h2>Pointer Syntax</h2><table class=\"reference-table\"><thead><tr><th>Operator</th><th>Syntax</th><th>Description</th><th>Example</th></tr></thead> <tbody><tr><td>Address-of</td><td><code>&</code></td><td>Get pointer to a variable</td><td><code>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var3 string
 			templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs("p := &x")
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/pointers.templ`, Line: 100, Col: 26}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/pointers.templ`, Line: 112, Col: 26}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "</code></td></tr><tr><td>Dereference</td><td><code>*</code></td><td>Access value at pointer</td><td><code>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "</code></td></tr><tr><td>Dereference</td><td><code>*</code></td><td>Access value at pointer</td><td><code>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var4 string
 			templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs("val := *p")
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/pointers.templ`, Line: 106, Col: 28}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/pointers.templ`, Line: 118, Col: 28}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "</code></td></tr><tr><td>Type Declaration</td><td><code>*T</code></td><td>Declare pointer to type T</td><td><code>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "</code></td></tr><tr><td>Type Declaration</td><td><code>*T</code></td><td>Declare pointer to type T</td><td><code>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var5 string
 			templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs("var p *int")
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/pointers.templ`, Line: 112, Col: 29}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/pointers.templ`, Line: 124, Col: 29}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "</code></td></tr><tr><td>Nil Check</td><td><code>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 10, "</code></td></tr><tr><td>Nil Check</td><td><code>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var6 string
 			templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs("p == nil")
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/pointers.templ`, Line: 116, Col: 27}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/pointers.templ`, Line: 128, Col: 27}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 10, "</code></td><td>Check if pointer is nil</td><td><code>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 11, "</code></td><td>Check if pointer is nil</td><td><code>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var7 string
 			templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.JoinStringErrs("if p != nil { }")
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/pointers.templ`, Line: 118, Col: 34}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/pointers.templ`, Line: 130, Col: 34}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var7))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 11, "</code></td></tr><tr><td>New Function</td><td><code>new(T)</code></td><td>Allocate memory, return pointer</td><td><code>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 12, "</code></td></tr><tr><td>New Function</td><td><code>new(T)</code></td><td>Allocate memory, return pointer</td><td><code>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var8 string
 			templ_7745c5c3_Var8, templ_7745c5c3_Err = templ.JoinStringErrs("p := new(int)")
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/pointers.templ`, Line: 124, Col: 32}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/pointers.templ`, Line: 136, Col: 32}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var8))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 12, "</code></td></tr></tbody></table><h2>Pointer Characteristics</h2><table class=\"reference-table\"><thead><tr><th>Feature</th><th>Description</th><th>Notes</th></tr></thead> <tbody><tr><td>Zero Value</td><td>Nil for all pointer types</td><td>Dereferencing nil causes panic</td></tr><tr><td>Memory Address</td><td>Pointers store memory addresses</td><td>Typically displayed in hexadecimal</td></tr><tr><td>Type Safety</td><td>Pointers are typed</td><td><code>*int</code> different from <code>*string</code></td></tr><tr><td>No Arithmetic</td><td>Go doesn't support pointer arithmetic</td><td>Unlike C/C++, can't do <code>ptr++</code></td></tr><tr><td>Automatic Deref</td><td>Struct field access auto-dereferences</td><td><code>p.field</code> instead of <code>(*p).field</code></td></tr><tr><td>Pass by Value</td><td>Go passes everything by value</td><td>Pointers let you \"pass by reference\"</td></tr></tbody></table><h2>Common Pointer Patterns</h2><table class=\"reference-table\"><thead><tr><th>Pattern</th><th>Code</th><th>Use Case</th></tr></thead> <tbody><tr><td>Modify in Function</td><td><code>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 13, "</code></td></tr></tbody></table><h2>Pointer Characteristics</h2><table class=\"reference-table\"><thead><tr><th>Feature</th><th>Description</th><th>Notes</th></tr></thead> <tbody><tr><td>Zero Value</td><td>Nil for all pointer types</td><td>Dereferencing nil causes panic</td></tr><tr><td>Memory Address</td><td>Pointers store memory addresses</td><td>Typically displayed in hexadecimal</td></tr><tr><td>Type Safety</td><td>Pointers are typed</td><td><code>*int</code> different from <code>*string</code></td></tr><tr><td>No Arithmetic</td><td>Go doesn't support pointer arithmetic</td><td>Unlike C/C++, can't do <code>ptr++</code></td></tr><tr><td>Automatic Deref</td><td>Struct field access auto-dereferences</td><td><code>p.field</code> instead of <code>(*p).field</code></td></tr><tr><td>Pass by Value</td><td>Go passes everything by value</td><td>Pointers let you \"pass by reference\"</td></tr></tbody></table><h2>Common Pointer Patterns</h2><table class=\"reference-table\"><thead><tr><th>Pattern</th><th>Code</th><th>Use Case</th></tr></thead> <tbody><tr><td>Modify in Function</td><td><code>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var9 string
 			templ_7745c5c3_Var9, templ_7745c5c3_Err = templ.JoinStringErrs("func update(p *int) { *p = 10 }")
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/pointers.templ`, Line: 182, Col: 50}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/pointers.templ`, Line: 194, Col: 50}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var9))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 13, "</code></td><td>Change original value in function</td></tr><tr><td>Struct Pointer</td><td><code>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 14, "</code></td><td>Change original value in function</td></tr><tr><td>Struct Pointer</td><td><code>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var10 string
 			templ_7745c5c3_Var10, templ_7745c5c3_Err = templ.JoinStringErrs("func (p *Person) SetAge(age int)")
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/pointers.templ`, Line: 187, Col: 51}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/pointers.templ`, Line: 199, Col: 51}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var10))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 14, "</code></td><td>Method that modifies receiver</td></tr><tr><td>Optional Value</td><td><code>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 15, "</code></td><td>Method that modifies receiver</td></tr><tr><td>Optional Value</td><td><code>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var11 string
 			templ_7745c5c3_Var11, templ_7745c5c3_Err = templ.JoinStringErrs("var config *Config")
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/pointers.templ`, Line: 192, Col: 37}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/pointers.templ`, Line: 204, Col: 37}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var11))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 15, "</code></td><td>Nil indicates absence of value</td></tr><tr><td>Large Struct</td><td><code>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 16, "</code></td><td>Nil indicates absence of value</td></tr><tr><td>Large Struct</td><td><code>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var12 string
 			templ_7745c5c3_Var12, templ_7745c5c3_Err = templ.JoinStringErrs("func process(data *LargeData)")
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/pointers.templ`, Line: 197, Col: 48}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/pointers.templ`, Line: 209, Col: 48}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var12))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 16, "</code></td><td>Avoid copying large structures</td></tr><tr><td>Linked Structures</td><td><code>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 17, "</code></td><td>Avoid copying large structures</td></tr><tr><td>Linked Structures</td><td><code>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var13 string
 			templ_7745c5c3_Var13, templ_7745c5c3_Err = templ.JoinStringErrs("type Node struct { Next *Node }")
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/pointers.templ`, Line: 202, Col: 50}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/pointers.templ`, Line: 214, Col: 50}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var13))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 17, "</code></td><td>Build linked lists, trees, graphs</td></tr><tr><td>Factory Function</td><td><code>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 18, "</code></td><td>Build linked lists, trees, graphs</td></tr><tr><td>Factory Function</td><td><code>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var14 string
 			templ_7745c5c3_Var14, templ_7745c5c3_Err = templ.JoinStringErrs("func NewPerson() *Person")
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/pointers.templ`, Line: 207, Col: 43}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/pointers.templ`, Line: 219, Col: 43}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var14))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 18, "</code></td><td>Return pointer to new struct</td></tr></tbody></table><h2>Pointers vs Values</h2><table class=\"reference-table\"><thead><tr><th>Aspect</th><th>Value</th><th>Pointer</th></tr></thead> <tbody><tr><td>Memory</td><td>Copies entire value</td><td>Copies memory address only</td></tr><tr><td>Modification</td><td>Cannot modify original</td><td>Can modify original value</td></tr><tr><td>Nil Check</td><td>Not applicable</td><td>Must check for nil</td></tr><tr><td>Performance</td><td>Fast for small types</td><td>Better for large structs</td></tr><tr><td>Semantics</td><td>Copy/independent value</td><td>Shared/referenced value</td></tr><tr><td>Safety</td><td>Always safe to use</td><td>Risk of nil pointer panic</td></tr></tbody></table><h2>Key Points</h2><ul><li>Pointers store memory addresses of values</li><li>Use <code>&</code> to get a pointer to a variable</li><li>Use <code>*</code> to dereference a pointer and access its value</li><li>Zero value of a pointer is <code>nil</code></li><li>Dereferencing a nil pointer causes a runtime panic</li><li>Go does not support pointer arithmetic (unlike C/C++)</li><li>Pointers enable functions to modify arguments</li><li>Use pointers for large structs to avoid copying overhead</li><li>Methods with pointer receivers can modify the receiver</li><li>Struct field access through pointers is automatically dereferenced</li></ul>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 19, "</code></td><td>Return pointer to new struct</td></tr></tbody></table><h2>Pointers vs Values</h2><table class=\"reference-table\"><thead><tr><th>Aspect</th><th>Value</th><th>Pointer</th></tr></thead> <tbody><tr><td>Memory</td><td>Copies entire value</td><td>Copies memory address only</td></tr><tr><td>Modification</td><td>Cannot modify original</td><td>Can modify original value</td></tr><tr><td>Nil Check</td><td>Not applicable</td><td>Must check for nil</td></tr><tr><td>Performance</td><td>Fast for small types</td><td>Better for large structs</td></tr><tr><td>Semantics</td><td>Copy/independent value</td><td>Shared/referenced value</td></tr><tr><td>Safety</td><td>Always safe to use</td><td>Risk of nil pointer panic</td></tr></tbody></table>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

@@ -1,0 +1,16 @@
+// Package components contains reusable Templ components.
+package components
+
+templ KeyPoints(points []string) {
+	<div class="key-points-box">
+		<h3 class="key-points-title">
+			<span class="key-points-icon">💡</span>
+			Key Points
+		</h3>
+		<ul class="key-points-list">
+			for _, point := range points {
+				<li>@templ.Raw(point)</li>
+			}
+		</ul>
+	</div>
+}

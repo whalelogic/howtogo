@@ -8,6 +8,18 @@ templ Pointers() {
 		@components.Breadcrumb("pointers", "Pointers")
 		@components.CustomHeader("Pointers", "Strings and Runes")
 		<p>Go supports pointers, allowing you to pass references to values and records within your program. Pointers are useful for large structs or when you need to modify a value in a function.</p>
+		@components.KeyPoints([]string{
+			"Pointers store memory addresses of values",
+			"Use <code>&</code> to get a pointer to a variable",
+			"Use <code>*</code> to dereference a pointer and access its value",
+			"Zero value of a pointer is <code>nil</code>",
+			"Dereferencing a nil pointer causes a runtime panic",
+			"Go does not support pointer arithmetic (unlike C/C++)",
+			"Pointers enable functions to modify arguments",
+			"Use pointers for large structs to avoid copying overhead",
+			"Methods with pointer receivers can modify the receiver",
+			"Struct field access through pointers is automatically dereferenced",
+		})
 		<h2>Basic Pointer Operations</h2>
 		<p>Pointers hold the memory address of a value. Use <code>&</code> to get a pointer and <code>*</code> to dereference:</p>
 		<div class="code-block">
@@ -251,19 +263,6 @@ After zeroPointer: 0`)
 				</tr>
 			</tbody>
 		</table>
-		<h2>Key Points</h2>
-		<ul>
-			<li>Pointers store memory addresses of values</li>
-			<li>Use <code>&</code> to get a pointer to a variable</li>
-			<li>Use <code>*</code> to dereference a pointer and access its value</li>
-			<li>Zero value of a pointer is <code>nil</code></li>
-			<li>Dereferencing a nil pointer causes a runtime panic</li>
-			<li>Go does not support pointer arithmetic (unlike C/C++)</li>
-			<li>Pointers enable functions to modify arguments</li>
-			<li>Use pointers for large structs to avoid copying overhead</li>
-			<li>Methods with pointer receivers can modify the receiver</li>
-			<li>Struct field access through pointers is automatically dereferenced</li>
-		</ul>
 		@components.Footer()
 	}
 }

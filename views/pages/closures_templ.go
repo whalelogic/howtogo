@@ -56,7 +56,24 @@ func Closures() templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, " <p>Go supports anonymous functions which can form closures. A closure is a function value that references variables from outside its body. The function may access and assign to the referenced variables.</p><h2>Basic Closure</h2><p>This example shows a closure that captures and modifies a variable from its outer scope:</p><div class=\"code-block\"><pre><code class=\"language-go\">")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, " <p>Go supports anonymous functions which can form closures. A closure is a function value that references variables from outside its body. The function may access and assign to the referenced variables.</p>")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = components.KeyPoints([]string{
+				"Closures are anonymous functions that capture variables from their surrounding scope",
+				"Captured variables are referenced, not copied (changes persist)",
+				"Each closure instance maintains its own set of captured variables",
+				"Closures extend the lifetime of captured variables",
+				"Useful for callbacks, iterators, and maintaining state without explicit structs",
+				"Common in goroutines to capture loop variables correctly",
+				"Be careful with loop variables in closures - they may need explicit copies",
+				"Closures enable functional programming patterns in Go",
+			}).Render(ctx, templ_7745c5c3_Buffer)
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, " <h2>Basic Closure</h2><p>This example shows a closure that captures and modifies a variable from its outer scope:</p><div class=\"code-block\"><pre><code class=\"language-go\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -89,7 +106,7 @@ func main() {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "</code></pre></div><span class=\"output-label\">Output:</span>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "</code></pre></div><span class=\"output-label\">Output:</span>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -100,7 +117,7 @@ func main() {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, " <h2>Closure as Function Argument</h2><p>Closures are often used as arguments to higher-order functions or for callbacks:</p><div class=\"code-block\"><pre><code class=\"language-go\">")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, " <h2>Closure as Function Argument</h2><p>Closures are often used as arguments to higher-order functions or for callbacks:</p><div class=\"code-block\"><pre><code class=\"language-go\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -139,7 +156,7 @@ func main() {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "</code></pre></div><span class=\"output-label\">Output:</span>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "</code></pre></div><span class=\"output-label\">Output:</span>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -148,85 +165,85 @@ Even numbers: [2 4 6 8 10]`).Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, " <h2>Closure Patterns</h2><table class=\"reference-table\"><thead><tr><th>Pattern</th><th>Example</th><th>Description</th></tr></thead> <tbody><tr><td>Function Generator</td><td><code>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, " <h2>Closure Patterns</h2><table class=\"reference-table\"><thead><tr><th>Pattern</th><th>Example</th><th>Description</th></tr></thead> <tbody><tr><td>Function Generator</td><td><code>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var3 string
 			templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs("func() func() int")
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/closures.templ`, Line: 105, Col: 36}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/closures.templ`, Line: 115, Col: 36}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "</code></td><td>Return a closure with state</td></tr><tr><td>Inline Closure</td><td><code>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "</code></td><td>Return a closure with state</td></tr><tr><td>Inline Closure</td><td><code>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var4 string
 			templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs("func(n int) bool { return n > 0 }")
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/closures.templ`, Line: 110, Col: 52}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/closures.templ`, Line: 120, Col: 52}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "</code></td><td>Anonymous function capturing outer variables</td></tr><tr><td>Callback</td><td><code>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "</code></td><td>Anonymous function capturing outer variables</td></tr><tr><td>Callback</td><td><code>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var5 string
 			templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs("onClick(func() { ... })")
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/closures.templ`, Line: 115, Col: 42}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/closures.templ`, Line: 125, Col: 42}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "</code></td><td>Pass closure as callback function</td></tr><tr><td>Encapsulation</td><td><code>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 10, "</code></td><td>Pass closure as callback function</td></tr><tr><td>Encapsulation</td><td><code>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var6 string
 			templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs("func() (get, set func())")
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/closures.templ`, Line: 120, Col: 43}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/closures.templ`, Line: 130, Col: 43}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 10, "</code></td><td>Return multiple closures sharing state</td></tr><tr><td>Deferred Closure</td><td><code>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 11, "</code></td><td>Return multiple closures sharing state</td></tr><tr><td>Deferred Closure</td><td><code>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var7 string
 			templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.JoinStringErrs("defer func() { ... }()")
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/closures.templ`, Line: 125, Col: 41}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/closures.templ`, Line: 135, Col: 41}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var7))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 11, "</code></td><td>Capture variables for deferred execution</td></tr></tbody></table><h2>Closure Characteristics</h2><table class=\"reference-table\"><thead><tr><th>Feature</th><th>Description</th><th>Behavior</th></tr></thead> <tbody><tr><td>Variable Capture</td><td>Closures capture variables by reference</td><td>Changes persist across calls</td></tr><tr><td>Independent State</td><td>Each closure has its own state</td><td>Multiple closures don't share captured vars</td></tr><tr><td>Lifetime</td><td>Captured variables live as long as closure exists</td><td>Prevents garbage collection of captured vars</td></tr><tr><td>Anonymous</td><td>Closures are typically anonymous functions</td><td>Defined without a name</td></tr><tr><td>First-class</td><td>Can be assigned, passed, returned</td><td>Treated like any other value</td></tr></tbody></table><h2>Common Use Cases</h2><table class=\"reference-table\"><thead><tr><th>Use Case</th><th>Pattern</th><th>Purpose</th></tr></thead> <tbody><tr><td>Iterators</td><td>Function returning closure with state</td><td>Generate sequential values</td></tr><tr><td>Event Handlers</td><td>Closure capturing context</td><td>React to events with specific context</td></tr><tr><td>Configuration</td><td>Factory function with parameters</td><td>Create customized functions</td></tr><tr><td>Goroutines</td><td>Launch goroutine with closure</td><td>Concurrent execution with captured state</td></tr><tr><td>Deferred Cleanup</td><td><code>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 12, "</code></td><td>Capture variables for deferred execution</td></tr></tbody></table><h2>Closure Characteristics</h2><table class=\"reference-table\"><thead><tr><th>Feature</th><th>Description</th><th>Behavior</th></tr></thead> <tbody><tr><td>Variable Capture</td><td>Closures capture variables by reference</td><td>Changes persist across calls</td></tr><tr><td>Independent State</td><td>Each closure has its own state</td><td>Multiple closures don't share captured vars</td></tr><tr><td>Lifetime</td><td>Captured variables live as long as closure exists</td><td>Prevents garbage collection of captured vars</td></tr><tr><td>Anonymous</td><td>Closures are typically anonymous functions</td><td>Defined without a name</td></tr><tr><td>First-class</td><td>Can be assigned, passed, returned</td><td>Treated like any other value</td></tr></tbody></table><h2>Common Use Cases</h2><table class=\"reference-table\"><thead><tr><th>Use Case</th><th>Pattern</th><th>Purpose</th></tr></thead> <tbody><tr><td>Iterators</td><td>Function returning closure with state</td><td>Generate sequential values</td></tr><tr><td>Event Handlers</td><td>Closure capturing context</td><td>React to events with specific context</td></tr><tr><td>Configuration</td><td>Factory function with parameters</td><td>Create customized functions</td></tr><tr><td>Goroutines</td><td>Launch goroutine with closure</td><td>Concurrent execution with captured state</td></tr><tr><td>Deferred Cleanup</td><td><code>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var8 string
 			templ_7745c5c3_Var8, templ_7745c5c3_Err = templ.JoinStringErrs("defer")
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/closures.templ`, Line: 199, Col: 24}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/closures.templ`, Line: 209, Col: 24}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var8))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 12, "</code> with closure</td><td>Resource cleanup with current state</td></tr><tr><td>Functional Programming</td><td>Map, filter, reduce patterns</td><td>Transform collections with custom logic</td></tr></tbody></table><h2>Key Points</h2><ul><li>Closures are anonymous functions that capture variables from their surrounding scope</li><li>Captured variables are referenced, not copied (changes persist)</li><li>Each closure instance maintains its own set of captured variables</li><li>Closures extend the lifetime of captured variables</li><li>Useful for callbacks, iterators, and maintaining state without explicit structs</li><li>Common in goroutines to capture loop variables correctly</li><li>Be careful with loop variables in closures - they may need explicit copies</li><li>Closures enable functional programming patterns in Go</li></ul><div class=\"nav-buttons\">")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 13, "</code> with closure</td><td>Resource cleanup with current state</td></tr><tr><td>Functional Programming</td><td>Map, filter, reduce patterns</td><td>Transform collections with custom logic</td></tr></tbody></table><div class=\"nav-buttons\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -238,7 +255,7 @@ Even numbers: [2 4 6 8 10]`).Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 13, "</div>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 14, "</div>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

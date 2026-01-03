@@ -8,6 +8,14 @@ templ Switch() {
 		@components.Breadcrumb("switch", "Switch")
 		@components.CustomHeader("Switch", "Arrays")
 		<p>Switch statements express conditionals across many branches. Go's switch is more powerful than in many other languages, with flexible matching and automatic break behavior.</p>
+		@components.KeyPoints([]string{
+			"Cases break automatically - no <code>break</code> statement needed",
+			"Use <code>fallthrough</code> to explicitly continue to the next case",
+			"Multiple expressions can be tested in a single case",
+			"Switch without an expression acts like if/else chain",
+			"Type switches let you determine the concrete type of an interface value",
+			"<code>default</code> case is optional and can appear anywhere",
+		})
 		<h2>Basic Switch</h2>
 		<p>The most basic switch compares a value against multiple cases:</p>
 		<div class="code-block">
@@ -189,15 +197,6 @@ Don't know type string`)
 				</tr>
 			</tbody>
 		</table>
-		<h2>Key Points</h2>
-		<ul>
-			<li>Cases break automatically - no <code>{ "break" }</code> statement needed</li>
-			<li>Use <code>{ "fallthrough" }</code> to explicitly continue to the next case</li>
-			<li>Multiple expressions can be tested in a single case</li>
-			<li>Switch without an expression acts like if/else chain</li>
-			<li>Type switches let you determine the concrete type of an interface value</li>
-			<li><code>{ "default" }</code> case is optional and can appear anywhere</li>
-		</ul>
 		<div class="nav-buttons">
 			@components.Button("Previous: If/Else", "/ifelse")
 			@components.Button("Next: Arrays", "/arrays")

@@ -8,6 +8,12 @@ templ Variables() {
 		@components.Breadcrumb("variables", "Variables")
 		@components.CustomHeader("Variables", "Constants")
 		<p>Variables let you name values. Go uses explicit <code>var</code> declarations or short-hand <code style="color: red;">:=</code> inside functions.</p>
+		@components.KeyPoints([]string{
+			"<code>var</code> allows explicit types or inferred types from the initializer.",
+			"<code>:=</code> is only valid inside functions; it infers the type.",
+			"Multiple assignment is common for parallel declarations.",
+			"Uninitialized variables have their type's zero value, never undefined.",
+		})
 		<div class="code-block">
 			<pre>
 				<code class="language-go">
@@ -108,13 +114,6 @@ short`)
 				</tr>
 			</tbody>
 		</table>
-		<h2>Key Points</h2>
-		<ul>
-			<li><code>var</code> allows explicit types or inferred types from the initializer.</li>
-			<li><code>:=</code> is only valid inside functions; it infers the type.</li>
-			<li>Multiple assignment is common for parallel declarations.</li>
-			<li>Uninitialized variables have their type's zero value, never undefined.</li>
-		</ul>
 		<div class="nav-buttons">
 			@components.Button("Previous: Values", "/values")
 			@components.Button("Next: Constants", "/constants")
