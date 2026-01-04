@@ -1,0 +1,204 @@
+package pages
+
+import "github.com/whalelogic/howtogo/views/layouts"
+import "github.com/whalelogic/howtogo/views/components"
+
+templ Interfaces() {
+	@layouts.Base("Interfaces | How to Go") {
+		@components.Breadcrumb("interfaces", "Interfaces")
+		@components.CustomHeader("Interfaces", "Generics")
+		<p>An interface in Go is a collection of method signatures. A value implements an interface by implementing its methods. There is no explicit declaration of intent.</p>
+		@components.KeyPoints([]string{
+			"Interfaces specify method signatures",
+			"Implementation is implicit",
+			"Empty interface accepts any value",
+			"Enables polymorphism",
+			"Small interfaces preferred",
+			"Use assertions for underlying values",
+		})
+		<h2>Defining and Implementing Interfaces</h2>
+		<p>Define an interface by listing method signatures:</p>
+		<div class="code-block">
+			<pre>
+				<code class="language-go">
+					@templ.Raw(`package main
+
+import (
+    "fmt"
+    "math"
+)
+
+// Define an interface
+type Shape interface {
+    Area() float64
+}
+
+// Rectangle implements Shape
+type Rectangle struct {
+    Width, Height float64
+}
+
+func (r Rectangle) Area() float64 {
+    return r.Width * r.Height
+}
+
+// Circle implements Shape
+type Circle struct {
+    Radius float64
+}
+
+func (c Circle) Area() float64 {
+    return math.Pi * c.Radius * c.Radius
+}
+
+func PrintArea(s Shape) {
+    fmt.Println("Area:", s.Area())
+}
+
+func main() {
+    rect := Rectangle{Width: 10, Height: 5}
+    circ := Circle{Radius: 7}
+    
+    PrintArea(rect)
+    PrintArea(circ)
+}`)
+				</code>
+			</pre>
+		</div>
+		<span class="output-label">Output:</span>
+		@components.CodeOutput(`Area: 50
+Area: 153.93804002589985`)
+		<h2>The Empty Interface</h2>
+		<p>The empty interface specifies zero methods and can hold values of any kind:</p>
+		<div class="code-block">
+			<pre>
+				<code class="language-go">
+					@templ.Raw(`package main
+
+import "fmt"
+
+func describe(i interface{}) {
+    fmt.Printf("(%v, %T)\n", i, i)
+}
+
+func main() {
+    var i interface{}
+    describe(i)
+    
+    i = 42
+    describe(i)
+    
+    i = "hello"
+    describe(i)
+}`)
+				</code>
+			</pre>
+		</div>
+		<span class="output-label">Output:</span>
+		@components.CodeOutput(`(<nil>, <nil>)
+(42, int)
+(hello, string)`)
+		<h2>Type Assertions</h2>
+		<p>A type assertion provides access to an underlying concrete value:</p>
+		<div class="code-block">
+			<pre>
+				<code class="language-go">
+					@templ.Raw(`package main
+
+import "fmt"
+
+func main() {
+    var i interface{} = "hello"
+    
+    s := i.(string)
+    fmt.Println(s)
+    
+    s, ok := i.(string)
+    fmt.Println(s, ok)
+    
+    f, ok := i.(float64)
+    fmt.Println(f, ok)
+}`)
+				</code>
+			</pre>
+		</div>
+		<span class="output-label">Output:</span>
+		@components.CodeOutput(`hello
+hello true
+0 false`)
+		<h2>Common Standard Interfaces</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Interface</th>
+					<th>Methods</th>
+					<th>Purpose</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td><code>{ "fmt.Stringer" }</code></td>
+					<td><code>{ "String() string" }</code></td>
+					<td>Custom string representation</td>
+				</tr>
+				<tr>
+					<td><code>{ "error" }</code></td>
+					<td><code>{ "Error() string" }</code></td>
+					<td>Error handling</td>
+				</tr>
+				<tr>
+					<td><code>{ "io.Reader" }</code></td>
+					<td><code>{ "Read([]byte) (int, error)" }</code></td>
+					<td>Read data from source</td>
+				</tr>
+				<tr>
+					<td><code>{ "io.Writer" }</code></td>
+					<td><code>{ "Write([]byte) (int, error)" }</code></td>
+					<td>Write data to destination</td>
+				</tr>
+				<tr>
+					<td><code>{ "io.Closer" }</code></td>
+					<td><code>{ "Close() error" }</code></td>
+					<td>Release resources</td>
+				</tr>
+			</tbody>
+		</table>
+		<h2>Best Practices</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Practice</th>
+					<th>Guideline</th>
+					<th>Reason</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Small contracts</td>
+					<td>Prefer 1-3 methods</td>
+					<td>Easier to implement</td>
+				</tr>
+				<tr>
+					<td>Accept contracts</td>
+					<td>Parameters should be contracts</td>
+					<td>More flexible</td>
+				</tr>
+				<tr>
+					<td>Output structs</td>
+					<td>Output concrete values</td>
+					<td>Clearer API</td>
+				</tr>
+				<tr>
+					<td>Define at use site</td>
+					<td>Consumer defines contracts</td>
+					<td>Minimal dependencies</td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="nav-buttons">
+			@components.Button("Previous: Methods", "/methods")
+			@components.Button("Next: Generics", "/generics")
+		</div>
+		@components.Footer()
+	}
+}

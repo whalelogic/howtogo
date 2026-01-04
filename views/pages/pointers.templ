@@ -6,7 +6,7 @@ import "github.com/whalelogic/howtogo/views/components"
 templ Pointers() {
 	@layouts.Base("Pointers | How to Go") {
 		@components.Breadcrumb("pointers", "Pointers")
-		@components.CustomHeader("Pointers", "Strings and Runes")
+		@components.CustomHeader("Pointers", "Strings")
 		<p>Go supports pointers, allowing you to pass references to values and records within your program. Pointers are useful for large structs or when you need to modify a value in a function.</p>
 		@components.KeyPoints([]string{
 			"Pointers store memory addresses of values",
@@ -263,6 +263,10 @@ After zeroPointer: 0`)
 				</tr>
 			</tbody>
 		</table>
+		<div class="nav-buttons">
+			@components.Button("Previous: Recursion", "/recursion")
+			@components.Button("Next: Strings", "/strings")
+		</div>
 		@components.Footer()
 	}
 }

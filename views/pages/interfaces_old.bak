@@ -1,0 +1,385 @@
+package pages
+
+import "github.com/whalelogic/howtogo/views/layouts"
+import "github.com/whalelogic/howtogo/views/components"
+
+templ Interfaces() {
+	@layouts.Base("Interfaces | How to Go") {
+		@components.Breadcrumb("interfaces", "Interfaces")
+		@components.CustomHeader("Interfaces", "Generics")
+		<p>Interfaces in Go define behavior by specifying a set of method signatures. A type implements an interface by implementing its methods - no explicit declaration required. Interfaces enable polymorphism and decoupling in Go.</p>
+		@components.KeyPoints([]string{
+			"Interfaces specify method signatures, not implementations",
+			"Types implement interfaces implicitly (no 'implements' keyword)",
+			"Empty interface <code>interface{}</code> (or <code>any</code>) accepts any type",
+			"Interfaces enable polymorphism and abstraction",
+			"Small interfaces are preferred (often 1-3 methods)",
+			"Interface values store both type and value information",
+			"Nil interface value means both type and value are nil",
+			"Type assertions and type switches work with interfaces",
+		})
+		<h2>Defining and Implementing Interfaces</h2>
+		<p>Define an interface and implement it implicitly:</p>
+		<div class="code-block">
+			<pre>
+				<code class="language-go">
+					@templ.Raw(`package main
+
+import (
+    "fmt"
+    "math"
+)
+
+// Define an interface
+type Shape interface {
+    Area() float64
+    Perimeter() float64
+}
+
+// Rectangle implements Shape
+type Rectangle struct {
+    Width, Height float64
+}
+
+func (r Rectangle) Area() float64 {
+    return r.Width * r.Height
+}
+
+func (r Rectangle) Perimeter() float64 {
+    return 2 * (r.Width + r.Height)
+}
+
+// Circle implements Shape
+type Circle struct {
+    Radius float64
+}
+
+func (c Circle) Area() float64 {
+    return math.Pi * c.Radius * c.Radius
+}
+
+func (c Circle) Perimeter() float64 {
+    return 2 * math.Pi * c.Radius
+}
+
+// Function accepts interface type
+func PrintShapeInfo(s Shape) {
+    fmt.Printf("Area: %.2f, Perimeter: %.2f\n", s.Area(), s.Perimeter())
+}
+
+func main() {
+    rect := Rectangle{Width: 10, Height: 5}
+    circ := Circle{Radius: 7}
+    
+    PrintShapeInfo(rect)
+    PrintShapeInfo(circ)
+}`)
+				</code>
+			</pre>
+		</div>
+		<span class="output-label">Output:</span>
+		@components.CodeOutput(`Area: 50.00, Perimeter: 30.00
+Area: 153.94, Perimeter: 43.98`)
+		<h2>Empty Interface and Type Assertions</h2>
+		<p>The empty interface accepts any type. Use type assertions to access underlying values:</p>
+		<div class="code-block">
+			<pre>
+				<code class="language-go">
+					@templ.Raw(`package main
+
+import "fmt"
+
+// Empty interface accepts any type
+func describe(i interface{}) {
+    fmt.Printf("(%v, %T)\n", i, i)
+}
+
+func main() {
+    var i interface{}
+    describe(i) // nil
+    
+    i = 42
+    describe(i)
+    
+    i = "hello"
+    describe(i)
+    
+    i = []int{1, 2, 3}
+    describe(i)
+    
+    // Type assertion
+    var x interface{} = "hello"
+    
+    // Safe type assertion with ok
+    s, ok := x.(string)
+    fmt.Printf("Value: %v, Success: %v\n", s, ok)
+    
+    // This would be false
+    n, ok := x.(int)
+    fmt.Printf("Value: %v, Success: %v\n", n, ok)
+    
+    // Type assertion without ok panics if wrong
+    // n := x.(int) // This would panic!
+}`)
+				</code>
+			</pre>
+		</div>
+		<span class="output-label">Output:</span>
+		@components.CodeOutput(`(<nil>, <nil>)
+(42, int)
+(hello, string)
+([1 2 3], []int)
+Value: hello, Success: true
+Value: 0, Success: false`)
+		<h2>Type Switches</h2>
+		<p>Type switches allow handling different types:</p>
+		<div class="code-block">
+			<pre>
+				<code class="language-go">
+					@templ.Raw(`package main
+
+import "fmt"
+
+func process(i interface{}) {
+    switch v := i.(type) {
+    case int:
+        fmt.Printf("Integer: %d\n", v*2)
+    case string:
+        fmt.Printf("String: %s (length: %d)\n", v, len(v))
+    case bool:
+        fmt.Printf("Boolean: %v\n", v)
+    case []int:
+        fmt.Printf("Int slice: %v (sum: %d)\n", v, sum(v))
+    default:
+        fmt.Printf("Unknown type: %T\n", v)
+    }
+}
+
+func sum(nums []int) int {
+    total := 0
+    for _, n := range nums {
+        total += n
+    }
+    return total
+}
+
+func main() {
+    process(42)
+    process("hello")
+    process(true)
+    process([]int{1, 2, 3, 4, 5})
+    process(3.14)
+}`)
+				</code>
+			</pre>
+		</div>
+		<span class="output-label">Output:</span>
+		@components.CodeOutput(`Integer: 84
+String: hello (length: 5)
+Boolean: true
+Int slice: [1 2 3 4 5] (sum: 15)
+Unknown type: float64`)
+		<h2>Common Standard Interfaces</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Interface</th>
+					<th>Method(s)</th>
+					<th>Purpose</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td><code>fmt.Stringer</code></td>
+					<td><code>String() string</code></td>
+					<td>Custom string representation</td>
+				</tr>
+				<tr>
+					<td><code>error</code></td>
+					<td><code>Error() string</code></td>
+					<td>Error handling</td>
+				</tr>
+				<tr>
+					<td><code>io.Reader</code></td>
+					<td><code>Read([]byte) (int, error)</code></td>
+					<td>Read data from source</td>
+				</tr>
+				<tr>
+					<td><code>io.Writer</code></td>
+					<td><code>Write([]byte) (int, error)</code></td>
+					<td>Write data to destination</td>
+				</tr>
+				<tr>
+					<td><code>io.Closer</code></td>
+					<td><code>Close() error</code></td>
+					<td>Release resources</td>
+				</tr>
+				<tr>
+					<td><code>sort.Interface</code></td>
+					<td><code>Len(), Less(), Swap()</code></td>
+					<td>Custom sorting</td>
+				</tr>
+				<tr>
+					<td><code>http.Handler</code></td>
+					<td><code>ServeHTTP(ResponseWriter, *Request)</code></td>
+					<td>HTTP request handling</td>
+				</tr>
+			</tbody>
+		</table>
+		<h2>Interface Composition</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Pattern</th>
+					<th>Example</th>
+					<th>Description</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Embed interfaces</td>
+					<td><code>{ "type ReadWriter interface { Reader; Writer }" }</code></td>
+					<td>Combine multiple interfaces</td>
+				</tr>
+				<tr>
+					<td>io.ReadWriter</td>
+					<td><code>{ "type ReadWriter interface { Reader; Writer }" }</code></td>
+					<td>Read and write operations</td>
+				</tr>
+				<tr>
+					<td>io.ReadCloser</td>
+					<td><code>{ "type ReadCloser interface { Reader; Closer }" }</code></td>
+					<td>Read with cleanup</td>
+				</tr>
+				<tr>
+					<td>Single method</td>
+					<td><code>{ "type Runner interface { Run() }" }</code></td>
+					<td>Simple, focused interface</td>
+				</tr>
+			</tbody>
+		</table>
+		<h2>Interface Characteristics</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Feature</th>
+					<th>Description</th>
+					<th>Notes</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Implicit implementation</td>
+					<td>No explicit declaration needed</td>
+					<td>Type implements by having methods</td>
+				</tr>
+				<tr>
+					<td>Duck typing</td>
+					<td>"If it walks like a duck..."</td>
+					<td>Structural, not nominal typing</td>
+				</tr>
+				<tr>
+					<td>Zero value</td>
+					<td><code>nil</code> for interface types</td>
+					<td>Both types and values are <code>nil</code></td>
+				</tr>
+				<tr>
+					<td>Type and value</td>
+					<td>Interface stores both</td>
+					<td>Can be checked with { "type" } assertions</td>
+				</tr>
+				<tr>
+					<td>Empty interface</td>
+					<td><code>interface{}</code> or <code>any</code></td>
+					<td>Accepts any { "type" }</td>
+				</tr>
+				<tr>
+					<td>Method sets</td>
+					<td>Value vs pointer receivers matter</td>
+					<td>Pointer receiver = only pointers satisfy</td>
+				</tr>
+			</tbody>
+		</table>
+		<h2>Interface Best Practices</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Principle</th>
+					<th>Guideline</th>
+					<th>Example</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Small interfaces</td>
+					<td>Prefer 1-3 methods</td>
+					<td><code>io.Reader</code> has one method</td>
+				</tr>
+				<tr>
+					<td>Accept interfaces</td>
+					<td>Accept interfaces, { "return" } structs</td>
+					<td><code>func Process(r io.Reader)</code></td>
+				</tr>
+				<tr>
+					<td>Define at use site</td>
+					<td>Define where needed, not with { "type" }</td>
+					<td>Consumer defines interface</td>
+				</tr>
+				<tr>
+					<td>Composition over inheritance</td>
+					<td>Embed interfaces to build larger ones</td>
+					<td><code>io.ReadWriter</code> embeds two</td>
+				</tr>
+				<tr>
+					<td>Nil checks</td>
+					<td>Check { "for" } nil { "interface" } values</td>
+					<td><code>{ "if x != nil { }" }</code></td>
+				</tr>
+				<tr>
+					<td>Type assertions</td>
+					<td>Use safe form with ok</td>
+					<td><code>v, ok := i.(Type)</code></td>
+				</tr>
+			</tbody>
+		</table>
+		<h2>Common Patterns</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Pattern</th>
+					<th>Code</th>
+					<th>Use Case</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Polymorphism</td>
+					<td><code>{ "func Draw(s Shape) { s.Draw() }" }</code></td>
+					<td>Work with multiple types</td>
+				</tr>
+				<tr>
+					<td>Dependency injection</td>
+					<td><code>{ "type Service struct { db Database }" }</code></td>
+					<td>Decouple dependencies</td>
+				</tr>
+				<tr>
+					<td>Mocking</td>
+					<td><code>{ "type MockDB struct { }" }</code></td>
+					<td>Test with fake implementations</td>
+				</tr>
+				<tr>
+					<td>Strategy pattern</td>
+					<td><code>{ "type Sorter interface { Sort([]int) }" }</code></td>
+					<td>Swap algorithms</td>
+				</tr>
+				<tr>
+					<td>Adapter pattern</td>
+					<td><code>{ "type Adapter struct { legacy *Old }" }</code></td>
+					<td>Adapt incompatible interfaces</td>
+				</tr>
+			</tbody>
+		</table>
+		@components.Footer()
+	}
+}
+

@@ -1,0 +1,296 @@
+package pages
+
+import "github.com/whalelogic/howtogo/views/layouts"
+import "github.com/whalelogic/howtogo/views/components"
+
+templ Runes() {
+	@layouts.Base("Runes | How to Go") {
+		@components.Breadcrumb("runes", "Runes")
+		@components.CustomHeader("Runes", "Structs")
+		<p>A rune in Go is an alias for <code>int32</code> and represents a Unicode code point. Runes are essential for properly handling international text and multi-byte characters in Go.</p>
+		@components.KeyPoints([]string{
+			"rune is an alias for int32",
+			"Runes represent Unicode code points",
+			"Use single quotes for rune literals: 'A'",
+			"Iterating over strings with range returns runes, not bytes",
+			"Convert strings to []rune for character-based operations",
+			"One rune can occupy 1-4 bytes in UTF-8 encoding",
+			"Use utf8 package for advanced rune operations",
+		})
+		<h2>Runes vs Bytes</h2>
+		<p>Understanding the difference between bytes and runes is crucial for text processing:</p>
+		<div class="code-block">
+			<pre>
+				<code class="language-go">
+					@templ.Raw(`package main
+
+import (
+    "fmt"
+    "unicode/utf8"
+)
+
+func main() {
+    s := "Hello 世界"
+    
+    // Length in bytes
+    fmt.Println("Byte length:", len(s))
+    
+    // Length in runes (characters)
+    fmt.Println("Rune count:", utf8.RuneCountInString(s))
+    
+    // Iterating bytes (wrong for multi-byte chars)
+    fmt.Println("Bytes:")
+    for i := 0; i < len(s); i++ {
+        fmt.Printf("%c ", s[i])
+    }
+    fmt.Println()
+    
+    // Iterating runes (correct)
+    fmt.Println("Runes:")
+    for _, r := range s {
+        fmt.Printf("%c ", r)
+    }
+    fmt.Println()
+}`)
+				</code>
+			</pre>
+		</div>
+		<span class="output-label">Output:</span>
+		@components.CodeOutput(`Byte length: 12
+Rune count: 8
+Bytes:
+H e l l o   ä ¸ � ç � �
+Runes:
+H e l l o   世 界`)
+		<h2>Working with Runes</h2>
+		<p>Convert between strings and runes for proper character handling:</p>
+		<div class="code-block">
+			<pre>
+				<code class="language-go">
+					@templ.Raw(`package main
+
+import (
+    "fmt"
+    "unicode/utf8"
+)
+
+func main() {
+    // Single rune literal
+    r := 'A'
+    fmt.Printf("Rune: %c, Value: %d\n", r, r)
+    
+    // Unicode escape
+    heart := '\u2665'
+    fmt.Printf("Heart: %c\n", heart)
+    
+    // Convert string to rune slice
+    s := "Hello 世界"
+    runes := []rune(s)
+    fmt.Println("Rune slice:", runes)
+    fmt.Println("Length:", len(runes))
+    
+    // Access individual characters
+    fmt.Printf("First char: %c\n", runes[0])
+    fmt.Printf("Last char: %c\n", runes[len(runes)-1])
+    
+    // Modify runes (strings are immutable)
+    runes[0] = 'h'
+    modified := string(runes)
+    fmt.Println("Modified:", modified)
+    
+    // Decode first rune from string
+    r, size := utf8.DecodeRuneInString(s)
+    fmt.Printf("First rune: %c (size: %d bytes)\n", r, size)
+}`)
+				</code>
+			</pre>
+		</div>
+		<span class="output-label">Output:</span>
+		@components.CodeOutput(`Rune: A, Value: 65
+Heart: ♥
+Rune slice: [72 101 108 108 111 32 19990 30028]
+Length: 8
+First char: H
+Last char: 界
+Modified: hello 世界
+First rune: H (size: 1 bytes)`)
+		<h2>Rune Operations</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Operation</th>
+					<th>Syntax</th>
+					<th>Description</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Rune literal</td>
+					<td><code>'A'</code></td>
+					<td>Single character in quotes</td>
+				</tr>
+				<tr>
+					<td>Unicode escape</td>
+					<td><code>'\u0041'</code></td>
+					<td>Unicode code point (4 hex digits)</td>
+				</tr>
+				<tr>
+					<td>Long unicode</td>
+					<td><code>'\U00000041'</code></td>
+					<td>Unicode code point (8 hex digits)</td>
+				</tr>
+				<tr>
+					<td>String to runes</td>
+					<td><code>[]rune(s)</code></td>
+					<td>Convert string to rune slice</td>
+				</tr>
+				<tr>
+					<td>Runes to string</td>
+					<td><code>string(runes)</code></td>
+					<td>Convert rune slice to string</td>
+				</tr>
+				<tr>
+					<td>Count runes</td>
+					<td><code>utf8.RuneCountInString(s)</code></td>
+					<td>Number of runes in string</td>
+				</tr>
+				<tr>
+					<td>Decode rune</td>
+					<td><code>utf8.DecodeRuneInString(s)</code></td>
+					<td>Get first rune and its size</td>
+				</tr>
+			</tbody>
+		</table>
+		<h2>Unicode Package Functions</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Function</th>
+					<th>Description</th>
+					<th>Example</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td><code>unicode.IsLetter(r)</code></td>
+					<td>Check if rune is a letter</td>
+					<td><code>{ "unicode.IsLetter('A')" }</code></td>
+				</tr>
+				<tr>
+					<td><code>unicode.IsDigit(r)</code></td>
+					<td>Check if rune is a digit</td>
+					<td><code>{ "unicode.IsDigit('5')" }</code></td>
+				</tr>
+				<tr>
+					<td><code>unicode.IsSpace(r)</code></td>
+					<td>Check if rune is whitespace</td>
+					<td><code>{ "unicode.IsSpace(' ')" }</code></td>
+				</tr>
+				<tr>
+					<td><code>unicode.IsUpper(r)</code></td>
+					<td>Check if rune is uppercase</td>
+					<td><code>{ "unicode.IsUpper('A')" }</code></td>
+				</tr>
+				<tr>
+					<td><code>unicode.IsLower(r)</code></td>
+					<td>Check if rune is lowercase</td>
+					<td><code>{ "unicode.IsLower('a')" }</code></td>
+				</tr>
+				<tr>
+					<td><code>unicode.ToUpper(r)</code></td>
+					<td>Convert rune to uppercase</td>
+					<td><code>{ "unicode.ToUpper('a')" }</code></td>
+				</tr>
+				<tr>
+					<td><code>unicode.ToLower(r)</code></td>
+					<td>Convert rune to lowercase</td>
+					<td><code>{ "unicode.ToLower('A')" }</code></td>
+				</tr>
+			</tbody>
+		</table>
+		<h2>Bytes vs Runes</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Aspect</th>
+					<th>Byte</th>
+					<th>Rune</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Type</td>
+					<td><code>byte</code> (alias for <code>uint8</code>)</td>
+					<td><code>rune</code> (alias for <code>int32</code>)</td>
+				</tr>
+				<tr>
+					<td>Size</td>
+					<td>1 byte (8 bits)</td>
+					<td>4 bytes (32 bits)</td>
+				</tr>
+				<tr>
+					<td>Range</td>
+					<td>0-255</td>
+					<td>Unicode code points (0-1,114,111)</td>
+				</tr>
+				<tr>
+					<td>Literal</td>
+					<td>No specific literal</td>
+					<td>Single quotes: <code>'A'</code></td>
+				</tr>
+				<tr>
+					<td>Use case</td>
+					<td>Raw binary data, ASCII</td>
+					<td>Unicode text, characters</td>
+				</tr>
+				<tr>
+					<td>String index</td>
+					<td><code>s[0]</code> returns byte</td>
+					<td><code>{ "range" }</code> loop returns runes</td>
+				</tr>
+			</tbody>
+		</table>
+		<h2>Common Patterns</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Pattern</th>
+					<th>Code</th>
+					<th>Use Case</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Iterate characters</td>
+					<td><code>{ "for _, r := range s { }" }</code></td>
+					<td>Process each Unicode character</td>
+				</tr>
+				<tr>
+					<td>Character count</td>
+					<td><code>{ "utf8.RuneCountInString(s)" }</code></td>
+					<td>Get actual character count</td>
+				</tr>
+				<tr>
+					<td>Substring by chars</td>
+					<td><code>{ "string([]rune(s)[2:5])" }</code></td>
+					<td>Slice by characters, not bytes</td>
+				</tr>
+				<tr>
+					<td>Validate rune</td>
+					<td><code>{ "unicode.IsLetter(r)" }</code></td>
+					<td>Check character properties</td>
+				</tr>
+				<tr>
+					<td>Case conversion</td>
+					<td><code>{ "unicode.ToUpper(r)" }</code></td>
+					<td>Convert individual characters</td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="nav-buttons">
+			@components.Button("Previous: Strings", "/strings")
+			@components.Button("Next: Structs", "/structs")
+		</div>
+		@components.Footer()
+	}
+}

@@ -1,0 +1,273 @@
+package pages
+
+import "github.com/whalelogic/howtogo/views/layouts"
+import "github.com/whalelogic/howtogo/views/components"
+
+templ Strings() {
+	@layouts.Base("Strings | How to Go") {
+		@components.Breadcrumb("strings", "Strings")
+		@components.CustomHeader("Strings", "Runes")
+		<p>Strings in Go are immutable sequences of bytes, typically used to represent UTF-8 encoded text. Go provides rich support for string manipulation through the <code>strings</code> package and built-in operations.</p>
+		@components.KeyPoints([]string{
+			"Strings are immutable - once created, they cannot be changed",
+			"Strings are represented as UTF-8 encoded byte sequences",
+			"Use double quotes for string literals: <code>\"hello\"</code>",
+			"Use backticks for raw string literals: <code>`hello\\nworld`</code>",
+			"String concatenation creates new strings",
+			"Indexing a string returns bytes, not characters",
+			"The <code>strings</code> package provides extensive string manipulation functions",
+			"Use <code>len()</code> to get byte length, not character count",
+		})
+		<h2>String Basics</h2>
+		<p>Strings can be created using double quotes or backticks for raw strings:</p>
+		<div class="code-block">
+			<pre>
+				<code class="language-go">
+					@templ.Raw(`package main
+
+import "fmt"
+
+func main() {
+    // Regular string with double quotes
+    s1 := "Hello, World!"
+    fmt.Println(s1)
+    
+    // Raw string with backticks (ignores escape sequences)
+    s2 := ` + "`" + `Line 1
+Line 2
+Line 3` + "`" + `
+    fmt.Println(s2)
+    
+    // String concatenation
+    greeting := "Hello" + " " + "World"
+    fmt.Println(greeting)
+    
+    // String length (in bytes)
+    fmt.Println("Length:", len(s1))
+    
+    // Accessing bytes
+    fmt.Println("First byte:", s1[0])
+}`)
+				</code>
+			</pre>
+		</div>
+		<span class="output-label">Output:</span>
+		@components.CodeOutput(`Hello, World!
+Line 1
+Line 2
+Line 3
+Hello World
+Length: 13
+First byte: 72`)
+		<h2>String Operations</h2>
+		<p>The <code>strings</code> package provides many useful functions for working with strings:</p>
+		<div class="code-block">
+			<pre>
+				<code class="language-go">
+					@templ.Raw(`package main
+
+import (
+    "fmt"
+    "strings"
+)
+
+func main() {
+    s := "Hello, Go Programming"
+    
+    // Check if string contains substring
+    fmt.Println("Contains 'Go':", strings.Contains(s, "Go"))
+    
+    // Count occurrences
+    fmt.Println("Count 'o':", strings.Count(s, "o"))
+    
+    // Check prefix/suffix
+    fmt.Println("Starts with 'Hello':", strings.HasPrefix(s, "Hello"))
+    fmt.Println("Ends with 'ing':", strings.HasSuffix(s, "ing"))
+    
+    // Find index
+    fmt.Println("Index of 'Go':", strings.Index(s, "Go"))
+    
+    // Join strings
+    parts := []string{"Go", "is", "awesome"}
+    joined := strings.Join(parts, " ")
+    fmt.Println("Joined:", joined)
+    
+    // Split strings
+    split := strings.Split(s, " ")
+    fmt.Println("Split:", split)
+    
+    // Replace
+    replaced := strings.Replace(s, "Go", "Golang", 1)
+    fmt.Println("Replaced:", replaced)
+    
+    // Case conversion
+    fmt.Println("Upper:", strings.ToUpper(s))
+    fmt.Println("Lower:", strings.ToLower(s))
+    
+    // Trim whitespace
+    padded := "  spaces  "
+    fmt.Println("Trimmed:", strings.TrimSpace(padded))
+}`)
+				</code>
+			</pre>
+		</div>
+		<span class="output-label">Output:</span>
+		@components.CodeOutput(`Contains 'Go': true
+Count 'o': 3
+Starts with 'Hello': true
+Ends with 'ing': true
+Index of 'Go': 7
+Joined: Go is awesome
+Split: [Hello, Go Programming]
+Replaced: Hello, Golang Programming
+Upper: HELLO, GO PROGRAMMING
+Lower: hello, go programming
+Trimmed: spaces`)
+		<h2>Common String Functions</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Function</th>
+					<th>Description</th>
+					<th>Example</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td><code>strings.Contains(s, substr)</code></td>
+					<td>Check if string contains substring</td>
+					<td><code>{ "strings.Contains(\"hello\", \"lo\")" }</code></td>
+				</tr>
+				<tr>
+					<td><code>strings.Count(s, substr)</code></td>
+					<td>Count non-overlapping instances</td>
+					<td><code>{ "strings.Count(\"cheese\", \"e\")" }</code></td>
+				</tr>
+				<tr>
+					<td><code>strings.HasPrefix(s, prefix)</code></td>
+					<td>Check if string starts with prefix</td>
+					<td><code>{ "strings.HasPrefix(\"go\", \"g\")" }</code></td>
+				</tr>
+				<tr>
+					<td><code>strings.HasSuffix(s, suffix)</code></td>
+					<td>Check if string ends with suffix</td>
+					<td><code>{ "strings.HasSuffix(\"go\", \"o\")" }</code></td>
+				</tr>
+				<tr>
+					<td><code>strings.Index(s, substr)</code></td>
+					<td>Find index of first occurrence</td>
+					<td><code>{ "strings.Index(\"hello\", \"l\")" }</code></td>
+				</tr>
+				<tr>
+					<td><code>strings.Join(slice, sep)</code></td>
+					<td>Join slice elements with separator</td>
+					<td><code>{ "strings.Join([]string{\"a\",\"b\"}, \"-\")" }</code></td>
+				</tr>
+				<tr>
+					<td><code>strings.Split(s, sep)</code></td>
+					<td>Split string by separator</td>
+					<td><code>{ "strings.Split(\"a-b-c\", \"-\")" }</code></td>
+				</tr>
+				<tr>
+					<td><code>strings.Replace(s, old, new, n)</code></td>
+					<td>Replace first n occurrences</td>
+					<td><code>{ "strings.Replace(s, \"a\", \"b\", 1)" }</code></td>
+				</tr>
+				<tr>
+					<td><code>strings.ToLower(s)</code></td>
+					<td>Convert to lowercase</td>
+					<td><code>{ "strings.ToLower(\"HELLO\")" }</code></td>
+				</tr>
+				<tr>
+					<td><code>strings.ToUpper(s)</code></td>
+					<td>Convert to uppercase</td>
+					<td><code>{ "strings.ToUpper(\"hello\")" }</code></td>
+				</tr>
+				<tr>
+					<td><code>strings.TrimSpace(s)</code></td>
+					<td>Remove leading/trailing whitespace</td>
+					<td><code>{ "strings.TrimSpace(\" hi \")" }</code></td>
+				</tr>
+			</tbody>
+		</table>
+		<h2>String Building</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Method</th>
+					<th>Performance</th>
+					<th>Use Case</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td><code>+</code> operator</td>
+					<td>Slow for many concatenations</td>
+					<td>Concatenating few strings</td>
+				</tr>
+				<tr>
+					<td><code>strings.Builder</code></td>
+					<td>Fast, minimal allocations</td>
+					<td>Building strings in loops</td>
+				</tr>
+				<tr>
+					<td><code>fmt.Sprintf</code></td>
+					<td>Moderate</td>
+					<td>Formatted string construction</td>
+				</tr>
+				<tr>
+					<td><code>strings.Join</code></td>
+					<td>Fast for slices</td>
+					<td>Joining slice of strings</td>
+				</tr>
+			</tbody>
+		</table>
+		<h2>String Characteristics</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Feature</th>
+					<th>Description</th>
+					<th>Notes</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Immutability</td>
+					<td>Strings cannot be modified</td>
+					<td>Modifications create new strings</td>
+				</tr>
+				<tr>
+					<td>UTF-8 Encoding</td>
+					<td>Strings are UTF-8 by default</td>
+					<td>Supports international characters</td>
+				</tr>
+				<tr>
+					<td>Byte Sequences</td>
+					<td>Strings are byte arrays</td>
+					<td>Indexing returns bytes, not runes</td>
+				</tr>
+				<tr>
+					<td>Length</td>
+					<td><code>len()</code> returns byte count</td>
+					<td>Not the same as character count</td>
+				</tr>
+				<tr>
+					<td>Comparison</td>
+					<td>Compared lexicographically</td>
+					<td>Use <code>==</code>, <code>&lt;</code>, <code>&gt;</code></td>
+				</tr>
+				<tr>
+					<td>Zero Value</td>
+					<td>Empty string <code>""</code></td>
+					<td>Not nil</td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="nav-buttons">
+			@components.Button("Previous: Pointers", "/pointers")
+			@components.Button("Next: Runes", "/runes")
+		</div>
+		@components.Footer()
+	}
+}

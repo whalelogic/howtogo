@@ -94,3 +94,39 @@ func RecursionHandler(c *gin.Context) {
 func PointersHandler(c *gin.Context) {
 	render(c, http.StatusOK, pages.Pointers())
 }
+
+func StringsHandler(c *gin.Context) {
+	render(c, http.StatusOK, pages.Strings())
+}
+
+func RunesHandler(c *gin.Context) {
+	render(c, http.StatusOK, pages.Runes())
+}
+
+func StructsHandler(c *gin.Context) {
+	render(c, http.StatusOK, pages.Structs())
+}
+
+func MethodsHandler(c *gin.Context) {
+	render(c, http.StatusOK, pages.Methods())
+}
+
+func InterfacesHandler(c *gin.Context) {
+	render(c, http.StatusOK, pages.Interfaces())
+}
+
+func GenericsHandler(c *gin.Context) {
+	render(c, http.StatusOK, pages.Generics())
+}
+
+func ErrorsHandler(c *gin.Context) {
+	render(c, http.StatusOK, pages.Errors())
+}
+
+func GoroutinesHandler(c *gin.Context) {
+	render(c, http.StatusOK, pages.Goroutines())
+}
+
+func ChannelsHandler(c *gin.Context) {
+	render(c, http.StatusOK, pages.Channels())
+}

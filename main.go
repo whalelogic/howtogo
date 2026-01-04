@@ -39,6 +39,16 @@ func main() {
 	r.GET("/variadic-functions", handlers.VariadicFunctionsHandler)
 	r.GET("/closures", handlers.ClosuresHandler)
 	r.GET("/recursion", handlers.RecursionHandler)
+	r.GET("/pointers", handlers.PointersHandler)
+	r.GET("/strings", handlers.StringsHandler)
+	r.GET("/runes", handlers.RunesHandler)
+	r.GET("/structs", handlers.StructsHandler)
+	r.GET("/methods", handlers.MethodsHandler)
+	r.GET("/interfaces", handlers.InterfacesHandler)
+	r.GET("/generics", handlers.GenericsHandler)
+	r.GET("/errors", handlers.ErrorsHandler)
+	r.GET("/goroutines", handlers.GoroutinesHandler)
+	r.GET("/channels", handlers.ChannelsHandler)
 
 	if err := r.Run(":8080"); err != nil {
 		log.Fatalf("server failed: %v", err)

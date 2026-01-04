@@ -52,7 +52,7 @@ func Pointers() templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = components.CustomHeader("Pointers", "Strings and Runes").Render(ctx, templ_7745c5c3_Buffer)
+			templ_7745c5c3_Err = components.CustomHeader("Pointers", "Strings").Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -315,7 +315,19 @@ After zeroPointer: 0`).Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 19, "</code></td><td>Return pointer to new struct</td></tr></tbody></table><h2>Pointers vs Values</h2><table class=\"reference-table\"><thead><tr><th>Aspect</th><th>Value</th><th>Pointer</th></tr></thead> <tbody><tr><td>Memory</td><td>Copies entire value</td><td>Copies memory address only</td></tr><tr><td>Modification</td><td>Cannot modify original</td><td>Can modify original value</td></tr><tr><td>Nil Check</td><td>Not applicable</td><td>Must check for nil</td></tr><tr><td>Performance</td><td>Fast for small types</td><td>Better for large structs</td></tr><tr><td>Semantics</td><td>Copy/independent value</td><td>Shared/referenced value</td></tr><tr><td>Safety</td><td>Always safe to use</td><td>Risk of nil pointer panic</td></tr></tbody></table>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 19, "</code></td><td>Return pointer to new struct</td></tr></tbody></table><h2>Pointers vs Values</h2><table class=\"reference-table\"><thead><tr><th>Aspect</th><th>Value</th><th>Pointer</th></tr></thead> <tbody><tr><td>Memory</td><td>Copies entire value</td><td>Copies memory address only</td></tr><tr><td>Modification</td><td>Cannot modify original</td><td>Can modify original value</td></tr><tr><td>Nil Check</td><td>Not applicable</td><td>Must check for nil</td></tr><tr><td>Performance</td><td>Fast for small types</td><td>Better for large structs</td></tr><tr><td>Semantics</td><td>Copy/independent value</td><td>Shared/referenced value</td></tr><tr><td>Safety</td><td>Always safe to use</td><td>Risk of nil pointer panic</td></tr></tbody></table><div class=\"nav-buttons\">")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = components.Button("Previous: Recursion", "/recursion").Render(ctx, templ_7745c5c3_Buffer)
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = components.Button("Next: Strings", "/strings").Render(ctx, templ_7745c5c3_Buffer)
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 20, "</div>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

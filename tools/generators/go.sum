@@ -1,0 +1,6 @@
+github.com/a-h/templ v0.3.960 h1:trshEpGa8clF5cdI39iY4ZrZG8Z/QixyzEyUnA7feTM=
+github.com/a-h/templ v0.3.960/go.mod h1:oCZcnKRf5jjsGpf2yELzQfodLphd2mwecwG4Crk5HBo=
+github.com/google/go-cmp v0.6.0 h1:ofyhxvXcZhMsU5ulbFiLKl/XBFqE1GSq7atu8tAmTRI=
+github.com/google/go-cmp v0.6.0/go.mod h1:17dUlkBOakJ0+DkrSSNjCkIjxS6bF9zb3elmeNGIjoY=
+github.com/whalelogic/howtogo v0.0.0-20260103055234-9515b9949ce4 h1:GAn92ZceYQEGb06fl6anp1dFTZyqrag/HcWIMUzUeUw=
+github.com/whalelogic/howtogo v0.0.0-20260103055234-9515b9949ce4/go.mod h1:QbHHaYyV0fMwK9205h53VjpwbDR8CRFnu0oiemGxuNg=

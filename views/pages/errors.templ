@@ -1,0 +1,394 @@
+package pages
+
+import "github.com/whalelogic/howtogo/views/layouts"
+import "github.com/whalelogic/howtogo/views/components"
+
+templ Errors() {
+	@layouts.Base("Errors | How to Go") {
+		@components.Breadcrumb("errors", "Errors")
+		@components.CustomHeader("Errors", "Goroutines")
+		<p>Go handles errors explicitly through return values rather than exceptions. Errors are values that implement the <code>error</code> interface, making error handling straightforward and visible in your code.</p>
+		@components.KeyPoints([]string{
+			"Errors are values, not exceptions",
+			"Functions return errors as the last return value",
+			"Always check errors immediately after function calls",
+			"The <code>error</code> interface has one method: <code>Error() string</code>",
+			"Use <code>errors.New()</code> to create simple errors",
+			"Use <code>fmt.Errorf()</code> for formatted error messages",
+			"Wrap errors with <code>%w</code> to preserve error chain",
+			"Use <code>errors.Is()</code> and <code>errors.As()</code> for error checking",
+		})
+		<h2>Basic Error Handling</h2>
+		<p>Functions return errors that must be explicitly checked:</p>
+		<div class="code-block">
+			<pre>
+				<code class="language-go">
+					@templ.Raw(`package main
+
+import (
+    "errors"
+    "fmt"
+)
+
+func divide(a, b float64) (float64, error) {
+    if b == 0 {
+        return 0, errors.New("division by zero")
+    }
+    return a / b, nil
+}
+
+func main() {
+    // Proper error checking
+    result, err := divide(10, 2)
+    if err != nil {
+        fmt.Println("Error:", err)
+        return
+    }
+    fmt.Println("Result:", result)
+    
+    // Error case
+    result, err = divide(10, 0)
+    if err != nil {
+        fmt.Println("Error:", err)
+        return
+    }
+    fmt.Println("Result:", result)
+}`)
+				</code>
+			</pre>
+		</div>
+		<span class="output-label">Output:</span>
+		@components.CodeOutput(`Result: 5
+Error: division by zero`)
+		<h2>Custom Errors</h2>
+		<p>Create custom error types for more context:</p>
+		<div class="code-block">
+			<pre>
+				<code class="language-go">
+					@templ.Raw(`package main
+
+import "fmt"
+
+// Custom error type
+type ValidationError struct {
+    Field   string
+    Message string
+}
+
+// Implement error interface
+func (e *ValidationError) Error() string {
+    return fmt.Sprintf("validation error on '%s': %s", e.Field, e.Message)
+}
+
+func validateAge(age int) error {
+    if age < 0 {
+        return &ValidationError{
+            Field:   "age",
+            Message: "cannot be negative",
+        }
+    }
+    if age > 150 {
+        return &ValidationError{
+            Field:   "age",
+            Message: "unrealistic value",
+        }
+    }
+    return nil
+}
+
+func main() {
+    // Valid age
+    if err := validateAge(30); err != nil {
+        fmt.Println("Error:", err)
+    } else {
+        fmt.Println("Age is valid")
+    }
+    
+    // Invalid age
+    if err := validateAge(-5); err != nil {
+        fmt.Println("Error:", err)
+    }
+    
+    // Check specific error type
+    err := validateAge(200)
+    if validErr, ok := err.(*ValidationError); ok {
+        fmt.Printf("Field '%s' failed: %s\n", validErr.Field, validErr.Message)
+    }
+}`)
+				</code>
+			</pre>
+		</div>
+		<span class="output-label">Output:</span>
+		@components.CodeOutput(`Age is valid
+Error: validation error on 'age': cannot be negative
+Field 'age' failed: unrealistic value`)
+		<h2>Error Wrapping and Unwrapping</h2>
+		<p>Wrap errors to add context while preserving the error chain:</p>
+		<div class="code-block">
+			<pre>
+				<code class="language-go">
+					@templ.Raw(`package main
+
+import (
+    "errors"
+    "fmt"
+    "os"
+)
+
+var ErrNotFound = errors.New("not found")
+
+func readConfig(filename string) error {
+    _, err := os.Open(filename)
+    if err != nil {
+        // Wrap error with context using %w
+        return fmt.Errorf("failed to read config: %w", err)
+    }
+    return nil
+}
+
+func initialize() error {
+    err := readConfig("config.json")
+    if err != nil {
+        return fmt.Errorf("initialization failed: %w", err)
+    }
+    return nil
+}
+
+func main() {
+    err := initialize()
+    if err != nil {
+        fmt.Println("Error:", err)
+        
+        // Check if error chain contains specific error
+        if errors.Is(err, os.ErrNotExist) {
+            fmt.Println("Config file does not exist")
+        }
+        
+        // Unwrap to get underlying error
+        fmt.Println("Unwrapped:", errors.Unwrap(err))
+    }
+}`)
+				</code>
+			</pre>
+		</div>
+		<span class="output-label">Output:</span>
+		@components.CodeOutput(`Error: initialization failed: failed to read config: open config.json: no such file or directory
+Config file does not exist
+Unwrapped: failed to read config: open config.json: no such file or directory`)
+		<h2>Error Checking Functions</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Function</th>
+					<th>Signature</th>
+					<th>Purpose</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td><code>errors.New</code></td>
+					<td><code>func New(text string) error</code></td>
+					<td>Create simple error</td>
+				</tr>
+				<tr>
+					<td><code>fmt.Errorf</code></td>
+					<td><code>func Errorf(format string, a ...any) error</code></td>
+					<td>Create formatted error</td>
+				</tr>
+				<tr>
+					<td><code>errors.Is</code></td>
+					<td><code>func Is(err, target error) bool</code></td>
+					<td>Check if error matches target</td>
+				</tr>
+				<tr>
+					<td><code>errors.As</code></td>
+					<td><code>func As(err error, target any) bool</code></td>
+					<td>Check if error is of type</td>
+				</tr>
+				<tr>
+					<td><code>errors.Unwrap</code></td>
+					<td><code>func Unwrap(err error) error</code></td>
+					<td>Get wrapped error</td>
+				</tr>
+				<tr>
+					<td><code>errors.Join</code></td>
+					<td><code>func Join(errs ...error) error</code></td>
+					<td>Combine multiple errors (Go 1.20+)</td>
+				</tr>
+			</tbody>
+		</table>
+		<h2>Error Handling Patterns</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Pattern</th>
+					<th>Code</th>
+					<th>Use Case</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Immediate check</td>
+					<td><code>{ "if err != nil { return err }" }</code></td>
+					<td>Most common pattern</td>
+				</tr>
+				<tr>
+					<td>Inline check</td>
+					<td><code>{ "if err := fn(); err != nil { }" }</code></td>
+					<td>Limit error scope</td>
+				</tr>
+				<tr>
+					<td>Wrap and return</td>
+					<td><code>{ "return fmt.Errorf(\"context: %w\", err)" }</code></td>
+					<td>Add context to error</td>
+				</tr>
+				<tr>
+					<td>Sentinel error</td>
+					<td><code>{ "var ErrNotFound = errors.New(\"not found\")" }</code></td>
+					<td>Define known errors</td>
+				</tr>
+				<tr>
+					<td>Error variable</td>
+					<td><code>{ "var err error" }</code></td>
+					<td>Reuse across calls</td>
+				</tr>
+				<tr>
+					<td>Named return</td>
+					<td><code>{ "func fn() (err error) { defer ... }" }</code></td>
+					<td>Clean up on error</td>
+				</tr>
+			</tbody>
+		</table>
+		<h2>Panic and Recover</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Function</th>
+					<th>Description</th>
+					<th>When to Use</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td><code>panic(v)</code></td>
+					<td>Stop normal execution</td>
+					<td>Unrecoverable errors, programming bugs</td>
+				</tr>
+				<tr>
+					<td><code>recover()</code></td>
+					<td>Regain control after panic</td>
+					<td>In deferred functions to catch panics</td>
+				</tr>
+				<tr>
+					<td><code>defer</code></td>
+					<td>Execute before function returns</td>
+					<td>Cleanup, recover from panics</td>
+				</tr>
+			</tbody>
+		</table>
+		<h2>Error Best Practices</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Practice</th>
+					<th>Description</th>
+					<th>Example</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Check all errors</td>
+					<td>Never ignore error values</td>
+					<td>Always use <code>{ "if err != nil" }</code></td>
+				</tr>
+				<tr>
+					<td>Add context</td>
+					<td>Wrap errors with meaningful messages</td>
+					<td><code>fmt.Errorf("failed to X: %w", err)</code></td>
+				</tr>
+				<tr>
+					<td>Use %w for wrapping</td>
+					<td>Preserve error chain for Is/As</td>
+					<td><code>fmt.Errorf("context: %w", err)</code></td>
+				</tr>
+				<tr>
+					<td>Return early</td>
+					<td>Handle errors immediately</td>
+					<td><code>{ "if err != nil { return err }" }</code></td>
+				</tr>
+				<tr>
+					<td>Descriptive messages</td>
+					<td>Error messages should be clear</td>
+					<td>"failed to connect to database"</td>
+				</tr>
+				<tr>
+					<td>Lowercase messages</td>
+					<td>Error strings start lowercase</td>
+					<td><code>errors.New("connection failed")</code></td>
+				</tr>
+				<tr>
+					<td>No punctuation</td>
+					<td>Don't end with period</td>
+					<td>"not found" not "not found."</td>
+				</tr>
+				<tr>
+					<td>Define sentinel errors</td>
+					<td>Use variables for known errors</td>
+					<td><code>var ErrNotFound = ...</code></td>
+				</tr>
+				<tr>
+					<td>Custom types for context</td>
+					<td>Add fields to error structs</td>
+					<td>Include codes, fields, etc.</td>
+				</tr>
+				<tr>
+					<td>Avoid panic</td>
+					<td>Use panic only for bugs</td>
+					<td>Return errors instead</td>
+				</tr>
+			</tbody>
+		</table>
+		<h2>Common Error Patterns</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Pattern</th>
+					<th>Example</th>
+					<th>Use Case</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Error as last return</td>
+					<td><code>{ "func Open() (*File, error)" }</code></td>
+					<td>Standard Go convention</td>
+				</tr>
+				<tr>
+					<td>Boolean ok pattern</td>
+					<td><code>{ "v, ok := m[key]" }</code></td>
+					<td>Map lookups, type assertions</td>
+				</tr>
+				<tr>
+					<td>Defer cleanup</td>
+					<td><code>{ "defer file.Close()" }</code></td>
+					<td>Ensure cleanup happens</td>
+				</tr>
+				<tr>
+					<td>Error group</td>
+					<td><code>{ "errgroup.Group" }</code></td>
+					<td>Collect errors from goroutines</td>
+				</tr>
+				<tr>
+					<td>Multi-error</td>
+					<td><code>{ "errors.Join(err1, err2)" }</code></td>
+					<td>Multiple errors at once</td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="nav-buttons">
+			@components.Button("Previous: Generics", "/generics")
+			@components.Button("Next: Goroutines", "/goroutines")
+		</div>
+		@components.Footer()
+	}
+}

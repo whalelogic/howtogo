@@ -38,4 +38,7 @@ require (
 	google.golang.org/protobuf v1.36.9 // indirect
 )
 
-require github.com/gin-gonic/gin v1.11.0
+require (
+	github.com/gin-gonic/gin v1.11.0
+	github.com/yuin/goldmark v1.7.14
+)

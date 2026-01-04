@@ -1,0 +1,341 @@
+package pages
+
+import "github.com/whalelogic/howtogo/views/layouts"
+import "github.com/whalelogic/howtogo/views/components"
+
+templ Structs() {
+	@layouts.Base("Structs | How to Go") {
+		@components.Breadcrumb("structs", "Structs")
+		@components.CustomHeader("Structs", "Methods")
+		<p>A struct is a composite data type that groups together variables (fields) under a single name. Structs are fundamental in Go for creating complex data structures and modeling real-world entities.</p>
+		@components.KeyPoints([]string{
+			"Structs group related data into a single unit",
+			"Fields can be of different types",
+			"Structs are value types - assignment creates a copy",
+			"Use <code>&</code> to get a pointer to a struct",
+			"Struct fields are accessed with dot notation",
+			"Anonymous structs can be created inline",
+			"Structs can be embedded in other structs for composition",
+			"Exported fields start with uppercase letters",
+		})
+		<h2>Defining and Using Structs</h2>
+		<p>Define a struct type with the <code>type</code> keyword and create instances:</p>
+		<div class="code-block">
+			<pre>
+				<code class="language-go">
+					@templ.Raw(`package main
+
+import "fmt"
+
+// Define a struct type
+type Person struct {
+    Name string
+    Age  int
+    City string
+}
+
+func main() {
+    // Create struct instance
+    p1 := Person{Name: "Alice", Age: 30, City: "NYC"}
+    fmt.Println("Person 1:", p1)
+    
+    // Create with field names (order doesn't matter)
+    p2 := Person{
+        Age:  25,
+        Name: "Bob",
+        City: "SF",
+    }
+    fmt.Println("Person 2:", p2)
+    
+    // Create without field names (must match order)
+    p3 := Person{"Charlie", 35, "LA"}
+    fmt.Println("Person 3:", p3)
+    
+    // Access fields
+    fmt.Println("Name:", p1.Name)
+    fmt.Println("Age:", p1.Age)
+    
+    // Modify fields
+    p1.Age = 31
+    fmt.Println("Updated age:", p1.Age)
+}`)
+				</code>
+			</pre>
+		</div>
+		<span class="output-label">Output:</span>
+		@components.CodeOutput(`Person 1: {Alice 30 NYC}
+Person 2: {Bob 25 SF}
+Person 3: {Charlie 35 LA}
+Name: Alice
+Age: 30
+Updated age: 31`)
+		<h2>Struct Pointers</h2>
+		<p>Use pointers to structs to avoid copying and enable modification:</p>
+		<div class="code-block">
+			<pre>
+				<code class="language-go">
+					@templ.Raw(`package main
+
+import "fmt"
+
+type Person struct {
+    Name string
+    Age  int
+}
+
+func updateAge(p *Person, newAge int) {
+    p.Age = newAge // Go automatically dereferences
+}
+
+func main() {
+    // Create struct pointer with &
+    p1 := &Person{Name: "Alice", Age: 30}
+    fmt.Println("Before:", p1)
+    
+    // Access fields (automatic dereferencing)
+    fmt.Println("Name:", p1.Name)
+    
+    // Pass pointer to function
+    updateAge(p1, 31)
+    fmt.Println("After:", p1)
+    
+    // new() allocates memory and returns pointer
+    p2 := new(Person)
+    p2.Name = "Bob"
+    p2.Age = 25
+    fmt.Println("Person 2:", p2)
+}`)
+				</code>
+			</pre>
+		</div>
+		<span class="output-label">Output:</span>
+		@components.CodeOutput(`Before: &{Alice 30}
+Name: Alice
+After: &{Alice 31}
+Person 2: &{Bob 25}`)
+		<h2>Anonymous Structs and Embedding</h2>
+		<p>Create inline structs and embed structs for composition:</p>
+		<div class="code-block">
+			<pre>
+				<code class="language-go">
+					@templ.Raw(`package main
+
+import "fmt"
+
+type Address struct {
+    Street string
+    City   string
+    State  string
+}
+
+type Person struct {
+    Name    string
+    Age     int
+    Address // Embedded struct
+}
+
+func main() {
+    // Anonymous struct (no type name)
+    config := struct {
+        Host string
+        Port int
+    }{
+        Host: "localhost",
+        Port: 8080,
+    }
+    fmt.Println("Config:", config)
+    
+    // Struct embedding
+    p := Person{
+        Name: "Alice",
+        Age:  30,
+        Address: Address{
+            Street: "123 Main St",
+            City:   "NYC",
+            State:  "NY",
+        },
+    }
+    
+    // Access embedded fields directly
+    fmt.Println("Name:", p.Name)
+    fmt.Println("City:", p.City) // Can access Address.City directly
+    fmt.Println("Full address:", p.Address)
+}`)
+				</code>
+			</pre>
+		</div>
+		<span class="output-label">Output:</span>
+		@components.CodeOutput(`Config: {localhost 8080}
+Name: Alice
+City: NYC
+Full address: {123 Main St NYC NY}`)
+		<h2>Struct Declaration Patterns</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Pattern</th>
+					<th>Example</th>
+					<th>Description</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Named struct</td>
+					<td><code>{ "type Person struct { Name string }" }</code></td>
+					<td>Define a reusable struct type</td>
+				</tr>
+				<tr>
+					<td>Anonymous struct</td>
+					<td><code>{ "struct { X int; Y int }{1, 2}" }</code></td>
+					<td>One-time use struct</td>
+				</tr>
+				<tr>
+					<td>Empty struct</td>
+					<td><code>{ "struct{}" }</code></td>
+					<td>Zero-size type, useful for signals</td>
+				</tr>
+				<tr>
+					<td>Embedded struct</td>
+					<td><code>{ "type A struct { B }" }</code></td>
+					<td>Composition via embedding</td>
+				</tr>
+				<tr>
+					<td>Pointer struct</td>
+					<td><code>{ "p := &Person{}" }</code></td>
+					<td>Create pointer to struct</td>
+				</tr>
+				<tr>
+					<td>With new()</td>
+					<td><code>{ "p := new(Person)" }</code></td>
+					<td>Allocate and return pointer</td>
+				</tr>
+			</tbody>
+		</table>
+		<h2>Struct Tags</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Use Case</th>
+					<th>Example</th>
+					<th>Description</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>JSON encoding</td>
+					<td><code>{ "`json:\"name\"`" }</code></td>
+					<td>Control JSON field names</td>
+				</tr>
+				<tr>
+					<td>Omit empty</td>
+					<td><code>{ "`json:\"age,omitempty\"`" }</code></td>
+					<td>Skip zero values in JSON</td>
+				</tr>
+				<tr>
+					<td>Ignore field</td>
+					<td><code>{ "`json:\"-\"`" }</code></td>
+					<td>Exclude from JSON</td>
+				</tr>
+				<tr>
+					<td>XML tags</td>
+					<td><code>{ "`xml:\"person\"`" }</code></td>
+					<td>Control XML encoding</td>
+				</tr>
+				<tr>
+					<td>Validation</td>
+					<td><code>{ "`validate:\"required\"`" }</code></td>
+					<td>Add validation rules</td>
+				</tr>
+				<tr>
+					<td>Database</td>
+					<td><code>{ "`db:\"user_name\"`" }</code></td>
+					<td>Map to database columns</td>
+				</tr>
+			</tbody>
+		</table>
+		<h2>Struct Characteristics</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Feature</th>
+					<th>Description</th>
+					<th>Notes</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Value type</td>
+					<td>Assignment copies the struct</td>
+					<td>Use pointers to avoid copying</td>
+				</tr>
+				<tr>
+					<td>Zero value</td>
+					<td>All fields set to their zero values</td>
+					<td>Structs are never nil, pointers can be</td>
+				</tr>
+				<tr>
+					<td>Comparability</td>
+					<td>Comparable if all fields are comparable</td>
+					<td>Can use <code>==</code> and <code>!=</code></td>
+				</tr>
+				<tr>
+					<td>Field access</td>
+					<td>Dot notation: <code>s.field</code></td>
+					<td>Automatic pointer dereferencing</td>
+				</tr>
+				<tr>
+					<td>Exported fields</td>
+					<td>Uppercase = exported (public)</td>
+					<td>Lowercase = unexported (private)</td>
+				</tr>
+				<tr>
+					<td>Memory layout</td>
+					<td>Fields stored sequentially</td>
+					<td>May include padding for alignment</td>
+				</tr>
+			</tbody>
+		</table>
+		<h2>Common Patterns</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Pattern</th>
+					<th>Code</th>
+					<th>Use Case</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Constructor function</td>
+					<td><code>{ "func NewPerson() *Person { }" }</code></td>
+					<td>Create and initialize structs</td>
+				</tr>
+				<tr>
+					<td>Builder pattern</td>
+					<td><code>{ "func (p *Person) WithAge(age int) *Person" }</code></td>
+					<td>Fluent configuration</td>
+				</tr>
+				<tr>
+					<td>Options pattern</td>
+					<td><code>{ "func WithTimeout(d time.Duration) Option" }</code></td>
+					<td>Flexible initialization</td>
+				</tr>
+				<tr>
+					<td>Embedding for mixins</td>
+					<td><code>{ "type Manager struct { Person; Level int }" }</code></td>
+					<td>Extend structs with new fields</td>
+				</tr>
+				<tr>
+					<td>Anonymous fields</td>
+					<td><code>{ "type Point struct { int; int }" }</code></td>
+					<td>Simple coordinate structs</td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="nav-buttons">
+			@components.Button("Previous: Runes", "/runes")
+			@components.Button("Next: Methods", "/methods")
+		</div>
+		@components.Footer()
+	}
+}

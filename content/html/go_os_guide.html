@@ -1,20 +1,9 @@
-<h2 id="os-package"><code>os</code> Package</h2>
-<p>The <code>os</code> package provides a platform-independent interface
-to core operating-system features. It enables file operations,
-environment variable management, directory manipulation, process
-interaction, and access to standard I/O.</p>
-<p>This guide serves as a structured reference, including tables,
-examples, and usage explanations.</p>
+<h2><code>os</code> Package</h2>
+<p>The <code>os</code> package provides a platform-independent interface to core operating-system features. It enables file operations, environment variable management, directory manipulation, process interaction, and access to standard I/O.</p>
+<p>This guide serves as a structured reference, including tables, examples, and usage explanations.</p>
 <hr />
-<h2 id="quick-reference-table">Quick Reference Table</h2>
+<h2>Quick Reference Table</h2>
 <table>
-<colgroup>
-<col style="width: 6%" />
-<col style="width: 8%" />
-<col style="width: 7%" />
-<col style="width: 43%" />
-<col style="width: 34%" />
-</colgroup>
 <thead>
 <tr>
 <th>Package</th>
@@ -203,85 +192,94 @@ examples, and usage explanations.</p>
 </tbody>
 </table>
 <hr />
-<h1 id="file-creation-opening">✏️ 1. File Creation &amp; Opening</h1>
-<h3 id="os.create"><code>os.Create()</code></h3>
-<div class="sourceCode" id="cb1"><pre class="sourceCode go"><code class="sourceCode go"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>f<span class="op">,</span> err <span class="op">:=</span> os<span class="op">.</span>Create<span class="op">(</span><span class="st">&quot;notes.txt&quot;</span><span class="op">)</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> err <span class="op">!=</span> <span class="ot">nil</span> <span class="op">{</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    log<span class="op">.</span>Fatal<span class="op">(</span>err<span class="op">)</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="cf">defer</span> f<span class="op">.</span>Close<span class="op">()</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>f<span class="op">.</span>WriteString<span class="op">(</span><span class="st">&quot;Hello, World!&quot;</span><span class="op">)</span></span></code></pre></div>
-<h3 id="os.open"><code>os.Open()</code></h3>
-<div class="sourceCode" id="cb2"><pre class="sourceCode go"><code class="sourceCode go"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>f<span class="op">,</span> err <span class="op">:=</span> os<span class="op">.</span>Open<span class="op">(</span><span class="st">&quot;notes.txt&quot;</span><span class="op">)</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> err <span class="op">!=</span> <span class="ot">nil</span> <span class="op">{</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    log<span class="op">.</span>Fatal<span class="op">(</span>err<span class="op">)</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="cf">defer</span> f<span class="op">.</span>Close<span class="op">()</span></span></code></pre></div>
-<h3 id="os.openfile"><code>os.OpenFile()</code></h3>
-<div class="sourceCode" id="cb3"><pre class="sourceCode go"><code class="sourceCode go"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>f<span class="op">,</span> err <span class="op">:=</span> os<span class="op">.</span>OpenFile<span class="op">(</span><span class="st">&quot;log.txt&quot;</span><span class="op">,</span> os<span class="op">.</span>O_APPEND<span class="op">|</span>os<span class="op">.</span>O_CREATE<span class="op">|</span>os<span class="op">.</span>O_WRONLY<span class="op">,</span> <span class="bn">0644</span><span class="op">)</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> err <span class="op">!=</span> <span class="ot">nil</span> <span class="op">{</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    log<span class="op">.</span>Fatal<span class="op">(</span>err<span class="op">)</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="cf">defer</span> f<span class="op">.</span>Close<span class="op">()</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>f<span class="op">.</span>WriteString<span class="op">(</span><span class="st">&quot;New log entry</span><span class="ch">\n</span><span class="st">&quot;</span><span class="op">)</span></span></code></pre></div>
+<h1>✏️ 1. File Creation &amp; Opening</h1>
+<h3><code>os.Create()</code></h3>
+<pre><code class="language-go">f, err := os.Create(&quot;notes.txt&quot;)
+if err != nil {
+    log.Fatal(err)
+}
+defer f.Close()
+
+f.WriteString(&quot;Hello, World!&quot;)
+</code></pre>
+<h3><code>os.Open()</code></h3>
+<pre><code class="language-go">f, err := os.Open(&quot;notes.txt&quot;)
+if err != nil {
+    log.Fatal(err)
+}
+defer f.Close()
+</code></pre>
+<h3><code>os.OpenFile()</code></h3>
+<pre><code class="language-go">f, err := os.OpenFile(&quot;log.txt&quot;, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+if err != nil {
+    log.Fatal(err)
+}
+defer f.Close()
+
+f.WriteString(&quot;New log entry\n&quot;)
+</code></pre>
 <hr />
-<h1 id="reading-writing-files">📄 2. Reading &amp; Writing Files</h1>
-<h3 id="os.readfile"><code>os.ReadFile()</code></h3>
-<div class="sourceCode" id="cb4"><pre class="sourceCode go"><code class="sourceCode go"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>data<span class="op">,</span> err <span class="op">:=</span> os<span class="op">.</span>ReadFile<span class="op">(</span><span class="st">&quot;config.json&quot;</span><span class="op">)</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> err <span class="op">!=</span> <span class="ot">nil</span> <span class="op">{</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    log<span class="op">.</span>Fatal<span class="op">(</span>err<span class="op">)</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="bu">println</span><span class="op">(</span><span class="dt">string</span><span class="op">(</span>data<span class="op">))</span></span></code></pre></div>
-<h3 id="os.writefile"><code>os.WriteFile()</code></h3>
-<div class="sourceCode" id="cb5"><pre class="sourceCode go"><code class="sourceCode go"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>content <span class="op">:=</span> <span class="op">[]</span><span class="dt">byte</span><span class="op">(</span><span class="st">&quot;This replaces the file content.&quot;</span><span class="op">)</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>err <span class="op">:=</span> os<span class="op">.</span>WriteFile<span class="op">(</span><span class="st">&quot;output.txt&quot;</span><span class="op">,</span> content<span class="op">,</span> <span class="bn">0644</span><span class="op">)</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> err <span class="op">!=</span> <span class="ot">nil</span> <span class="op">{</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    log<span class="op">.</span>Fatal<span class="op">(</span>err<span class="op">)</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<h1>📄 2. Reading &amp; Writing Files</h1>
+<h3><code>os.ReadFile()</code></h3>
+<pre><code class="language-go">data, err := os.ReadFile(&quot;config.json&quot;)
+if err != nil {
+    log.Fatal(err)
+}
+println(string(data))
+</code></pre>
+<h3><code>os.WriteFile()</code></h3>
+<pre><code class="language-go">content := []byte(&quot;This replaces the file content.&quot;)
+err := os.WriteFile(&quot;output.txt&quot;, content, 0644)
+if err != nil {
+    log.Fatal(err)
+}
+</code></pre>
 <hr />
-<h1 id="directory-management">📁 3. Directory Management</h1>
-<h3 id="create-directory">Create directory</h3>
-<div class="sourceCode" id="cb6"><pre class="sourceCode go"><code class="sourceCode go"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>err <span class="op">:=</span> os<span class="op">.</span>Mkdir<span class="op">(</span><span class="st">&quot;data&quot;</span><span class="op">,</span> <span class="bn">0755</span><span class="op">)</span></span></code></pre></div>
-<h3 id="recursive-create">Recursive create</h3>
-<div class="sourceCode" id="cb7"><pre class="sourceCode go"><code class="sourceCode go"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>os<span class="op">.</span>MkdirAll<span class="op">(</span><span class="st">&quot;logs/2023/jan&quot;</span><span class="op">,</span> <span class="bn">0755</span><span class="op">)</span></span></code></pre></div>
-<h3 id="delete-items">Delete items</h3>
-<div class="sourceCode" id="cb8"><pre class="sourceCode go"><code class="sourceCode go"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>os<span class="op">.</span>Remove<span class="op">(</span><span class="st">&quot;old_notes.txt&quot;</span><span class="op">)</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>os<span class="op">.</span>RemoveAll<span class="op">(</span><span class="st">&quot;logs&quot;</span><span class="op">)</span></span></code></pre></div>
+<h1>📁 3. Directory Management</h1>
+<h3>Create directory</h3>
+<pre><code class="language-go">err := os.Mkdir(&quot;data&quot;, 0755)
+</code></pre>
+<h3>Recursive create</h3>
+<pre><code class="language-go">os.MkdirAll(&quot;logs/2023/jan&quot;, 0755)
+</code></pre>
+<h3>Delete items</h3>
+<pre><code class="language-go">os.Remove(&quot;old_notes.txt&quot;)
+os.RemoveAll(&quot;logs&quot;)
+</code></pre>
 <hr />
-<h1 id="file-metadata">📊 4. File Metadata</h1>
-<div class="sourceCode" id="cb9"><pre class="sourceCode go"><code class="sourceCode go"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>info<span class="op">,</span> err <span class="op">:=</span> os<span class="op">.</span>Stat<span class="op">(</span><span class="st">&quot;image.png&quot;</span><span class="op">)</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> err <span class="op">!=</span> <span class="ot">nil</span> <span class="op">{</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> os<span class="op">.</span>IsNotExist<span class="op">(</span>err<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>        <span class="bu">println</span><span class="op">(</span><span class="st">&quot;File does not exist&quot;</span><span class="op">)</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="op">}</span> <span class="cf">else</span> <span class="op">{</span></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">println</span><span class="op">(</span>info<span class="op">.</span>Name<span class="op">(),</span> info<span class="op">.</span>Size<span class="op">())</span></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
-<h3 id="rename">Rename:</h3>
-<div class="sourceCode" id="cb10"><pre
-class="sourceCode go"><code class="sourceCode go"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>os<span class="op">.</span>Rename<span class="op">(</span><span class="st">&quot;temp.tmp&quot;</span><span class="op">,</span> <span class="st">&quot;final.jpg&quot;</span><span class="op">)</span></span></code></pre></div>
+<h1>📊 4. File Metadata</h1>
+<pre><code class="language-go">info, err := os.Stat(&quot;image.png&quot;)
+if err != nil {
+    if os.IsNotExist(err) {
+        println(&quot;File does not exist&quot;)
+    }
+} else {
+    println(info.Name(), info.Size())
+}
+</code></pre>
+<h3>Rename:</h3>
+<pre><code class="language-go">os.Rename(&quot;temp.tmp&quot;, &quot;final.jpg&quot;)
+</code></pre>
 <hr />
-<h1 id="environment-variables">🌐 5. Environment Variables</h1>
-<h3 id="read">Read</h3>
-<div class="sourceCode" id="cb11"><pre
-class="sourceCode go"><code class="sourceCode go"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>path <span class="op">:=</span> os<span class="op">.</span>Getenv<span class="op">(</span><span class="st">&quot;PATH&quot;</span><span class="op">)</span></span></code></pre></div>
-<h3 id="lookup">Lookup</h3>
-<div class="sourceCode" id="cb12"><pre
-class="sourceCode go"><code class="sourceCode go"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>val<span class="op">,</span> ok <span class="op">:=</span> os<span class="op">.</span>LookupEnv<span class="op">(</span><span class="st">&quot;MY_API_KEY&quot;</span><span class="op">)</span></span></code></pre></div>
-<h3 id="set">Set</h3>
-<div class="sourceCode" id="cb13"><pre
-class="sourceCode go"><code class="sourceCode go"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>os<span class="op">.</span>Setenv<span class="op">(</span><span class="st">&quot;APP_MODE&quot;</span><span class="op">,</span> <span class="st">&quot;production&quot;</span><span class="op">)</span></span></code></pre></div>
+<h1>🌐 5. Environment Variables</h1>
+<h3>Read</h3>
+<pre><code class="language-go">path := os.Getenv(&quot;PATH&quot;)
+</code></pre>
+<h3>Lookup</h3>
+<pre><code class="language-go">val, ok := os.LookupEnv(&quot;MY_API_KEY&quot;)
+</code></pre>
+<h3>Set</h3>
+<pre><code class="language-go">os.Setenv(&quot;APP_MODE&quot;, &quot;production&quot;)
+</code></pre>
 <hr />
-<h1 id="process-user-info">⚙️ 6. Process &amp; User Info</h1>
-<div class="sourceCode" id="cb14"><pre
-class="sourceCode go"><code class="sourceCode go"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>dir<span class="op">,</span> _ <span class="op">:=</span> os<span class="op">.</span>Getwd<span class="op">()</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>os<span class="op">.</span>Chdir<span class="op">(</span><span class="st">&quot;/tmp&quot;</span><span class="op">)</span></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>os<span class="op">.</span>Exit<span class="op">(</span><span class="dv">1</span><span class="op">)</span></span></code></pre></div>
+<h1>⚙️ 6. Process &amp; User Info</h1>
+<pre><code class="language-go">dir, _ := os.Getwd()
+os.Chdir(&quot;/tmp&quot;)
+os.Exit(1)
+</code></pre>
 <hr />
-<h1 id="standard-streams">📌 7. Standard Streams</h1>
-<div class="sourceCode" id="cb15"><pre
-class="sourceCode go"><code class="sourceCode go"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>os<span class="op">.</span>Stdout<span class="op">.</span>WriteString<span class="op">(</span><span class="st">&quot;This goes to stdout</span><span class="ch">\n</span><span class="st">&quot;</span><span class="op">)</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>os<span class="op">.</span>Stderr<span class="op">.</span>WriteString<span class="op">(</span><span class="st">&quot;This is an error message</span><span class="ch">\n</span><span class="st">&quot;</span><span class="op">)</span></span></code></pre></div>
+<h1>📌 7. Standard Streams</h1>
+<pre><code class="language-go">os.Stdout.WriteString(&quot;This goes to stdout\n&quot;)
+os.Stderr.WriteString(&quot;This is an error message\n&quot;)
+</code></pre>
 <hr />

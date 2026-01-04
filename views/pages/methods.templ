@@ -1,0 +1,352 @@
+package pages
+
+import "github.com/whalelogic/howtogo/views/layouts"
+import "github.com/whalelogic/howtogo/views/components"
+
+templ Methods() {
+	@layouts.Base("Methods | How to Go") {
+		@components.Breadcrumb("methods", "Methods")
+		@components.CustomHeader("Methods", "Interfaces")
+		<p>Methods in Go are functions with a special receiver argument. They allow you to define behavior on types, enabling object-oriented programming patterns while maintaining Go's simplicity.</p>
+		@components.KeyPoints([]string{
+			"Methods are functions with a receiver parameter",
+			"Receivers can be value receivers or pointer receivers",
+			"Value receivers operate on copies, pointer receivers can modify original",
+			"Methods can be defined on any type in the same package",
+			"Method names must be unique per type",
+			"Use pointer receivers for large structs to avoid copying",
+			"Methods enable types to satisfy interfaces",
+			"Cannot define methods on built-in types directly",
+		})
+		<h2>Defining Methods</h2>
+		<p>Methods are defined with a receiver between <code>func</code> and the method name:</p>
+		<div class="code-block">
+			<pre>
+				<code class="language-go">
+					@templ.Raw(`package main
+
+import (
+    "fmt"
+    "math"
+)
+
+type Rectangle struct {
+    Width  float64
+    Height float64
+}
+
+type Circle struct {
+    Radius float64
+}
+
+// Method with value receiver
+func (r Rectangle) Area() float64 {
+    return r.Width * r.Height
+}
+
+// Method with value receiver
+func (r Rectangle) Perimeter() float64 {
+    return 2 * (r.Width + r.Height)
+}
+
+// Method with value receiver
+func (c Circle) Area() float64 {
+    return math.Pi * c.Radius * c.Radius
+}
+
+func main() {
+    rect := Rectangle{Width: 10, Height: 5}
+    circ := Circle{Radius: 7}
+    
+    fmt.Printf("Rectangle area: %.2f\n", rect.Area())
+    fmt.Printf("Rectangle perimeter: %.2f\n", rect.Perimeter())
+    fmt.Printf("Circle area: %.2f\n", circ.Area())
+}`)
+				</code>
+			</pre>
+		</div>
+		<span class="output-label">Output:</span>
+		@components.CodeOutput(`Rectangle area: 50.00
+Rectangle perimeter: 30.00
+Circle area: 153.94`)
+		<h2>Pointer vs Value Receivers</h2>
+		<p>Pointer receivers allow methods to modify the receiver:</p>
+		<div class="code-block">
+			<pre>
+				<code class="language-go">
+					@templ.Raw(`package main
+
+import "fmt"
+
+type Counter struct {
+    Count int
+}
+
+// Value receiver - operates on a copy
+func (c Counter) IncrementValue() {
+    c.Count++
+    fmt.Println("Inside IncrementValue:", c.Count)
+}
+
+// Pointer receiver - modifies original
+func (c *Counter) IncrementPointer() {
+    c.Count++
+    fmt.Println("Inside IncrementPointer:", c.Count)
+}
+
+// Pointer receiver for reading is also common
+func (c *Counter) GetCount() int {
+    return c.Count
+}
+
+func main() {
+    counter := Counter{Count: 0}
+    fmt.Println("Initial count:", counter.Count)
+    
+    // Value receiver doesn't modify original
+    counter.IncrementValue()
+    fmt.Println("After IncrementValue:", counter.Count)
+    
+    // Pointer receiver modifies original
+    counter.IncrementPointer()
+    fmt.Println("After IncrementPointer:", counter.Count)
+    
+    // Go automatically takes address when needed
+    counter.IncrementPointer()
+    fmt.Println("Final count:", counter.GetCount())
+}`)
+				</code>
+			</pre>
+		</div>
+		<span class="output-label">Output:</span>
+		@components.CodeOutput(`Initial count: 0
+Inside IncrementValue: 1
+After IncrementValue: 0
+Inside IncrementPointer: 1
+After IncrementPointer: 1
+Inside IncrementPointer: 2
+Final count: 2`)
+		<h2>Methods on Custom Types</h2>
+		<p>Define methods on any type defined in your package:</p>
+		<div class="code-block">
+			<pre>
+				<code class="language-go">
+					@templ.Raw(`package main
+
+import (
+    "fmt"
+    "strings"
+)
+
+// Custom type based on string
+type Name string
+
+// Method on custom string type
+func (n Name) Greeting() string {
+    return fmt.Sprintf("Hello, %s!", n)
+}
+
+// Method with pointer receiver
+func (n *Name) Uppercase() {
+    *n = Name(strings.ToUpper(string(*n)))
+}
+
+// Custom type based on slice
+type IntSlice []int
+
+// Method on slice type
+func (is IntSlice) Sum() int {
+    total := 0
+    for _, v := range is {
+        total += v
+    }
+    return total
+}
+
+func main() {
+    name := Name("Alice")
+    fmt.Println(name.Greeting())
+    
+    name.Uppercase()
+    fmt.Println(name.Greeting())
+    
+    numbers := IntSlice{1, 2, 3, 4, 5}
+    fmt.Println("Sum:", numbers.Sum())
+}`)
+				</code>
+			</pre>
+		</div>
+		<span class="output-label">Output:</span>
+		@components.CodeOutput(`Hello, Alice!
+Hello, ALICE!
+Sum: 15`)
+		<h2>Method Syntax</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Pattern</th>
+					<th>Example</th>
+					<th>Description</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Value receiver</td>
+					<td><code>{ "func (r Rect) Area() float64" }</code></td>
+					<td>Operates on copy of receiver</td>
+				</tr>
+				<tr>
+					<td>Pointer receiver</td>
+					<td><code>{ "func (r *Rect) Scale(f float64)" }</code></td>
+					<td>Can modify receiver</td>
+				</tr>
+				<tr>
+					<td>Method call</td>
+					<td><code>{ "obj.Method()" }</code></td>
+					<td>Call method on object</td>
+				</tr>
+				<tr>
+					<td>Method value</td>
+					<td><code>{ "f := obj.Method" }</code></td>
+					<td>Store method as function value</td>
+				</tr>
+				<tr>
+					<td>Method expression</td>
+					<td><code>{ "f := Type.Method" }</code></td>
+					<td>Get method as function</td>
+				</tr>
+			</tbody>
+		</table>
+		<h2>When to Use Pointer Receivers</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Scenario</th>
+					<th>Receiver Type</th>
+					<th>Reason</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Need to modify receiver</td>
+					<td>Pointer</td>
+					<td>Value receivers operate on copies</td>
+				</tr>
+				<tr>
+					<td>Large struct</td>
+					<td>Pointer</td>
+					<td>Avoid copying overhead</td>
+				</tr>
+				<tr>
+					<td>Consistency</td>
+					<td>Pointer</td>
+					<td>If some methods use pointer, use for all</td>
+				</tr>
+				<tr>
+					<td>Small struct, read-only</td>
+					<td>Value</td>
+					<td>Simple and safe</td>
+				</tr>
+				<tr>
+					<td>Built-in types</td>
+					<td>Value or Pointer</td>
+					<td>Depends on use case</td>
+				</tr>
+				<tr>
+					<td>Interface implementation</td>
+					<td>Consider both</td>
+					<td>Value receiver more flexible</td>
+				</tr>
+			</tbody>
+		</table>
+		<h2>Method Characteristics</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Feature</th>
+					<th>Description</th>
+					<th>Notes</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Auto-dereferencing</td>
+					<td>Go automatically dereferences pointers</td>
+					<td><code>ptr.Method()</code> works automatically</td>
+				</tr>
+				<tr>
+					<td>Auto-addressing</td>
+					<td>Go takes address when needed</td>
+					<td><code>value.PointerMethod()</code> works</td>
+				</tr>
+				<tr>
+					<td>Package restriction</td>
+					<td>Methods must be in same package as type</td>
+					<td>Cannot add methods to external types</td>
+				</tr>
+				<tr>
+					<td>No overloading</td>
+					<td>Cannot have multiple methods with same name</td>
+					<td>Even with different parameters</td>
+				</tr>
+				<tr>
+					<td>Interface satisfaction</td>
+					<td>Methods enable interface implementation</td>
+					<td>Implicit interface satisfaction</td>
+				</tr>
+				<tr>
+					<td>Visibility</td>
+					<td>Uppercase = exported, lowercase = unexported</td>
+					<td>Same rules as functions</td>
+				</tr>
+			</tbody>
+		</table>
+		<h2>Common Patterns</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Pattern</th>
+					<th>Example</th>
+					<th>Use Case</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Getter method</td>
+					<td><code>{ "func (p *Person) Name() string" }</code></td>
+					<td>Access private fields</td>
+				</tr>
+				<tr>
+					<td>Setter method</td>
+					<td><code>{ "func (p *Person) SetName(n string)" }</code></td>
+					<td>Modify with validation</td>
+				</tr>
+				<tr>
+					<td>Fluent interface</td>
+					<td><code>{ "func (b *Builder) Add() *Builder" }</code></td>
+					<td>Method chaining</td>
+				</tr>
+				<tr>
+					<td>String representation</td>
+					<td><code>{ "func (p Person) String() string" }</code></td>
+					<td>Implement <code>fmt.Stringer</code></td>
+				</tr>
+				<tr>
+					<td>Validation</td>
+					<td><code>{ "func (u *User) Validate() error" }</code></td>
+					<td>Check object validity</td>
+				</tr>
+				<tr>
+					<td>State modification</td>
+					<td><code>{ "func (s *Server) Start() error" }</code></td>
+					<td>Change object state</td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="nav-buttons">
+			@components.Button("Previous: Structs", "/structs")
+			@components.Button("Next: Interfaces", "/interfaces")
+		</div>
+		@components.Footer()
+	}
+}

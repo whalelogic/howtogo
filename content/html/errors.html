@@ -1,8 +1,20 @@
-<h1 class="title" id="error-handling-in-go">Error Handling in Go</h1>
-<p>Go’s approach to error handling is explicit and straightforward.
-Errors are values that are returned from functions, not thrown as
-exceptions.</p>
-<h2 class="subtitle" id="the-error-type">The error Type</h2>
+<hr />
+<p>author: Keith Thomson<br />
+categories:</p>
+<ul>
+<li>Programming<br />
+tags:</li>
+<li>go</li>
+<li>error-handling</li>
+<li>golang</li>
+<li>programming<br />
+title: 🩺 Error Handling in Go</li>
+</ul>
+<hr />
+<h1>Error Handling in Go {#error-handling-in-go .title}</h1>
+<p>Go's approach to error handling is explicit and straightforward. Errors<br />
+are values that are returned from functions, not thrown as exceptions.</p>
+<h2>The error Type {#the-error-type .subtitle}</h2>
 <p>The error type is a built-in interface:</p>
 <pre><code>type error interface {
     Error() string
@@ -25,9 +37,9 @@ func main() {
         return
     }
     fmt.Println(&quot;Result:&quot;, result)
-}</code></pre>
-<h2 class="subtitle" id="creating-custom-errors">Creating Custom
-Errors</h2>
+}
+</code></pre>
+<h2>Creating Custom Errors {#creating-custom-errors .subtitle}</h2>
 <p>Create custom error types by implementing the error interface:</p>
 <pre><code>type ValidationError struct {
     Field string
@@ -46,8 +58,9 @@ func validateAge(age int) error {
         }
     }
     return nil
-}</code></pre>
-<h2 class="subtitle" id="error-wrapping">Error Wrapping</h2>
+}
+</code></pre>
+<h2>Error Wrapping {#error-wrapping .subtitle}</h2>
 <p>Wrap errors to add context using fmt.Errorf with %w:</p>
 <pre><code>import (
     &quot;fmt&quot;
@@ -72,9 +85,9 @@ func main() {
             fmt.Println(&quot;Config file not found&quot;)
         }
     }
-}</code></pre>
-<h2 class="subtitle" id="error-checking-patterns">Error Checking
-Patterns</h2>
+}
+</code></pre>
+<h2>Error Checking Patterns {#error-checking-patterns .subtitle}</h2>
 <p>Common patterns for checking specific errors:</p>
 <pre><code>// errors.Is - check if error matches a value
 if errors.Is(err, os.ErrNotExist) {
@@ -92,8 +105,9 @@ if netErr, ok := err.(*net.Error); ok {
     if netErr.Timeout() {
         // Handle timeout
     }
-}</code></pre>
-<h2 class="subtitle" id="panic-and-recover">Panic and Recover</h2>
+}
+</code></pre>
+<h2>Panic and Recover {#panic-and-recover .subtitle}</h2>
 <p>For unrecoverable errors, use panic and recover:</p>
 <pre><code>func riskyOperation() {
     defer func() {
@@ -113,8 +127,9 @@ func mustConnect(addr string) *Connection {
         panic(fmt.Sprintf(&quot;failed to connect to %s: %v&quot;, addr, err))
     }
     return conn
-}</code></pre>
-<h2 class="subtitle" id="best-practices">Best Practices</h2>
+}
+</code></pre>
+<h2>Best Practices {#best-practices .subtitle}</h2>
 <p>Guidelines for effective error handling:</p>
 <pre><code>// 1. Always check errors
 f, err := os.Open(&quot;file.txt&quot;)
@@ -149,4 +164,5 @@ func operation() (result int, err error) {
     
     // Do work...
     return
-}</code></pre>
+}
+</code></pre>

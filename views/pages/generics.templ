@@ -1,0 +1,372 @@
+package pages
+
+import "github.com/whalelogic/howtogo/views/layouts"
+import "github.com/whalelogic/howtogo/views/components"
+
+templ Generics() {
+	@layouts.Base("Generics | How to Go") {
+		@components.Breadcrumb("generics", "Generics")
+		@components.CustomHeader("Generics", "Errors")
+		<p>Generics (type parameters) were introduced in Go 1.18, allowing you to write functions and types that work with multiple types while maintaining type safety. Generics eliminate code duplication and enable powerful abstractions.</p>
+		@components.KeyPoints([]string{
+			"Generics enable type-safe reusable code",
+			"Use square brackets [] for type parameters",
+			"Type constraints specify what operations are allowed",
+			"any is a constraint that accepts any type",
+			"comparable constraint for types that support == and !=",
+			"Can define custom constraints with interfaces",
+			"Generics work with functions, types, and methods",
+			"Type inference often eliminates need to specify types explicitly",
+		})
+		<h2>Generic Functions</h2>
+		<p>Define functions that work with multiple types:</p>
+		<div class="code-block">
+			<pre>
+				<code class="language-go">
+					@templ.Raw(`package main
+
+import "fmt"
+
+// Generic function with type parameter T
+func Print[T any](value T) {
+    fmt.Println(value)
+}
+
+// Generic function with constraint
+func Min[T comparable](a, b T) T {
+    // Note: This won't compile as-is because comparable
+    // doesn't include < operator. See ordered constraint below.
+    if a < b {
+        return a
+    }
+    return b
+}
+
+// Using constraints package for ordered types
+import "golang.org/x/exp/constraints"
+
+func MinOrdered[T constraints.Ordered](a, b T) T {
+    if a < b {
+        return a
+    }
+    return b
+}
+
+func main() {
+    // Type inference - Go figures out the type
+    Print(42)
+    Print("hello")
+    Print(3.14)
+    Print([]int{1, 2, 3})
+    
+    // Explicit type parameter
+    Print[string]("world")
+    
+    // Using ordered constraint
+    fmt.Println("Min int:", MinOrdered(10, 20))
+    fmt.Println("Min float:", MinOrdered(3.14, 2.71))
+    fmt.Println("Min string:", MinOrdered("apple", "banana"))
+}`)
+				</code>
+			</pre>
+		</div>
+		<span class="output-label">Output:</span>
+		@components.CodeOutput(`42
+hello
+3.14
+[1 2 3]
+world
+Min int: 10
+Min float: 2.71
+Min string: apple`)
+		<h2>Generic Types</h2>
+		<p>Create data structures that work with any type:</p>
+		<div class="code-block">
+			<pre>
+				<code class="language-go">
+					@templ.Raw(`package main
+
+import "fmt"
+
+// Generic stack type
+type Stack[T any] struct {
+    items []T
+}
+
+// Methods on generic type
+func (s *Stack[T]) Push(item T) {
+    s.items = append(s.items, item)
+}
+
+func (s *Stack[T]) Pop() (T, bool) {
+    if len(s.items) == 0 {
+        var zero T
+        return zero, false
+    }
+    index := len(s.items) - 1
+    item := s.items[index]
+    s.items = s.items[:index]
+    return item, true
+}
+
+func (s *Stack[T]) IsEmpty() bool {
+    return len(s.items) == 0
+}
+
+// Generic map function
+func Map[T, U any](slice []T, fn func(T) U) []U {
+    result := make([]U, len(slice))
+    for i, v := range slice {
+        result[i] = fn(v)
+    }
+    return result
+}
+
+func main() {
+    // Stack of integers
+    intStack := Stack[int]{}
+    intStack.Push(1)
+    intStack.Push(2)
+    intStack.Push(3)
+    
+    val, ok := intStack.Pop()
+    fmt.Printf("Popped: %d (ok: %v)\n", val, ok)
+    
+    // Stack of strings
+    strStack := Stack[string]{}
+    strStack.Push("hello")
+    strStack.Push("world")
+    
+    str, ok := strStack.Pop()
+    fmt.Printf("Popped: %s (ok: %v)\n", str, ok)
+    
+    // Generic map function
+    numbers := []int{1, 2, 3, 4, 5}
+    doubled := Map(numbers, func(n int) int { return n * 2 })
+    fmt.Println("Doubled:", doubled)
+    
+    strings := Map(numbers, func(n int) string {
+        return fmt.Sprintf("num_%d", n)
+    })
+    fmt.Println("Strings:", strings)
+}`)
+				</code>
+			</pre>
+		</div>
+		<span class="output-label">Output:</span>
+		@components.CodeOutput(`Popped: 3 (ok: true)
+Popped: world (ok: true)
+Doubled: [2 4 6 8 10]
+Strings: [num_1 num_2 num_3 num_4 num_5]`)
+		<h2>Type Constraints</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Constraint</th>
+					<th>Description</th>
+					<th>Example</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td><code>{ "any" }</code></td>
+					<td>Accepts any type (alias for <code>{ "interface{}" }</code>)</td>
+					<td><code>{ "func Print[T any](v T)" }</code></td>
+				</tr>
+				<tr>
+					<td><code>comparable</code></td>
+					<td>Types that support <code>==</code> and <code>!=</code></td>
+					<td><code>{ "func Equal[T comparable](a, b T)" }</code></td>
+				</tr>
+				<tr>
+					<td><code>constraints.Ordered</code></td>
+					<td>Types that support <code>&lt;</code>, <code>&gt;</code>, etc.</td>
+					<td><code>{ "func Max[T constraints.Ordered](a, b T)" }</code></td>
+				</tr>
+				<tr>
+					<td><code>constraints.Integer</code></td>
+					<td>All integer types</td>
+					<td><code>{ "func Sum[T constraints.Integer](nums []T)" }</code></td>
+				</tr>
+				<tr>
+					<td><code>constraints.Float</code></td>
+					<td>All float types</td>
+					<td><code>{ "func Avg[T constraints.Float](nums []T)" }</code></td>
+				</tr>
+				<tr>
+					<td>Custom interface</td>
+					<td>Define your own constraint</td>
+					<td><code>{ "type Numeric interface { int | float64 }" }</code></td>
+				</tr>
+			</tbody>
+		</table>
+		<h2>Custom Constraints</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Pattern</th>
+					<th>Example</th>
+					<th>Use Case</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Type union</td>
+					<td><code>{ "interface { int | float64 | string }" }</code></td>
+					<td>Allow specific types</td>
+				</tr>
+				<tr>
+					<td>Method constraint</td>
+					<td><code>{ "interface { String() string }" }</code></td>
+					<td>Require specific methods</td>
+				</tr>
+				<tr>
+					<td>Combined constraint</td>
+					<td><code>{ "interface { ~int | ~float64; String() string }" }</code></td>
+					<td>Type union + methods</td>
+				</tr>
+				<tr>
+					<td>Approximate type</td>
+					<td><code>{ "interface { ~int }" }</code></td>
+					<td>Underlying type must be int</td>
+				</tr>
+				<tr>
+					<td>Embedded constraint</td>
+					<td><code>{ "interface { Stringer; comparable }" }</code></td>
+					<td>Combine multiple constraints</td>
+				</tr>
+			</tbody>
+		</table>
+		<h2>Generic Syntax</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Element</th>
+					<th>Syntax</th>
+					<th>Description</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Type parameter</td>
+					<td><code>[T any]</code></td>
+					<td>Single type parameter</td>
+				</tr>
+				<tr>
+					<td>Multiple params</td>
+					<td><code>[T, U any]</code></td>
+					<td>Multiple type parameters</td>
+				</tr>
+				<tr>
+					<td>Different constraints</td>
+					<td><code>[T any, U comparable]</code></td>
+					<td>Each param with own constraint</td>
+				</tr>
+				<tr>
+					<td>Generic function</td>
+					<td><code>{ "func Name[T any](v T) { }" }</code></td>
+					<td>Function with type parameter</td>
+				</tr>
+				<tr>
+					<td>Generic type</td>
+					<td><code>{ "type Box[T any] struct { }" }</code></td>
+					<td>Type with type parameter</td>
+				</tr>
+				<tr>
+					<td>Method on generic</td>
+					<td><code>{ "func (b Box[T]) Get() T { }" }</code></td>
+					<td>Method on generic type</td>
+				</tr>
+			</tbody>
+		</table>
+		<h2>Common Generic Patterns</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Pattern</th>
+					<th>Example</th>
+					<th>Use Case</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Generic container</td>
+					<td><code>{ "type List[T any] struct { }" }</code></td>
+					<td>Lists, stacks, queues</td>
+				</tr>
+				<tr>
+					<td>Generic algorithm</td>
+					<td><code>{ "func Sort[T Ordered](slice []T)" }</code></td>
+					<td>Sorting, searching</td>
+				</tr>
+				<tr>
+					<td>Map/Filter/Reduce</td>
+					<td><code>{ "func Map[T, U any](s []T, f func(T)U) []U" }</code></td>
+					<td>Functional operations</td>
+				</tr>
+				<tr>
+					<td>Generic pair</td>
+					<td><code>{ "type Pair[T, U any] struct { First T; Second U }" }</code></td>
+					<td>Tuple-like structures</td>
+				</tr>
+				<tr>
+					<td>Generic option</td>
+					<td><code>{ "type Option[T any] struct { valid bool; value T }" }</code></td>
+					<td>Optional values</td>
+				</tr>
+				<tr>
+					<td>Generic result</td>
+					<td><code>{ "type Result[T any] struct { value T; err error }" }</code></td>
+					<td>Result with error</td>
+				</tr>
+			</tbody>
+		</table>
+		<h2>Generics Best Practices</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Guideline</th>
+					<th>Reason</th>
+					<th>Example</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Use when type-safe reuse needed</td>
+					<td>Avoid code duplication</td>
+					<td>Generic containers, algorithms</td>
+				</tr>
+				<tr>
+					<td>Keep constraints simple</td>
+					<td>Easier to understand and use</td>
+					<td>Prefer <code>{ "any" }</code>, <code>comparable</code></td>
+				</tr>
+				<tr>
+					<td>Consider interfaces first</td>
+					<td>May be simpler for behavior</td>
+					<td>Interface methods vs type params</td>
+				</tr>
+				<tr>
+					<td>Don't over-generalize</td>
+					<td>YAGNI principle</td>
+					<td>Add generics when actually needed</td>
+				</tr>
+				<tr>
+					<td>Use type inference</td>
+					<td>Less verbose code</td>
+					<td>Let Go infer types when possible</td>
+				</tr>
+				<tr>
+					<td>Name conventions</td>
+					<td>Clarity and consistency</td>
+					<td>T for type, K/V for key/value</td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="nav-buttons">
+			@components.Button("Previous: Interfaces", "/interfaces")
+			@components.Button("Next: Errors", "/errors")
+		</div>
+		@components.Footer()
+	}
+}

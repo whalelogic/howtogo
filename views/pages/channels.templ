@@ -1,0 +1,475 @@
+package pages
+
+import "github.com/whalelogic/howtogo/views/layouts"
+import "github.com/whalelogic/howtogo/views/components"
+
+templ Channels() {
+	@layouts.Base("Channels | How to Go") {
+		@components.Breadcrumb("channels", "Channels")
+		@components.CustomHeader("Channels", "")
+		<p>Channels are typed conduits that allow goroutines to communicate and synchronize. They provide a safe way to pass data between concurrent operations, following Go's philosophy: "Don't communicate by sharing memory; share memory by communicating."</p>
+		@components.KeyPoints([]string{
+			"Channels allow goroutines to communicate safely",
+			"Create channels with make(chan Type)",
+			"Send to channel: ch <- value",
+			"Receive from channel: value := <-ch",
+			"Channels block until both sender and receiver are ready",
+			"Buffered channels allow limited asynchronous communication",
+			"Close channels to signal no more values: close(ch)",
+			"Use range to iterate over channel values",
+		})
+		<h2>Creating and Using Channels</h2>
+		<p>Channels are created with <code>make</code> and used with the <code>&lt;-</code> operator:</p>
+		<div class="code-block">
+			<pre>
+				<code class="language-go">
+					@templ.Raw(`package main
+
+import "fmt"
+
+func main() {
+    // Create a channel
+    messages := make(chan string)
+    
+    // Send value in goroutine
+    go func() {
+        messages <- "hello"
+        messages <- "world"
+    }()
+    
+    // Receive values
+    msg1 := <-messages
+    fmt.Println(msg1)
+    
+    msg2 := <-messages
+    fmt.Println(msg2)
+}`)
+				</code>
+			</pre>
+		</div>
+		<span class="output-label">Output:</span>
+		@components.CodeOutput(`hello
+world`)
+		<h2>Buffered Channels</h2>
+		<p>Buffered channels accept a limited number of values without blocking:</p>
+		<div class="code-block">
+			<pre>
+				<code class="language-go">
+					@templ.Raw(`package main
+
+import "fmt"
+
+func main() {
+    // Buffered channel with capacity 2
+    messages := make(chan string, 2)
+    
+    // Send without blocking (up to capacity)
+    messages <- "buffered"
+    messages <- "channel"
+    
+    // Receive values
+    fmt.Println(<-messages)
+    fmt.Println(<-messages)
+    
+    // Demonstrate buffer
+    ch := make(chan int, 3)
+    ch <- 1
+    ch <- 2
+    ch <- 3
+    
+    fmt.Println("Length:", len(ch))
+    fmt.Println("Capacity:", cap(ch))
+    
+    fmt.Println(<-ch)
+    fmt.Println(<-ch)
+    fmt.Println(<-ch)
+}`)
+				</code>
+			</pre>
+		</div>
+		<span class="output-label">Output:</span>
+		@components.CodeOutput(`buffered
+channel
+Length: 3
+Capacity: 3
+1
+2
+3`)
+		<h2>Channel Synchronization</h2>
+		<p>Channels can synchronize execution between goroutines:</p>
+		<div class="code-block">
+			<pre>
+				<code class="language-go">
+					@templ.Raw(`package main
+
+import (
+    "fmt"
+    "time"
+)
+
+func worker(done chan bool) {
+    fmt.Println("Working...")
+    time.Sleep(time.Second)
+    fmt.Println("Done")
+    
+    // Signal completion
+    done <- true
+}
+
+func main() {
+    done := make(chan bool)
+    
+    go worker(done)
+    
+    // Block until signal received
+    <-done
+    fmt.Println("Worker finished")
+}`)
+				</code>
+			</pre>
+		</div>
+		<span class="output-label">Output:</span>
+		@components.CodeOutput(`Working...
+Done
+Worker finished`)
+		<h2>Channel Direction</h2>
+		<p>Specify send-only or receive-only channels in function signatures:</p>
+		<div class="code-block">
+			<pre>
+				<code class="language-go">
+					@templ.Raw(`package main
+
+import "fmt"
+
+// Send-only channel
+func sender(ch chan<- string) {
+    ch <- "hello"
+    ch <- "world"
+    close(ch)
+}
+
+// Receive-only channel
+func receiver(ch <-chan string) {
+    for msg := range ch {
+        fmt.Println("Received:", msg)
+    }
+}
+
+func main() {
+    messages := make(chan string, 2)
+    
+    go sender(messages)
+    receiver(messages)
+}`)
+				</code>
+			</pre>
+		</div>
+		<span class="output-label">Output:</span>
+		@components.CodeOutput(`Received: hello
+Received: world`)
+		<h2>Select Statement</h2>
+		<p>Select allows waiting on multiple channel operations:</p>
+		<div class="code-block">
+			<pre>
+				<code class="language-go">
+					@templ.Raw(`package main
+
+import (
+    "fmt"
+    "time"
+)
+
+func main() {
+    c1 := make(chan string)
+    c2 := make(chan string)
+    
+    go func() {
+        time.Sleep(1 * time.Second)
+        c1 <- "one"
+    }()
+    
+    go func() {
+        time.Sleep(2 * time.Second)
+        c2 <- "two"
+    }()
+    
+    // Wait for both channels
+    for i := 0; i < 2; i++ {
+        select {
+        case msg1 := <-c1:
+            fmt.Println("Received", msg1)
+        case msg2 := <-c2:
+            fmt.Println("Received", msg2)
+        }
+    }
+}`)
+				</code>
+			</pre>
+		</div>
+		<span class="output-label">Output:</span>
+		@components.CodeOutput(`Received one
+Received two`)
+		<h2>Channel Operations</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Operation</th>
+					<th>Syntax</th>
+					<th>Description</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Create</td>
+					<td><code>make(chan Type)</code></td>
+					<td>Unbuffered channel</td>
+				</tr>
+				<tr>
+					<td>Create buffered</td>
+					<td><code>make(chan Type, size)</code></td>
+					<td>Buffered channel</td>
+				</tr>
+				<tr>
+					<td>Send</td>
+					<td><code>{ "ch <- value" }</code></td>
+					<td>Send value to channel</td>
+				</tr>
+				<tr>
+					<td>Receive</td>
+					<td><code>{ "value := <-ch" }</code></td>
+					<td>Receive value from channel</td>
+				</tr>
+				<tr>
+					<td>Receive with ok</td>
+					<td><code>{ "value, ok := <-ch" }</code></td>
+					<td>Check if channel is closed</td>
+				</tr>
+				<tr>
+					<td>Close</td>
+					<td><code>close(ch)</code></td>
+					<td>Close channel (no more sends)</td>
+				</tr>
+				<tr>
+					<td>Range</td>
+					<td><code>{ "for v := range ch { }" }</code></td>
+					<td>Iterate until channel closed</td>
+				</tr>
+				<tr>
+					<td>Length</td>
+					<td><code>len(ch)</code></td>
+					<td>Number of queued elements</td>
+				</tr>
+				<tr>
+					<td>Capacity</td>
+					<td><code>cap(ch)</code></td>
+					<td>Buffer size</td>
+				</tr>
+			</tbody>
+		</table>
+		<h2>Channel Types</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Type</th>
+					<th>Syntax</th>
+					<th>Use Case</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Bidirectional</td>
+					<td><code>chan Type</code></td>
+					<td>Send and receive</td>
+				</tr>
+				<tr>
+					<td>Send-only</td>
+					<td><code>{ "chan<- Type" }</code></td>
+					<td>Only send values</td>
+				</tr>
+				<tr>
+					<td>Receive-only</td>
+					<td><code>{ "<-chan Type" }</code></td>
+					<td>Only receive values</td>
+				</tr>
+				<tr>
+					<td>Unbuffered</td>
+					<td><code>make(chan Type)</code></td>
+					<td>Synchronous communication</td>
+				</tr>
+				<tr>
+					<td>Buffered</td>
+					<td><code>make(chan Type, n)</code></td>
+					<td>Asynchronous up to capacity</td>
+				</tr>
+			</tbody>
+		</table>
+		<h2>Select Statement Patterns</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Pattern</th>
+					<th>Example</th>
+					<th>Use Case</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Multiple channels</td>
+					<td><code>{ "select { case <-ch1: case <-ch2: }" }</code></td>
+					<td>Wait on multiple operations</td>
+				</tr>
+				<tr>
+					<td>Default case</td>
+					<td><code>{ "select { case <-ch: default: }" }</code></td>
+					<td>Non-blocking receive</td>
+				</tr>
+				<tr>
+					<td>Timeout</td>
+					<td><code>{ "case <-time.After(1 * time.Second):" }</code></td>
+					<td>Time-bounded operation</td>
+				</tr>
+				<tr>
+					<td>Done channel</td>
+					<td><code>{ "case <-done:" }</code></td>
+					<td>Cancellation signal</td>
+				</tr>
+			</tbody>
+		</table>
+		<h2>Channel Characteristics</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Feature</th>
+					<th>Description</th>
+					<th>Details</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Type-safe</td>
+					<td>Channels are strongly typed</td>
+					<td>Only specific type can be sent/received</td>
+				</tr>
+				<tr>
+					<td>Blocking</td>
+					<td>Operations block by default</td>
+					<td>Send blocks until receiver ready</td>
+				</tr>
+				<tr>
+					<td>Synchronization</td>
+					<td>Provides implicit synchronization</td>
+					<td>No need for explicit locks</td>
+				</tr>
+				<tr>
+					<td>First-class values</td>
+					<td>Can be passed, stored, returned</td>
+					<td>Like any other value</td>
+				</tr>
+				<tr>
+					<td>Zero value is nil</td>
+					<td>nil channels block forever</td>
+					<td>Must use <code>make()</code></td>
+				</tr>
+				<tr>
+					<td>Closable</td>
+					<td>Can signal no more values</td>
+					<td>Receivers can detect closure</td>
+				</tr>
+			</tbody>
+		</table>
+		<h2>Best Practices</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Practice</th>
+					<th>Description</th>
+					<th>Reason</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Sender closes</td>
+					<td>Only sender should close channels</td>
+					<td>Closing closed channel panics</td>
+				</tr>
+				<tr>
+					<td>Check closure</td>
+					<td>Use <code>v, ok := &lt;-ch</code></td>
+					<td>Detect when channel closed</td>
+				</tr>
+				<tr>
+					<td>Use select for timeouts</td>
+					<td>Combine with <code>time.After</code></td>
+					<td>Prevent indefinite blocking</td>
+				</tr>
+				<tr>
+					<td>Buffered for known size</td>
+					<td>Use when exact count known</td>
+					<td>Avoid goroutine blocking</td>
+				</tr>
+				<tr>
+					<td>Don't pass by value</td>
+					<td>Channels are references</td>
+					<td>No need for pointers</td>
+				</tr>
+				<tr>
+					<td>Context for cancellation</td>
+					<td>Use <code>context.Context</code></td>
+					<td>Standard cancellation pattern</td>
+				</tr>
+			</tbody>
+		</table>
+		<h2>Common Patterns</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Pattern</th>
+					<th>Description</th>
+					<th>Use Case</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Worker pool</td>
+					<td>Multiple workers on shared channel</td>
+					<td>Parallel task processing</td>
+				</tr>
+				<tr>
+					<td>Pipeline</td>
+					<td>Chain channels for data flow</td>
+					<td>Multi-stage processing</td>
+				</tr>
+				<tr>
+					<td>Fan-out</td>
+					<td>One channel to many workers</td>
+					<td>Distribute work</td>
+				</tr>
+				<tr>
+					<td>Fan-in</td>
+					<td>Merge many channels to one</td>
+					<td>Collect results</td>
+				</tr>
+				<tr>
+					<td>Semaphore</td>
+					<td>Buffered channel for limiting</td>
+					<td>Limit concurrency</td>
+				</tr>
+				<tr>
+					<td>Done channel</td>
+					<td>Signal completion/cancellation</td>
+					<td>Coordinate shutdown</td>
+				</tr>
+				<tr>
+					<td>Quit channel</td>
+					<td>Signal goroutine to stop</td>
+					<td>Graceful termination</td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="nav-buttons">
+			@components.Button("Previous: Goroutines", "/goroutines")
+			@components.Button("Next: Channel Buffering", "/channel-buffering")
+		</div>
+		@components.Footer()
+	}
+}

@@ -1,12 +1,23 @@
-<h1 class="title" id="functions-in-go">Functions in Go</h1>
-<p>Functions are central to Go. They are the building blocks of a Go
-program and are used to perform specific tasks. This section covers the
+<hr />
+<p>author: Keith Thomson<br />
+categories:</p>
+<ul>
+<li>Programming<br />
+tags:</li>
+<li>go</li>
+<li>functions</li>
+<li>golang</li>
+<li>programming<br />
+title: 🔭 Functions in Go</li>
+</ul>
+<hr />
+<h1>Functions in Go {#functions-in-go .title}</h1>
+<p>Functions are central to Go. They are the building blocks of a Go<br />
+program and are used to perform specific tasks. This section covers the<br />
 basics of creating and using functions in Go.</p>
-<h2 class="subtitle" id="defining-and-calling-functions">Defining and
-Calling Functions</h2>
-<p>A function is defined with the <code>func</code> keyword, followed by
-the function name, a list of parameters, the return type(s), and the
-function body.</p>
+<h2>Defining and Calling Functions {#defining-and-calling-functions .subtitle}</h2>
+<p>A function is defined with the <code>func</code> keyword, followed by the function<br />
+name, a list of parameters, the return type(s), and the function body.</p>
 <pre><code>package main
 
 import &quot;fmt&quot;
@@ -19,16 +30,17 @@ func add(x int, y int) int {
 func main() {
     result := add(42, 13)
     fmt.Println(&quot;42 + 13 =&quot;, result)
-}</code></pre>
-<p>When you have multiple consecutive parameters of the same type, you
-can omit the type from all but the last one.</p>
+}
+</code></pre>
+<p>When you have multiple consecutive parameters of the same type, you can<br />
+omit the type from all but the last one.</p>
 <pre><code>func add(x, y int) int {
     return x + y
-}</code></pre>
-<h2 class="subtitle" id="multiple-return-values">Multiple Return
-Values</h2>
-<p>A function in Go can return any number of results. This is often used
-to return both a result and an error value.</p>
+}
+</code></pre>
+<h2>Multiple Return Values {#multiple-return-values .subtitle}</h2>
+<p>A function in Go can return any number of results. This is often used to<br />
+return both a result and an error value.</p>
 <pre><code>package main
 
 import (
@@ -57,12 +69,13 @@ func main() {
     } else {
         fmt.Println(&quot;Result:&quot;, result)
     }
-}</code></pre>
-<h2 class="subtitle" id="variadic-functions">Variadic Functions</h2>
-<p>A function that can be called with a varying number of arguments is
-called a variadic function. The last parameter of a variadic function is
-of the form <code>...T</code>, which means it can accept any number of
-arguments of type <code>T</code>.</p>
+}
+</code></pre>
+<h2>Variadic Functions {#variadic-functions .subtitle}</h2>
+<p>A function that can be called with a varying number of arguments is<br />
+called a variadic function. The last parameter of a variadic function is<br />
+of the form <code>...T</code>, which means it can accept any number of arguments of<br />
+type <code>T</code>.</p>
 <pre><code>package main
 
 import &quot;fmt&quot;
@@ -82,15 +95,15 @@ func main() {
 
     nums := []int{1, 2, 3, 4}
     sum(nums...)
-}</code></pre>
-<h2 class="subtitle" id="key-features-of-functions">Key Features of
-Functions</h2>
+}
+</code></pre>
+<h2>Key Features of Functions {#key-features-of-functions .subtitle}</h2>
 <ul>
-<li><strong>First-Class Citizens:</strong> Functions are first-class
-citizens in Go, meaning they can be assigned to variables, passed as
-arguments to other functions, and returned from other functions.</li>
-<li><strong>Anonymous Functions:</strong> You can create functions
-without a name, known as anonymous functions or function literals.</li>
-<li><strong>Closures:</strong> An anonymous function can form a closure,
-which means it has access to the variables in its lexical scope.</li>
+<li><strong>First-Class Citizens:</strong> Functions are first-class citizens in Go,<br />
+meaning they can be assigned to variables, passed as arguments to<br />
+other functions, and returned from other functions.</li>
+<li><strong>Anonymous Functions:</strong> You can create functions without a name,<br />
+known as anonymous functions or function literals.</li>
+<li><strong>Closures:</strong> An anonymous function can form a closure, which means it<br />
+has access to the variables in its lexical scope.</li>
 </ul>
