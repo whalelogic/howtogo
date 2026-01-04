@@ -79,46 +79,17 @@ https://go.dev/dl/
 ### Run an Example
 
 ```sh
-go run ./examples/<topic>/<file>.go
+go run .
+```
+Starts the server on `localhost:8080`
 
 Verify Go Setup
-
+```
 go version
 go env
-
-Repository Structure
-
-how-to-go/
-│
-├─ examples/               
-│  ├─ basics/
-│  ├─ variables/
-│  ├─ arrays/
-│  ├─ slices/
-│  ├─ maps/
-│  ├─ loops/
-│  ├─ functions/
-│  ├─ methods/
-│  ├─ interfaces/
-│  ├─ generics/
-│  ├─ concurrency/
-│  ├─ networking/
-│  ├─ filesystem/
-│  ├─ errors/
-│  ├─ testing/
-│  ├─ cli/
-│  ├─ web/
-│  └─ advanced/
-│
-├─ docs/                  
-│  ├─ concepts/
-│  ├─ patterns/
-│  └─ references/
-│
-├─ assets/               
-│
-└─ README.md
+go work (new workspace tool)
 ```
+
 
 ## Screenshots
 <p align="center">
@@ -130,11 +101,11 @@ how-to-go/
 
 Issues are listed in /ref/issues/issues.md
 
-More issues are welcome just creating an Issue. 
+More issues are welcome just creat an Issue like you normally would, but I'm tackling the ones listed on /ref/issues first. 
 
 ## Author
 
-Created by Keith — Computer Science student, Army Veteran, cloud engineer, and backend developer. Passionate about clarity, correctness, and high-performance systems.
+Created by Keith — Computer Science student, Army Veteran, cloud engineer, and backend developer. Passionate about clarity, correctness, my family, and high-performance systems 😄.
 
 ---
 
