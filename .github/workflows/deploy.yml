@@ -1,0 +1,33 @@
+name: Deploying HowToGO to AlmaLinux
+
+on:
+  push:
+    branches:
+      - main  # Set default branch 
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest # Github's computer, not mine
+    steps:
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            # Navigate to the app folder
+            cd /var/www/howtogo
+            
+            # Pull the latest code
+            git pull origin main
+            
+            # Rebuild the app
+            # (Assumes 'go' is in the path. If it fails, use /usr/bin/go)
+            go build -o howtogo
+            
+            # Security: Ensure the new binary has the correct SELinux label
+            chcon -t bin_t howtogo
+            
+            # Restart the service to pick up changes
+            systemctl restart howtogo
