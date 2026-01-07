@@ -1,19 +1,54 @@
 package main
 
 import (
+	"flag"
 	"log"
+	"os"
 
 	"github.com/gin-gonic/gin"
 
+	"github.com/whalelogic/howtogo/database"
 	"github.com/whalelogic/howtogo/handlers"
 )
 
 func main() {
+	// Optional flags for database configuration
+	dbPath := flag.String("db", "./database/analytics.db", "Path to SQLite database")
+	flag.Parse()
+
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
+
+	// Initialize the database
+	log.Printf("Connecting to database at: %s", *dbPath)
+	store, err := database.InitAnalyticsDB(*dbPath)
+	if err != nil {
+		log.Fatalf("Failed to initialize database: %v", err)
+	}
+	defer store.DB.Close()
+
+	h := handlers.New(store)
+
+	if os.Getenv("GIN_MODE") != "release" {
+		gin.SetMode(gin.DebugMode)
+	} else {
+		gin.SetMode(gin.ReleaseMode)
+	}
+
 	r := gin.Default()
-	if err := r.SetTrustedProxies(nil); err != nil {
+
+	// Caddy will be running as a reverse proxy, so we need to trust it
+	err = r.SetTrustedProxies([]string{"127.0.0.1", "::1"})
+	if err != nil {
 		log.Fatalf("failed to set trusted proxies: %v", err)
 	}
 
+	// Middleware
+	r.Use(h.AnalyticsMiddleware())
+
+	// Static files
 	r.Static("/css", "./static/css")
 	r.Static("/js", "./static/js")
 	r.Static("/icons", "./static/icons")
@@ -21,6 +56,8 @@ func main() {
 	r.StaticFile("/robots.txt", "./static/robots.txt")
 	r.StaticFile("/sitemap.xml", "./static/sitemap.xml")
 
+	// Routes
+	r.GET("/analytics", h.AnalyticsPageHandler)
 	r.GET("/health", handlers.HealthCheckHandler)
 	r.GET("/", handlers.HomePageHandler)
 	r.GET("/hello-world", handlers.HelloWorldHandler)
@@ -50,7 +87,9 @@ func main() {
 	r.GET("/goroutines", handlers.GoroutinesHandler)
 	r.GET("/channels", handlers.ChannelsHandler)
 
-	if err := r.Run(":8080"); err != nil {
+	// Start the server using the configured port
+	log.Printf("Server starting on port %s", port)
+	if err := r.Run(":" + port); err != nil {
 		log.Fatalf("server failed: %v", err)
 	}
 }

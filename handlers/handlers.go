@@ -10,8 +10,11 @@ import (
 
 	"github.com/a-h/templ"
 	"github.com/whalelogic/howtogo/views/pages"
+	"github.com/whalelogic/howtogo/database"
 )
 
+// render is a helper function to render a templ.Component with the given status code.
+// from the templ.guide examples.
 func render(c *gin.Context, status int, component templ.Component) {
 	c.Status(status)
 	if err := component.Render(c.Request.Context(), c.Writer); err != nil {
@@ -19,9 +22,49 @@ func render(c *gin.Context, status int, component templ.Component) {
 	}
 }
 
+// AppHandler holds dependencies for the HTTP handlers.
+type AppHandler struct {
+	Store *database.AnalyticsStore
+}
+
+func New(store *database.AnalyticsStore) *AppHandler {
+	return &AppHandler{Store: store}
+}
+
+// AnalyticsMiddleware is a Gin middleware that tracks page visits and collects analytics data.
+func (h *AppHandler) AnalyticsMiddleware() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		clientIP := c.ClientIP()
+		h.Store.RecordVisit(clientIP, c.Request.URL.Path)
+		totalViews, uniqueVisitors := h.Store.GetStats()
+
+		c.Set("client_ip", clientIP)
+		c.Set("page_views", totalViews)
+		c.Set("visitor_count", uniqueVisitors)
+
+		c.Next()
+	}
+}
+
+// AnalyticsPageHandler renders the analytics page with visit statistics.
+func (h *AppHandler) AnalyticsPageHandler(c *gin.Context) {
+	ip := c.MustGet("client_ip").(string)
+	views := c.MustGet("page_views").(int)
+	visitors := c.MustGet("visitor_count").(int)
+
+	render(c, http.StatusOK, pages.Analytics(ip, views, visitors))
+}
+
+
+
+// HealthCheckHandler responds with a simple "200 OK" message for health checks.
 func HealthCheckHandler(c *gin.Context) {
 	c.String(http.StatusOK, "200 OK\n")
 }
+
+
+
+// Page Handlers
 
 func HomePageHandler(c *gin.Context) {
 	render(c, http.StatusOK, pages.Index())

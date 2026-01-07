@@ -1,0 +1,53 @@
+package pages
+
+import (
+	"fmt"
+	// Replace these with your actual project paths
+	"github.com/whalelogic/howtogo/views/layouts"
+	"github.com/whalelogic/howtogo/views/components"
+)
+
+// Analytics renders the server statistics page using the standard layout
+templ Analytics(ip string, views int, visitors int) {
+	@layouts.Base("Analytics | How to Go") {
+		@components.Breadcrumb("analytics", "Analytics")
+		@components.CustomHeader("Analytics", "Server Stats")
+		
+		<p>Live server traffic analysis. Data is collected via middleware and stored in a persistent SQLite database.</p>
+
+		@components.KeyPoints([]string{
+			"<b>Real-time Tracking:</b> IP addresses are captured via middleware injection.",
+			"<b>Privacy First:</b> No external cookies or third-party trackers.",
+			"<b>Performance:</b> Database writes are asynchronous to prevent blocking.",
+		})
+
+		<h3>Current Session Data</h3>
+		
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Metric</th>
+					<th>Value</th>
+					<th>Description</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td><code>Client IP</code></td>
+					<td><code>{ ip }</code></td>
+					<td>Your public IP address as seen by the server</td>
+				</tr>
+				<tr>
+					<td><code>Total Views</code></td>
+					<td><code>{ fmt.Sprintf("%d", views) }</code></td>
+					<td>Aggregate page loads since inception</td>
+				</tr>
+				<tr>
+					<td><code>Unique Visitors</code></td>
+					<td><code>{ fmt.Sprintf("%d", visitors) }</code></td>
+					<td>Distinct IP addresses recorded in DB</td>
+				</tr>
+			</tbody>
+		</table>
+	}
+}

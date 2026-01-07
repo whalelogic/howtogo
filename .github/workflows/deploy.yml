@@ -25,7 +25,7 @@ jobs:
             # Rebuild the app
             # (Assumes 'go' is in the path. If it fails, use /usr/bin/go)
             go build -o howtogo
-            
+
             # Security: Ensure the new binary has the correct SELinux label
             chcon -t bin_t howtogo
             
