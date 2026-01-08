@@ -3,3 +3,6 @@
 *.db
 *.db-journal
 /ref
+*.db
+*.db-shm
+*.db-wal
