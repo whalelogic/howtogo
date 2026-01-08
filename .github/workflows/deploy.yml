@@ -16,14 +16,18 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
+            # Let me know if the script fails. Stops on error.
+            set -e 
             # Navigate to the app folder
             cd /var/www/howtogo
             
             # Pull the latest code
+            # Or use /usr/local/go/bin/go build -o howtogo
+            # git fetch with git reset --head origin/main may be better for CI/CD
             git pull origin main
             
             # Rebuild the app
-            # (Assumes 'go' is in the path. If it fails, use /usr/bin/go)
+            # Can use /usr/local/go/bin/go build -o howtogo if not in PATH
             go build -o howtogo
 
             # Security: Ensure the new binary has the correct SELinux label
