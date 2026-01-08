@@ -1,53 +1,67 @@
 package pages
 
 import (
-	"fmt"
-	// Replace these with your actual project paths
-	"github.com/whalelogic/howtogo/views/layouts"
-	"github.com/whalelogic/howtogo/views/components"
+    "fmt"
+    "github.com/whalelogic/howtogo/views/layouts"
+    "github.com/whalelogic/howtogo/views/components"
 )
 
-// Analytics renders the server statistics page using the standard layout
+// Analytics renders the server statistics page
 templ Analytics(ip string, views int, visitors int) {
-	@layouts.Base("Analytics | How to Go") {
-		@components.Breadcrumb("analytics", "Analytics")
-		@components.CustomHeader("Analytics", "Server Stats")
-		
-		<p>Live server traffic analysis. Data is collected via middleware and stored in a persistent SQLite database.</p>
+    @layouts.Base("Analytics | How to Go") {
+        @components.Breadcrumb("analytics", "Analytics")
+        @components.CustomHeader("Analytics", "About")
+        
+        <p style="margin-bottom: 2rem;">
+            Real-time traffic insights for <em>howtogo.dev</em>. This data is collected transparently using custom middleware and persisted in a local SQLite database.
+        </p>
 
-		@components.KeyPoints([]string{
-			"<b>Real-time Tracking:</b> IP addresses are captured via middleware injection.",
-			"<b>Privacy First:</b> No external cookies or third-party trackers.",
-			"<b>Performance:</b> Database writes are asynchronous to prevent blocking.",
-		})
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-bottom: 2.5rem;">
+            
+            <div style="padding: 1.25rem; border: 1px solid #e5e7eb; border-radius: 8px; background-color: #f9fafb;">
+                <strong style="display: block; font-size: 1.1em; margin-bottom: 0.5rem; color: #111827;">⚡ Real-time Tracking</strong>
+                <span style="color: #4b5563; line-height: 1.5;">Client IPs are captured via server-side middleware processing.</span>
+            </div>
 
-		<h3>Current Session Data</h3>
-		
-		<table class="reference-table">
-			<thead>
-				<tr>
-					<th>Metric</th>
-					<th>Value</th>
-					<th>Description</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td><code>Client IP</code></td>
-					<td><code>{ ip }</code></td>
-					<td>Your public IP address as seen by the server</td>
-				</tr>
-				<tr>
-					<td><code>Total Views</code></td>
-					<td><code>{ fmt.Sprintf("%d", views) }</code></td>
-					<td>Aggregate page loads since inception</td>
-				</tr>
-				<tr>
-					<td><code>Unique Visitors</code></td>
-					<td><code>{ fmt.Sprintf("%d", visitors) }</code></td>
-					<td>Distinct IP addresses recorded in DB</td>
-				</tr>
-			</tbody>
-		</table>
-	}
+            <div style="padding: 1.25rem; border: 1px solid #e5e7eb; border-radius: 8px; background-color: #f9fafb;">
+                <strong style="display: block; font-size: 1.1em; margin-bottom: 0.5rem; color: #111827;">🛡️ Privacy First</strong>
+                <span style="color: #4b5563; line-height: 1.5;">No external cookies, pixels, or third-party tracking scripts.</span>
+            </div>
+
+            <div style="padding: 1.25rem; border: 1px solid #e5e7eb; border-radius: 8px; background-color: #f9fafb;">
+                <strong style="display: block; font-size: 1.1em; margin-bottom: 0.5rem; color: #111827;">🚀 High Performance</strong>
+                <span style="color: #4b5563; line-height: 1.5;">Database writes are asynchronous to prevent request blocking.</span>
+            </div>
+
+        </div>
+
+        <h3>Current Session Data</h3>
+        
+        <table class="reference-table">
+            <thead>
+                <tr>
+                    <th>Metric</th>
+                    <th>Value</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>Client IP</code></td>
+                    <td><code>{ ip }</code></td>
+                    <td>Your public IP address as seen by the server</td>
+                </tr>
+                <tr>
+                    <td><code>Total Views</code></td>
+                    <td><code>{ fmt.Sprintf("%d", views) }</code></td>
+                    <td>Total page loads recorded since launch</td>
+                </tr>
+                <tr>
+                    <td><code>Unique Visitors</code></td>
+                    <td><code>{ fmt.Sprintf("%d", visitors) }</code></td>
+                    <td>Distinct IP addresses logged in the database</td>
+                </tr>
+            </tbody>
+        </table>
+    }
 }

@@ -1,4 +1,5 @@
 # .github
 .env
 *.db
+*.db-journal
 /ref

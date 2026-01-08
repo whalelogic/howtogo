@@ -29,7 +29,7 @@ func Footer() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<p class=\"footer\">&copy; 2026 WhaleLogic. All rights reserved. | 🐟 <a href=\"https://keiththomson.dev\">Keith Thomson</a> | <a href=\"https://github.com/whalelogic\" class=\"gh-link\"><img src=\"./icons/devicon-master/icons/github/github-original.svg\" alt=\"GitHub\" width=\"16\" height=\"16\"> WhaleLogic &trade;</a></p>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<p class=\"footer\">&copy; 2026 WhaleLogic | Created by <a href=\"https://keiththomson.dev\" style=\"text-decoration: none;\">Keith Thomson</a> | <a href=\"/analytics\" style=\"text-decoration: none;\">Analytics</a> |  <a href=\"/about\" style=\"text-decoration: none;\">About</a></p>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

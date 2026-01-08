@@ -55,6 +55,10 @@ func (h *AppHandler) AnalyticsPageHandler(c *gin.Context) {
 	render(c, http.StatusOK, pages.Analytics(ip, views, visitors))
 }
 
+func AboutPageHandler(c *gin.Context) {
+	render(c, http.StatusOK, pages.About())
+}
+
 
 
 // HealthCheckHandler responds with a simple "200 OK" message for health checks.

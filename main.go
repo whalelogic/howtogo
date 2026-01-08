@@ -57,9 +57,10 @@ func main() {
 	r.StaticFile("/sitemap.xml", "./static/sitemap.xml")
 
 	// Routes
+	r.GET("/", handlers.HomePageHandler)
 	r.GET("/analytics", h.AnalyticsPageHandler)
 	r.GET("/health", handlers.HealthCheckHandler)
-	r.GET("/", handlers.HomePageHandler)
+	r.GET("/about", handlers.AboutPageHandler)
 	r.GET("/hello-world", handlers.HelloWorldHandler)
 	r.GET("/values", handlers.ValuesHandler)
 	r.GET("/variables", handlers.VariablesHandler)

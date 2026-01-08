@@ -10,12 +10,11 @@ import templruntime "github.com/a-h/templ/runtime"
 
 import (
 	"fmt"
-	// Replace these with your actual project paths
 	"github.com/whalelogic/howtogo/views/components"
 	"github.com/whalelogic/howtogo/views/layouts"
 )
 
-// Analytics renders the server statistics page using the standard layout
+// Analytics renders the server statistics page
 func Analytics(ip string, views int, visitors int) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
@@ -57,62 +56,50 @@ func Analytics(ip string, views int, visitors int) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = components.CustomHeader("Analytics", "Server Stats").Render(ctx, templ_7745c5c3_Buffer)
+			templ_7745c5c3_Err = components.CustomHeader("Analytics", "About").Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, " <p>Live server traffic analysis. Data is collected via middleware and stored in a persistent SQLite database.</p>")
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-			templ_7745c5c3_Err = components.KeyPoints([]string{
-				"<b>Real-time Tracking:</b> IP addresses are captured via middleware injection.",
-				"<b>Privacy First:</b> No external cookies or third-party trackers.",
-				"<b>Performance:</b> Database writes are asynchronous to prevent blocking.",
-			}).Render(ctx, templ_7745c5c3_Buffer)
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, " <h3>Current Session Data</h3><table class=\"reference-table\"><thead><tr><th>Metric</th><th>Value</th><th>Description</th></tr></thead> <tbody><tr><td><code>Client IP</code></td><td><code>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, " <p style=\"margin-bottom: 2rem;\">Real-time traffic insights for <em>howtogo.dev</em>. This data is collected transparently using custom middleware and persisted in a local SQLite database.</p><div style=\"display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-bottom: 2.5rem;\"><div style=\"padding: 1.25rem; border: 1px solid #e5e7eb; border-radius: 8px; background-color: #f9fafb;\"><strong style=\"display: block; font-size: 1.1em; margin-bottom: 0.5rem; color: #111827;\">⚡ Real-time Tracking</strong> <span style=\"color: #4b5563; line-height: 1.5;\">Client IPs are captured via server-side middleware processing.</span></div><div style=\"padding: 1.25rem; border: 1px solid #e5e7eb; border-radius: 8px; background-color: #f9fafb;\"><strong style=\"display: block; font-size: 1.1em; margin-bottom: 0.5rem; color: #111827;\">🛡️ Privacy First</strong> <span style=\"color: #4b5563; line-height: 1.5;\">No external cookies, pixels, or third-party tracking scripts.</span></div><div style=\"padding: 1.25rem; border: 1px solid #e5e7eb; border-radius: 8px; background-color: #f9fafb;\"><strong style=\"display: block; font-size: 1.1em; margin-bottom: 0.5rem; color: #111827;\">🚀 High Performance</strong> <span style=\"color: #4b5563; line-height: 1.5;\">Database writes are asynchronous to prevent request blocking.</span></div></div><h3>Current Session Data</h3><table class=\"reference-table\"><thead><tr><th>Metric</th><th>Value</th><th>Description</th></tr></thead> <tbody><tr><td><code>Client IP</code></td><td><code>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var3 string
 			templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(ip)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/analytics.templ`, Line: 37, Col: 19}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/analytics.templ`, Line: 51, Col: 34}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "</code></td><td>Your public IP address as seen by the server</td></tr><tr><td><code>Total Views</code></td><td><code>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "</code></td><td>Your public IP address as seen by the server</td></tr><tr><td><code>Total Views</code></td><td><code>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var4 string
 			templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprintf("%d", views))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/analytics.templ`, Line: 42, Col: 41}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/analytics.templ`, Line: 56, Col: 56}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "</code></td><td>Aggregate page loads since inception</td></tr><tr><td><code>Unique Visitors</code></td><td><code>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "</code></td><td>Total page loads recorded since launch</td></tr><tr><td><code>Unique Visitors</code></td><td><code>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var5 string
 			templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprintf("%d", visitors))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/analytics.templ`, Line: 47, Col: 44}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/analytics.templ`, Line: 61, Col: 59}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "</code></td><td>Distinct IP addresses recorded in DB</td></tr></tbody></table>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "</code></td><td>Distinct IP addresses logged in the database</td></tr></tbody></table>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

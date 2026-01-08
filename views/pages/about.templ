@@ -1,0 +1,30 @@
+package pages
+
+import (
+    "github.com/whalelogic/howtogo/views/layouts"
+    "github.com/whalelogic/howtogo/views/components"
+)
+
+templ About() {
+    @layouts.Base("About | How to Go") {
+        @components.Breadcrumb("about", "About")
+        <h2> About</h2>
+
+        <p style="margin-bottom: 1.5rem;">
+            <span class="brand-name"><a href="https://howtogo.dev/">How to Go</a></span> is a comprehensive resource dedicated to helping developers master the Go programming language. Whether you're a beginner or an experienced programmer, our goal is to provide clear, concise, and practical examples to enhance your understanding of Go.
+        </p>
+        <h3>🧭 Our Mission</h3>
+        <p style="margin-bottom: 1.5rem;">
+            At How to Go, we believe that learning a programming language should be accessible and enjoyable. Our mission is to demystify Go by breaking down complex concepts into easy-to-understand examples. We aim to empower developers to write efficient, maintainable, and idiomatic Go code.
+        </p>
+        <h3>⭐ What We Offer</h3>
+        <p style="margin-bottom: 1.5rem;">
+            Our platform offers a wide range of annotated code examples covering various aspects of Go, from basic syntax to advanced programming patterns. Each example is carefully crafted to illustrate key concepts and best practices, making it easier for developers to grasp and apply what they learn.
+        </p>
+        <h3>🪄 Get Involved</h3>
+        <p>
+            We welcome contributions from the community! If you have suggestions for new examples or improvements to existing content, please feel free to reach out. Together, we can build a vibrant learning resource for Go developers worldwide.
+        </p>
+        @components.Footer()
+    }
+}
