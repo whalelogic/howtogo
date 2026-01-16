@@ -1,0 +1,79 @@
+package pages
+
+import "github.com/whalelogic/howtogo/views/layouts"
+import "github.com/whalelogic/howtogo/views/components"
+
+templ ChannelSynchronization() {
+	@layouts.Base("Channel Synchronization | How to Go") {
+		@components.Breadcrumb("channel-synchronization", "Channel Synchronization")
+		@components.CustomHeader("Channel Synchronization", "Select")
+		<p>We can use channels to synchronize execution across goroutines. Here's an example of using a blocking receive to wait for a goroutine to finish. This is a powerful way to orchestrate complex concurrent operations.</p>
+		@components.KeyPoints([]string{
+			"Channels can be used to synchronize execution across goroutines.",
+			"A blocking receive on a channel can be used to wait for a goroutine to finish.",
+			"This pattern is useful for ensuring that a goroutine has completed its work before the main program exits.",
+			"The value sent on the channel can be used to signal completion or pass data.",
+			"A buffered channel of size 1 can be used to avoid blocking the sender if the receiver is not ready.",
+		})
+
+		<h2>Channel Synchronization Example</h2>
+		<p>In this example, we'll use a channel to block the `main` goroutine until the `worker` goroutine has finished.</p>
+		
+		@components.CodeBlock(`package main
+
+import (
+    "fmt"
+    "time"
+)
+
+func worker(done chan bool) {
+    fmt.Print("working...")
+    time.Sleep(time.Second)
+    fmt.Println("done")
+
+    done <- true
+}
+
+func main() {
+    done := make(chan bool, 1)
+    go worker(done)
+
+    <-done
+}`)
+		<span class="output-label">Output:</span>
+		@components.CodeOutput(`working...done`)
+
+		<h2>Synchronization Patterns</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Pattern</th>
+					<th>Description</th>
+					<th>Example</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Wait for one goroutine</td>
+					<td>A single <code>&lt;-done</code> waits for one goroutine.</td>
+					<td><code>{ "&lt;-done" }</code></td>
+				</tr>
+				<tr>
+					<td>Wait for multiple goroutines</td>
+					<td>Use a <code>for</code> loop to wait for multiple signals.</td>
+					<td><code>{ "for i := 0; i &lt; N; i++ { &lt;-done }" }</code></td>
+				</tr>
+				<tr>
+					<td>Using <code>sync.WaitGroup</code></td>
+					<td>A more idiomatic way to wait for multiple goroutines.</td>
+					<td><code>{ "wg.Wait()" }</code></td>
+				</tr>
+			</tbody>
+		</table>
+
+		<div class="nav-buttons">
+			@components.Button("Previous: Channel Buffering", "/channel-buffering")
+			@components.Button("Next: Select", "/select")
+		</div>
+	}
+}

@@ -6,7 +6,7 @@ import "github.com/whalelogic/howtogo/views/components"
 templ Channels() {
 	@layouts.Base("Channels | How to Go") {
 		@components.Breadcrumb("channels", "Channels")
-		@components.CustomHeader("Channels", "")
+		@components.CustomHeader("Channels", "Channel Buffering")
 		<p>Channels are typed conduits that allow goroutines to communicate and synchronize. They provide a safe way to pass data between concurrent operations, following Go's philosophy: "Don't communicate by sharing memory; share memory by communicating."</p>
 		@components.KeyPoints([]string{
 			"Channels allow goroutines to communicate safely",

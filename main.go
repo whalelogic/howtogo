@@ -87,6 +87,17 @@ func main() {
 	r.GET("/errors", handlers.ErrorsHandler)
 	r.GET("/goroutines", handlers.GoroutinesHandler)
 	r.GET("/channels", handlers.ChannelsHandler)
+	r.GET("/channel-buffering", handlers.ChannelBufferingHandler)
+	r.GET("/channel-synchronization", handlers.ChannelSynchronizationHandler)
+	r.GET("/select", handlers.SelectHandler)
+	r.GET("/mutexes", handlers.MutexesHandler)
+	r.GET("/timers", handlers.TimersHandler)
+	r.GET("/timeouts", handlers.TimeoutsHandler)
+	r.GET("/tickers", handlers.TickersHandler)
+	r.GET("/wait-groups", handlers.WaitGroupsHandler)
+	r.GET("/worker-pools", handlers.WorkerPoolsHandler)
+	r.GET("/stateful-goroutines", handlers.StatefulGoroutinesHandler)
+	r.GET("/sorting", handlers.SortingHandler)
 
 	// Start the server using the configured port
 	log.Printf("Server starting on port %s", port)

@@ -1,0 +1,108 @@
+package pages
+
+import "github.com/whalelogic/howtogo/views/layouts"
+import "github.com/whalelogic/howtogo/views/components"
+
+templ WorkerPools() {
+	@layouts.Base("Worker Pools | How to Go") {
+		@components.Breadcrumb("worker-pools", "Worker Pools")
+		@components.CustomHeader("Worker Pools", "Wait Groups")
+		<p>In this example we'll look at how to implement a worker pool using goroutines and channels. A worker pool is a common concurrency pattern for limiting the number of concurrently running tasks.</p>
+		@components.KeyPoints([]string{
+			"Worker pools are a common concurrency pattern for limiting the number of concurrently running tasks.",
+			"A pool of worker goroutines is started, and they all read from a jobs channel.",
+			"The main goroutine sends jobs to the jobs channel and then closes it when all jobs have been sent.",
+			"Results are collected on a separate results channel.",
+			"This pattern is useful for processing a large number of tasks without overwhelming the system.",
+		})
+
+		<h2>Worker Pool Example</h2>
+		<p>This example shows a worker pool with 3 workers processing 5 jobs.</p>
+		
+		@components.CodeBlock(`package main
+
+import (
+	"fmt"
+	"time"
+)
+
+func worker(id int, jobs <-chan int, results chan<- int) {
+	for j := range jobs {
+		fmt.Println("worker", id, "started job", j)
+		time.Sleep(time.Second)
+		fmt.Println("worker", id, "finished job", j)
+		results <- j * 2
+	}
+}
+
+func main() {
+	const numJobs = 5
+	jobs := make(chan int, numJobs)
+	results := make(chan int, numJobs)
+
+	for w := 1; w <= 3; w++ {
+		go worker(w, jobs, results)
+	}
+
+	for j := 1; j <= numJobs; j++ {
+		jobs <- j
+	}
+	close(jobs)
+
+	for a := 1; a <= numJobs; a++ {
+		<-results
+	}
+	fmt.Println("All jobs done")
+}`)
+		<span class="output-label">Output:</span>
+		@components.CodeOutput(`worker 1 started job 1
+worker 2 started job 2
+worker 3 started job 3
+worker 1 finished job 1
+worker 1 started job 4
+worker 2 finished job 2
+worker 2 started job 5
+worker 3 finished job 3
+worker 1 finished job 4
+worker 2 finished job 5
+All jobs done`)
+
+		<h2>Worker Pool Components</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Component</th>
+					<th>Role</th>
+					<th>Example</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Jobs Channel</td>
+					<td>Channel to send work to the workers.</td>
+					<td><code>{ "jobs := make(chan int, 100)" }</code></td>
+				</tr>
+				<tr>
+					<td>Results Channel</td>
+					<td>Channel to receive results from the workers.</td>
+					<td><code>{ "results := make(chan int, 100)" }</code></td>
+				</tr>
+				<tr>
+					<td>Worker Function</td>
+					<td>The function that each worker goroutine runs.</td>
+					<td><code>{ "func worker(id int, jobs <-chan int, results chan<- int)" }</code></td>
+				</tr>
+				<tr>
+					<td>Starting Workers</td>
+					<td>Loop to start the desired number of workers.</td>
+					<td><code>{ "for w := 1; w <= 3; w++ { go worker(...) }" }</code></td>
+				</tr>
+			</tbody>
+		</table>
+
+		<div class="nav-buttons">
+			@components.Button("Previous: WaitGroups", "/waitgroups")
+			@components.Button("Next: Channels", "/channels")
+		</div>
+	}
+}

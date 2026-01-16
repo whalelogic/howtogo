@@ -1,0 +1,88 @@
+package pages
+
+import "github.com/whalelogic/howtogo/views/layouts"
+import "github.com/whalelogic/howtogo/views/components"
+
+templ Mutexes() {
+	@layouts.Base("Mutexes | How to Go") {
+		@components.Breadcrumb("mutexes", "Mutexes")
+		@components.CustomHeader("Mutexes", "Stateful Goroutines")
+
+		<p><code>sync.Mutex</code> is used to protect shared data from being accessed by multiple goroutines at the same time. This is a fundamental concept in concurrent programming to prevent race conditions.</p>
+		@components.KeyPoints([]string{
+			"<code>sync.Mutex</code> provides mutual exclusion.",
+			"Use <code>Lock()</code> to acquire the lock and <code>Unlock()</code> to release it.",
+			"A common and robust pattern is to use <code>defer mu.Unlock()</code> to ensure the mutex is released.",
+			"The zero value for a <code>sync.Mutex</code> is an unlocked mutex.",
+			"Mutexes are used to guard critical sections of code where shared data is modified.",
+		})
+
+		<h2>Using a Mutex</h2>
+		<p>Here is an example of using a mutex to safely increment a counter from multiple goroutines.</p>
+		
+		@components.CodeBlock(`package main
+
+import (
+	"fmt"
+	"sync"
+)
+
+func main() {
+	var mu sync.Mutex
+	var counter int
+
+	var wg sync.WaitGroup
+	for i := 0; i < 1000; i++ {
+		wg.Add(1)
+		go func() {
+			defer wg.Done()
+			mu.Lock()
+			counter++
+			mu.Unlock()
+		}()
+	}
+	wg.Wait()
+	fmt.Println("Final counter:", counter)
+}`)
+		<span class="output-label">Output:</span>
+		@components.CodeOutput(`Final counter: 1000`)
+
+		<h2>Mutex Operations</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Operation</th>
+					<th>Syntax</th>
+					<th>Description</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Declare</td>
+					<td><code>var mu sync.Mutex</code></td>
+					<td>Declares a new mutex.</td>
+				</tr>
+				<tr>
+					<td>Lock</td>
+					<td><code>mu.Lock()</code></td>
+					<td>Acquires the lock, blocking if it's already held.</td>
+				</tr>
+				<tr>
+					<td>Unlock</td>
+					<td><code>mu.Unlock()</code></td>
+					<td>Releases the lock.</td>
+				</tr>
+				<tr>
+					<td>Defer Unlock</td>
+					<td><code>defer mu.Unlock()</code></td>
+					<td>A common pattern to ensure the lock is released when the function returns.</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<div class="nav-buttons">
+			@components.Button("Previous: Goroutines", "/goroutines")
+			@components.Button("Next: Select", "/select")
+		</div>
+	}
+}

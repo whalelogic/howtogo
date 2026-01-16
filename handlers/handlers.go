@@ -177,3 +177,48 @@ func GoroutinesHandler(c *gin.Context) {
 func ChannelsHandler(c *gin.Context) {
 	render(c, http.StatusOK, pages.Channels())
 }
+
+func StatefulGoroutinesHandler(c *gin.Context) {
+	render(c, http.StatusOK, pages.StatefulGoroutines())
+}
+
+func ChannelBufferingHandler(c *gin.Context) {
+	render(c, http.StatusOK, pages.ChannelBuffering())
+}
+
+func ChannelSynchronizationHandler(c *gin.Context) {
+	render(c, http.StatusOK, pages.ChannelSynchronization())
+}
+
+func SelectHandler(c *gin.Context) {
+	render(c, http.StatusOK, pages.Select())
+}
+
+func TimeoutsHandler(c *gin.Context) {
+	render(c, http.StatusOK, pages.Timeouts())
+}
+
+func TimersHandler(c *gin.Context) {
+	render(c, http.StatusOK, pages.Timers())
+}
+
+func TickersHandler(c *gin.Context) {
+	render(c, http.StatusOK, pages.Tickers())
+}
+
+func WorkerPoolsHandler(c *gin.Context) {
+	render(c, http.StatusOK, pages.WorkerPools())
+}
+
+func MutexesHandler(c *gin.Context) {
+	render(c, http.StatusOK, pages.Mutexes())
+}
+
+func WaitGroupsHandler(c *gin.Context) {
+	render(c, http.StatusOK, pages.WaitGroups())
+}
+
+func SortingHandler(c *gin.Context) {
+	render(c, http.StatusOK, pages.Sorting())
+}
+

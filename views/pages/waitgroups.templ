@@ -1,0 +1,99 @@
+package pages
+
+import "github.com/whalelogic/howtogo/views/layouts"
+import "github.com/whalelogic/howtogo/views/components"
+
+templ WaitGroups() {
+	@layouts.Base("WaitGroups | How to Go") {
+		@components.Breadcrumb("waitgroups", "Wait-Groups")
+		@components.CustomHeader("Wait Groups", "Mutexes")
+		<p>A <code>sync.WaitGroup</code> is used to wait for a collection of goroutines to finish executing. The main goroutine calls <code>Add</code> to set the number of goroutines to wait for, and then each of the goroutines runs and calls <code>Done</code> when finished. At the same time, <code>Wait</code> can be used to block until all goroutines have finished.</p>
+		@components.KeyPoints([]string{
+			"<code>sync.WaitGroup</code> is used to wait for a collection of goroutines to finish.",
+			"The main goroutine calls <code>Add()</code> to set the number of goroutines to wait for.",
+			"Each worker goroutine calls <code>Done()</code> when it finishes.",
+			"The main goroutine calls <code>Wait()</code> to block until all worker goroutines have called <code>Done()</code>.",
+			"<code>WaitGroup</code> is a simple and efficient way to synchronize the completion of a group of goroutines.",
+		})
+
+		<h2>WaitGroup Example</h2>
+		<p>This example shows how to use a <code>WaitGroup</code> to wait for a number of goroutines to complete.</p>
+		
+		@components.CodeBlock(`package main
+
+import (
+	"fmt"
+	"sync"
+	"time"
+)
+
+func worker(id int, wg *sync.WaitGroup) {
+	defer wg.Done()
+	fmt.Printf("Worker %d starting\n", id)
+	time.Sleep(time.Second)
+	fmt.Printf("Worker %d done\n", id)
+}
+
+func main() {
+	var wg sync.WaitGroup
+
+	for i := 1; i <= 5; i++ {
+		wg.Add(1)
+		go worker(i, &wg)
+	}
+
+	wg.Wait()
+	fmt.Println("All workers done")
+}`)
+		<span class="output-label">Output:</span>
+		@components.CodeOutput(`Worker 1 starting
+Worker 2 starting
+Worker 3 starting
+Worker 4 starting
+Worker 5 starting
+Worker 1 done
+Worker 2 done
+Worker 3 done
+Worker 4 done
+Worker 5 done
+All workers done`)
+
+		<h2>WaitGroup Operations</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Operation</th>
+					<th>Syntax</th>
+					<th>Description</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Declare</td>
+					<td><code>{ "var wg sync.WaitGroup" }</code></td>
+					<td>Declares a new WaitGroup.</td>
+				</tr>
+				<tr>
+					<td>Add</td>
+					<td><code>{ "wg.Add(n)" }</code></td>
+					<td>Increments the WaitGroup counter by <code>n</code>.</td>
+				</tr>
+				<tr>
+					<td>Done</td>
+					<td><code>{ "wg.Done()" }</code></td>
+					<td>Decrements the WaitGroup counter by one.</td>
+				</tr>
+				<tr>
+					<td>Wait</td>
+					<td><code>{ "wg.Wait()" }</code></td>
+					<td>Blocks until the WaitGroup counter is zero.</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<div class="nav-buttons">
+			@components.Button("Previous: Tickers", "/tickers")
+			@components.Button("Next: Worker Pools", "/worker-pools")
+		</div>
+	}
+}

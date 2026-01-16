@@ -1,0 +1,87 @@
+package pages
+
+import "github.com/whalelogic/howtogo/views/layouts"
+import "github.com/whalelogic/howtogo/views/components"
+
+templ Tickers() {
+	@layouts.Base("Tickers | How to Go") {
+		@components.Breadcrumb("tickers", "Tickers")
+		@components.CustomHeader("Tickers", "Worker Pools")
+		<p>Tickers are for when you want to do something repeatedly at regular intervals. Here's an example of a ticker that ticks periodically until we stop it.</p>
+		@components.KeyPoints([]string{
+			"Tickers are used to perform an action at regular intervals.",
+			"<code>time.NewTicker()</code> creates a new Ticker that contains a channel <code>C</code>.",
+			"The <code>C</code> channel sends the time at each tick.",
+			"Tickers can be stopped by calling the <code>Stop()</code> method.",
+			"It's important to stop tickers when they are no longer needed to prevent resource leaks.",
+		})
+
+		<h2>Ticker Example</h2>
+		<p>This example shows a ticker that ticks every 500 milliseconds. We stop it after 1600 milliseconds.</p>
+		
+		@components.CodeBlock(`package main
+
+import (
+	"fmt"
+	"time"
+)
+
+func main() {
+	ticker := time.NewTicker(500 * time.Millisecond)
+	done := make(chan bool)
+
+	go func() {
+		for {
+			select {
+			case <-done:
+				return
+			case t := <-ticker.C:
+				fmt.Println("Tick at", t)
+			}
+		}
+	}()
+
+	time.Sleep(1600 * time.Millisecond)
+	ticker.Stop()
+	done <- true
+	fmt.Println("Ticker stopped")
+}`)
+		<span class="output-label">Output:</span>
+		@components.CodeOutput(`Tick at ...
+Tick at ...
+Tick at ...
+Ticker stopped`)
+
+		<h2>Ticker Operations</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Operation</th>
+					<th>Syntax</th>
+					<th>Description</th>
+				</tr>
+			</thead>
+			<tbody>
+				                <tr>
+				                    <td>Create</td>
+				                    <td><code>{ "ticker := time.NewTicker(duration)" }</code></td>
+				                    <td>Creates a new ticker.</td>
+				                </tr>
+				                <tr>
+				                    <td>Receive Tick</td>
+				                    <td><code>{ "<-ticker.C" }</code></td>
+				                    <td>Blocks until the next tick.</td>
+				                </tr>
+				                <tr>
+				                    <td>Stop</td>
+				                    <td><code>{ "ticker.Stop()" }</code></td>
+				                    <td>Stops the ticker, releasing associated resources.</td>
+				                </tr>			</tbody>
+		</table>
+
+		<div class="nav-buttons">
+			@components.Button("Previous: Timers", "/timers")
+			@components.Button("Next: WaitGroups", "/waitgroups")
+		</div>
+	}
+}

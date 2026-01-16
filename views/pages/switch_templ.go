@@ -333,7 +333,7 @@ Don't know type string`).Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 21, "</code></td><td>Runs if no case matches</td></tr></tbody></table><h2>Switch vs Other Languages</h2><table class=\"reference-table\"><thead><tr><th>Feature</th><th>Go Behavior</th><th>Notes</th></tr></thead> <tbody><tr><td>Automatic break</td><td>Cases break automatically</td><td>No fall-through by default</td></tr><tr><td><code>fallthrough</code></td><td>Explicit keyword to fall through</td><td>Rarely needed, use with caution</td></tr><tr><td>Expression types</td><td>Can switch on any comparable type</td><td>Not limited to integers</td></tr><tr><td><code>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 21, "</code></td><td>Runs if no case matches</td></tr></tbody></table><h2>Switch vs Other Languages</h2><table class=\"reference-table\"><thead><tr><th>Feature</th><th>Go Behavior</th><th>Notes</th></tr></thead> <tbody><tr><td>Automatic break</td><td>Cases break automatically</td><td>No fall-through by default</td></tr><tr><td><code>`fallthrough`</code></td><td>Explicit keyword to fall through</td><td>Rarely needed, use with caution</td></tr><tr><td>Expression types</td><td>Can switch on any comparable type</td><td>Not limited to integers</td></tr><tr><td><code>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

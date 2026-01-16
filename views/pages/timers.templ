@@ -1,0 +1,84 @@
+package pages
+
+import "github.com/whalelogic/howtogo/views/layouts"
+import "github.com/whalelogic/howtogo/views/components"
+
+templ Timers() {
+	@layouts.Base("Timers | How to Go") {
+		@components.Breadcrumb("timers", "Timers")
+		@components.CustomHeader("Timers", "Tickers")
+		<p>Timers are for when you want to do something once in the future. Here's an example of a timer that fires after a specified duration.</p>
+		@components.KeyPoints([]string{
+			"Timers are used to execute code at a future time.",
+			"<code>time.NewTimer()</code> creates a new Timer that provides a channel <code>C</code>.",
+			"The <code>C</code> channel sends the time when the timer fires.",
+			"Timers can be stopped before they fire by calling the <code>Stop()</code> method.",
+			"<code>Stop()</code> returns <code>true</code> if the timer was stopped before it fired, <code>false</code> otherwise.",
+		})
+
+		<h2>Timer Example</h2>
+		<p>This example shows how to create and stop a timer.</p>
+		
+		@components.CodeBlock(`package main
+
+import (
+	"fmt"
+	"time"
+)
+
+func main() {
+	timer1 := time.NewTimer(2 * time.Second)
+
+	<-timer1.C
+	fmt.Println("Timer 1 fired")
+
+	timer2 := time.NewTimer(time.Second)
+	go func() {
+		<-timer2.C
+		fmt.Println("Timer 2 fired")
+	}()
+	stop2 := timer2.Stop()
+	if stop2 {
+		fmt.Println("Timer 2 stopped")
+	}
+
+	time.Sleep(2 * time.Second)
+}`)
+		<span class="output-label">Output:</span>
+		@components.CodeOutput(`Timer 2 stopped
+Timer 1 fired`)
+
+		<h2>Timer Operations</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Operation</th>
+					<th>Syntax</th>
+					<th>Description</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Create</td>
+					<td><code>{ "timer := time.NewTimer(duration)" }</code></td>
+					<td>Creates a new timer.</td>
+				</tr>
+				<tr>
+					<td>Wait</td>
+					<td><code>{ "<-timer.C" }</code></td>
+					<td>Blocks until the timer fires.</td>
+				</tr>
+				<tr>
+					<td>Stop</td>
+					<td><code>{ "timer.Stop()" }</code></td>
+					<td>Stops the timer from firing.</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<div class="nav-buttons">
+			@components.Button("Previous: Timeouts", "/timeouts")
+			@components.Button("Next: Tickers", "/tickers")
+		</div>
+	}
+}

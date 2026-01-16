@@ -99,13 +99,11 @@ go work (new workspace tool)
 
 ## Contributing
 
-Issues are listed in /ref/issues/issues.md
-
-More issues are welcome just creat an Issue like you normally would, but I'm tackling the ones listed on /ref/issues first. 
+Contributions welcome! Please read the [CONTRIBUTING.md](CONTRIBUTING.md) guide for details on how to contribute.
 
 ## Author
 
-Created by Keith — Computer Science student, Army Veteran, cloud engineer, and backend developer. Passionate about clarity, correctness, my family, and high-performance systems 😄.
+Created by Keith — Computer Science student, Army Veteran and Programmer. Passionate about learning, programming, and cloud-native systems 😄.
 
 ---
 

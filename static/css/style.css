@@ -182,7 +182,7 @@ h3 {
 
 p {
   margin-bottom: var(--spacing-md);
-  max-width: 70ch;
+  max-width: 100%;
 }
 
 ul {

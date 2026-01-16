@@ -1,0 +1,118 @@
+package pages
+
+import "github.com/whalelogic/howtogo/views/layouts"
+import "github.com/whalelogic/howtogo/views/components"
+
+templ Timeouts() {
+	@layouts.Base("Timeouts | How to Go") {
+		@components.Breadcrumb("timeouts", "Timeouts")
+		@components.CustomHeader("Timeouts", "Timers")
+		<p>Timeouts are important for programs that connect to external resources or that otherwise need to bound execution time. Implementing timeouts in Go is clean and simple using <code>select</code> and <code>time.After</code>.</p>
+		@components.KeyPoints([]string{
+			"Timeouts are essential for programs that interact with external resources.",
+			"<code>select</code> with a <code>time.After</code> channel is the idiomatic way to implement timeouts in Go.",
+			"<code>time.After</code> waits for the duration to elapse and then sends the current time on the returned channel.",
+			"A timeout occurs if the <code>time.After</code> case is selected before the main operation's channel receives a value.",
+			"This pattern prevents goroutines from blocking indefinitely.",
+		})
+
+		<h2>Timeout Example</h2>
+		<p>This example shows how to use <code>select</code> with <code>time.After</code> to implement a timeout on a channel operation.</p>
+		
+		@components.CodeBlock(`package main
+
+import (
+	"fmt"
+	"time"
+)
+
+func main() {
+	c1 := make(chan string, 1)
+	go func() {
+		time.Sleep(2 * time.Second)
+		c1 <- "result 1"
+	}()
+
+	select {
+	case res := <-c1:
+		fmt.Println(res)
+	case <-time.After(1 * time.Second):
+		fmt.Println("timeout 1")
+	}
+
+	c2 := make(chan string, 1)
+	go func() {
+		time.Sleep(2 * time.Second)
+		c2 <- "result 2"
+	}()
+	select {
+	case res := <-c2:
+		fmt.Println(res)
+	case <-time.After(3 * time.Second):
+		fmt.Println("timeout 2")
+	}
+}`)
+		<span class="output-label">Output:</span>
+		@components.CodeOutput(`timeout 1
+result 2`)
+
+				<h2>Timeout Pattern</h2>
+
+				<table class="reference-table">
+
+					<thead>
+
+						<tr>
+
+							<th>Component</th>
+
+							<th>Role</th>
+
+							<th>Example</th>
+
+						</tr>
+
+					</thead>
+
+					<tbody>
+
+						<tr>
+
+							<td>Operation Channel</td>
+
+							<td>The channel for the primary operation.</td>
+
+							<td><code>{ "c1 := make(chan string, 1)" }</code></td>
+
+						</tr>
+
+						<tr>
+
+							<td><code>time.After</code></td>
+
+							<td>Creates a channel that fires after a duration.</td>
+
+							<td><code>{ "&lt;-time.After(1 * time.Second)" }</code></td>
+
+						</tr>
+
+						<tr>
+
+							<td><code>select</code></td>
+
+							<td>Waits on both channels.</td>
+
+							<td><code>{ "select { case res := &lt;-c1: ... case &lt;-time.After(...): ... }" }</code></td>
+
+						</tr>
+
+					</tbody>
+
+				</table>
+
+		<div class="nav-buttons">
+			@components.Button("Previous: Stateful Goroutines", "/stateful-goroutines")
+			@components.Button("Next: Timers", "/timers")
+		</div>
+	}
+}

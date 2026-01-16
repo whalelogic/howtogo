@@ -1,0 +1,133 @@
+package pages
+
+import "github.com/whalelogic/howtogo/views/layouts"
+import "github.com/whalelogic/howtogo/views/components"
+
+templ StatefulGoroutines() {
+	@layouts.Base("Stateful Goroutines | How to Go") {
+		@components.Breadcrumb("stateful-goroutines", "Stateful Goroutines")
+		@components.CustomHeader("Stateful Goroutines", "Sorting")
+		<p>In Go, stateful goroutines are a pattern where a single goroutine owns a piece of state, and all access to that state is done via channels. This avoids the need for mutexes and helps prevent race conditions.</p>
+		@components.KeyPoints([]string{
+			"Stateful goroutines encapsulate state and control access to it via channels.",
+			"This pattern avoids using mutexes, which can sometimes be more complex to manage.",
+			"Separate channels are often used for read and write operations to make the API clear.",
+			"The state is owned and managed by a single goroutine, preventing race conditions.",
+			"Communication with the stateful goroutine is synchronous.",
+		})
+
+		<h2>Stateful Goroutine Example</h2>
+		<p>This example shows a goroutine that owns a counter. Other goroutines can read or write to this counter using two separate channels.</p>
+		
+		@components.CodeBlock(`package main
+
+import (
+	"fmt"
+	"time"
+	"math/rand"
+)
+
+type ReadOp struct {
+	key  int
+	resp chan int
+}
+type WriteOp struct {
+	key  int
+	val  int
+	resp chan bool
+}
+
+func main() {
+	var readOps int64
+	var writeOps int64
+
+	reads := make(chan ReadOp)
+	writes := make(chan WriteOp)
+
+	go func() {
+		var state = make(map[int]int)
+		for {
+			select {
+			case read := <-reads:
+				read.resp <- state[read.key]
+			case write := <-writes:
+				state[write.key] = write.val
+				write.resp <- true
+			}
+		}
+	}()
+
+	for r := 0; r < 100; r++ {
+		go func() {
+			for {
+				read := ReadOp{
+					key:  rand.Intn(5),
+					resp: make(chan int)}
+				reads <- read
+				<-read.resp
+				atomic.AddInt64(&readOps, 1)
+				time.Sleep(time.Millisecond)
+			}
+		}()
+	}
+
+	for w := 0; w < 10; w++ {
+		go func() {
+			for {
+				write := WriteOp{
+					key:  rand.Intn(5),
+					val:  rand.Intn(100),
+					resp: make(chan bool)}
+				writes <- write
+				<-write.resp
+				atomic.AddInt64(&writeOps, 1)
+				time.Sleep(time.Millisecond)
+			}
+		}()
+	}
+
+	time.Sleep(time.Second)
+
+	readOpsFinal := atomic.LoadInt64(&readOps)
+	fmt.Println("readOps:", readOpsFinal)
+	writeOpsFinal := atomic.LoadInt64(&writeOps)
+	fmt.Println("writeOps:", writeOpsFinal)
+}`)
+		<span class="output-label">Output:</span>
+		@components.CodeOutput(`readOps: ...
+writeOps: ...`)
+
+		<h2>Stateful Goroutine Channels</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Channel</th>
+					<th>Purpose</th>
+					<th>Example</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Read Channel</td>
+					<td>To request and receive the current state.</td>
+					<td><code>reads := make(chan ReadOp)</code></td>
+				</tr>
+				<tr>
+					<td>Write Channel</td>
+					<td>To send a new value to update the state.</td>
+					<td><code>writes := make(chan WriteOp)</code></td>
+				</tr>
+				<tr>
+					<td>Response Channel</td>
+					<td>Included in the operation struct to receive a response.</td>
+					<td><code>resp chan int</code> or <code>resp chan bool</code></td>
+				</tr>
+			</tbody>
+		</table>
+
+		<div class="nav-buttons">
+			@components.Button("Previous: Mutexes", "/mutexes")
+			@components.Button("Next: Sorting", "/sorting")
+		</div>
+	}
+}

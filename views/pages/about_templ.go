@@ -34,6 +34,10 @@ func About() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<style>\n    p {\n      line-height: 1.75;\n    }\n    </style>")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
 		templ_7745c5c3_Var2 := templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 			templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 			templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
@@ -50,7 +54,7 @@ func About() templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, " <h2>About</h2><p style=\"margin-bottom: 1.5rem;\"><span class=\"brand-name\"><a href=\"https://howtogo.dev/\">How to Go</a></span> is a comprehensive resource dedicated to helping developers master the Go programming language. Whether you're a beginner or an experienced programmer, our goal is to provide clear, concise, and practical examples to enhance your understanding of Go.</p><h3>🧭 Our Mission</h3><p style=\"margin-bottom: 1.5rem;\">At How to Go, we believe that learning a programming language should be accessible and enjoyable. Our mission is to demystify Go by breaking down complex concepts into easy-to-understand examples. We aim to empower developers to write efficient, maintainable, and idiomatic Go code.</p><h3>⭐ What We Offer</h3><p style=\"margin-bottom: 1.5rem;\">Our platform offers a wide range of annotated code examples covering various aspects of Go, from basic syntax to advanced programming patterns. Each example is carefully crafted to illustrate key concepts and best practices, making it easier for developers to grasp and apply what they learn.</p><h3>🪄 Get Involved</h3><p>We welcome contributions from the community! If you have suggestions for new examples or improvements to existing content, please feel free to reach out. Together, we can build a vibrant learning resource for Go developers worldwide.</p>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, " <h2>About</h2><p style=\"margin-bottom: 1.5rem;\"><span class=\"brand-name\"><a href=\"https://howtogo.dev/\">How to Go</a></span> is a comprehensive resource dedicated to helping developers master the Go programming language. Whether you're a beginner or an experienced programmer, our goal is to provide clear, concise, and practical examples to enhance your understanding of Go. </p><h3>🧭 Mission</h3><p style=\"margin-bottom: 1.5rem;\"><span class=\"brand-name\"><a href=\"https://howtogo.dev/\">How to Go</a></span> believes learning a programming language should be accessible and enjoyable. Our mission is to unlock the full potential of the Go programming language. We transform complex concepts into clear, practical examples, empowering you to build efficient, maintainable software from day one.</p><h3>⭐ What We Offer</h3><p style=\"margin-bottom: 1.5rem;\"><span class=\"brand-name\"><a href=\"https://howtogo.dev/\">How to Go</a></span> offers a wide range of annotated code examples covering various aspects of Go, from basic syntax to advanced programming patterns. Each example is carefully crafted to illustrate key concepts and best practices.</p><h3>🪄 Get Involved</h3><p>We welcome contributions from the community! If you have suggestions for new examples or improvements to existing content, please feel free to reach out. Together, we can build a vibrant learning resource for Go developers worldwide.</p>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

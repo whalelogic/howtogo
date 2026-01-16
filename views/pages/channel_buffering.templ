@@ -1,0 +1,67 @@
+package pages
+
+import "github.com/whalelogic/howtogo/views/layouts"
+import "github.com/whalelogic/howtogo/views/components"
+
+templ ChannelBuffering() {
+	@layouts.Base("Channel Buffering | How to Go") {
+		@components.Breadcrumb("channel-buffering", "Channel Buffering")
+		@components.CustomHeader("Channel Buffering", "Channel Synchronization")
+		<p>By default, channels are unbuffered, meaning that they will only accept a send if there is a corresponding receive ready to take the value. Buffered channels accept a limited number of values without a corresponding receiver for those values.</p>
+		@components.KeyPoints([]string{
+			"By default, channels are unbuffered.",
+			"Unbuffered channels require a sender and receiver to be ready at the same time.",
+			"Buffered channels have a capacity and can store a limited number of values without a corresponding receiver.",
+			"<code>make(chan T, capacity)</code> creates a buffered channel.",
+			"Sends to a buffered channel block only when the buffer is full. Receives block only when the buffer is empty.",
+		})
+
+		<h2>Buffered Channel Example</h2>
+		<p>This example shows a buffered channel with a capacity of 2.</p>
+		
+		@components.CodeBlock(`package main
+
+import "fmt"
+
+func main() {
+    messages := make(chan string, 2)
+
+    messages <- "buffered"
+    messages <- "channel"
+
+    fmt.Println(<-messages)
+    fmt.Println(<-messages)
+}`)
+		<span class="output-label">Output:</span>
+		@components.CodeOutput(`buffered
+channel`)
+
+		<h2>Channel Types</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Type</th>
+					<th>Syntax</th>
+					<th>Behavior</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Unbuffered</td>
+					<td><code>{ "make(chan T)" }</code></td>
+					<td>Synchronous; sender and receiver must be ready.</td>
+				</tr>
+				<tr>
+					<td>Buffered</td>
+					<td><code>{ "make(chan T, N)" }</code></td>
+					<td>Asynchronous; can hold N values before blocking.</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<div class="nav-buttons">
+			@components.Button("Previous: Channels", "/channels")
+			@components.Button("Next: Channel Synchronization", "/channel-synchronization")
+		</div>
+	}
+}
