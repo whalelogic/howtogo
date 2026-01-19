@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"flag"
 	"log"
 	"os"
@@ -38,6 +39,21 @@ func main() {
 	}
 
 	r := gin.Default()
+	fmt.Println("Gin mode:", gin.Mode())
+	mw := gin.LoggerWithFormatter(func(param gin.LogFormatterParams) string {
+		return fmt.Sprintf("%s - [%s] \"%s %s %s %d %s\" \"%s\" %s\n",
+			param.ClientIP,
+			param.TimeStamp.Format("02/Jan/2006:15:04:05 -0700"),
+			param.Method,
+			param.Path,
+			param.Request.Proto,
+			param.StatusCode,
+			param.Latency,
+			param.Request.UserAgent(),
+			param.ErrorMessage,
+		)
+	})
+	r.Use(mw)
 
 	// Caddy will be running as a reverse proxy, so we need to trust it
 	err = r.SetTrustedProxies([]string{"127.0.0.1", "::1"})
