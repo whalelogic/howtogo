@@ -6,5 +6,4 @@
 *.db
 *.db-shm
 *.db-wal
-ref
 node_modules
