@@ -222,3 +222,37 @@ func SortingHandler(c *gin.Context) {
 	render(c, http.StatusOK, pages.Sorting())
 }
 
+func PanicHandler(c *gin.Context) {
+	render(c, http.StatusOK, pages.Panic())
+}
+
+func DeferHandler(c *gin.Context) {
+	render(c, http.StatusOK, pages.Defer())
+}
+
+func RecoverHandler(c *gin.Context) {
+	render(c, http.StatusOK, pages.Recover())
+}
+
+func JSONHandler(c *gin.Context) {
+	render(c, http.StatusOK, pages.JSON())
+}
+
+func XMLHandler(c *gin.Context) {
+	render(c, http.StatusOK, pages.XML())
+}
+
+func TimeHandler(c *gin.Context) {
+	render(c, http.StatusOK, pages.Time())
+}
+
+func ContextHandler(c *gin.Context) {
+	render(c, http.StatusOK, pages.Context())
+}
+
+func ExitHandler(c *gin.Context) {
+	render(c, http.StatusOK, pages.Exit())
+}
+
+
+

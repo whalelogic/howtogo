@@ -94,10 +94,19 @@ func main() {
 	r.GET("/timers", handlers.TimersHandler)
 	r.GET("/timeouts", handlers.TimeoutsHandler)
 	r.GET("/tickers", handlers.TickersHandler)
-	r.GET("/wait-groups", handlers.WaitGroupsHandler)
+	r.GET("/waitgroups", handlers.WaitGroupsHandler)
 	r.GET("/worker-pools", handlers.WorkerPoolsHandler)
 	r.GET("/stateful-goroutines", handlers.StatefulGoroutinesHandler)
 	r.GET("/sorting", handlers.SortingHandler)
+	r.GET("/panic", handlers.PanicHandler)
+	r.GET("/recover", handlers.RecoverHandler)
+	r.GET("/defer", handlers.DeferHandler)
+	r.GET("/json", handlers.JSONHandler)
+	r.GET("/xml", handlers.XMLHandler)
+	r.GET("/time", handlers.TimeHandler)
+	r.GET("/context", handlers.ContextHandler)
+	r.GET("/exit", handlers.ExitHandler)
+ 
 
 	// Start the server using the configured port
 	log.Printf("Server starting on port %s", port)

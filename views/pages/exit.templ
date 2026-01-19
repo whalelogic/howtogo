@@ -1,0 +1,436 @@
+package pages
+
+import "github.com/whalelogic/howtogo/views/layouts"
+import "github.com/whalelogic/howtogo/views/components"
+
+templ Exit() {
+	@layouts.Base("Exit | How to Go") {
+		@components.Breadcrumb("exit", "Exit")
+		@components.CustomHeader("Exit", "Signals")
+		<p>The os package in Go provides the Exit function to immediately terminate the program with a given status code.  Exit is typically used to indicate whether a program completed successfully or encountered an error.   By convention, exit code 0 indicates success, while non-zero codes indicate various types of failures.</p>
+		@components.KeyPoints([]string{
+			"<code>os.Exit(0)</code> indicates successful program termination",
+			"Non-zero exit codes indicate errors or abnormal termination",
+			"Exit immediately terminates without running deferred functions",
+			"Use <code>log.Fatal()</code> to log and exit with status 1",
+			"<code>panic()</code> exits with status 2 if unrecovered",
+			"Exit codes can be checked by shell scripts and CI/CD systems",
+			"Prefer returning errors from main over calling Exit directly",
+		})
+		<h2>Basic Exit Usage</h2>
+		<p>Use os.Exit to terminate a program with a specific status code:</p>
+		<div class="code-block">
+			<pre>
+				<code class="language-go">
+					@templ.Raw(`package main
+
+import (
+    "fmt"
+    "os"
+)
+
+func main() {
+    fmt.Println("Starting program")
+    
+    // Exit with success code
+    if true {
+        fmt.Println("Operation successful")
+        os.Exit(0)
+    }
+    
+    // This will not execute
+    fmt.Println("This won't print")
+}`)
+				</code>
+			</pre>
+		</div>
+		<span class="output-label">Output:</span>
+		@components.CodeOutput(`Starting program
+Operation successful`)
+		<h2>Exit with Error Codes</h2>
+		<p>Use different exit codes to indicate different types of failures:</p>
+		<div class="code-block">
+			<pre>
+				<code class="language-go">
+					@templ.Raw(`package main
+
+import (
+    "fmt"
+    "os"
+)
+
+func main() {
+    args := os.Args
+    
+    if len(args) < 2 {
+        fmt.Println("Error: missing required argument")
+        os.Exit(1)
+    }
+    
+    value := args[1]
+    
+    if value == "invalid" {
+        fmt.Println("Error: invalid input")
+        os.Exit(2)
+    }
+    
+    fmt.Println("Processing:", value)
+    os.Exit(0)
+}`)
+				</code>
+			</pre>
+		</div>
+		<span class="output-label">Output (no args):</span>
+		@components.CodeOutput(`Error: missing required argument
+Exit code: 1`)
+		<h2>Exit vs Deferred Functions</h2>
+		<p>Important:  os.Exit does NOT run deferred functions: </p>
+		<div class="code-block">
+			<pre>
+				<code class="language-go">
+					@templ.Raw(`package main
+
+import (
+    "fmt"
+    "os"
+)
+
+func main() {
+    defer fmt.Println("This deferred function will NOT run")
+    
+    fmt.Println("About to exit")
+    os.Exit(1)
+}`)
+				</code>
+			</pre>
+		</div>
+		<span class="output-label">Output: </span>
+		@components.CodeOutput(`About to exit`)
+		<h2>Exit Code Conventions</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Exit Code</th>
+					<th>Meaning</th>
+					<th>Usage</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>0</td>
+					<td>Success</td>
+					<td>Program completed successfully</td>
+				</tr>
+				<tr>
+					<td>1</td>
+					<td>General error</td>
+					<td>Catchall for general errors</td>
+				</tr>
+				<tr>
+					<td>2</td>
+					<td>Misuse</td>
+					<td>Misuse of shell command or unrecovered panic</td>
+				</tr>
+				<tr>
+					<td>126</td>
+					<td>Cannot execute</td>
+					<td>Command invoked cannot execute</td>
+				</tr>
+				<tr>
+					<td>127</td>
+					<td>Command not found</td>
+					<td>Command not found or path issue</td>
+				</tr>
+				<tr>
+					<td>128+n</td>
+					<td>Fatal error signal</td>
+					<td>Fatal error signal n (e.g., 130 = Ctrl+C)</td>
+				</tr>
+				<tr>
+					<td>130</td>
+					<td>Terminated by Ctrl+C</td>
+					<td>Script terminated by Control-C (SIGINT)</td>
+				</tr>
+				<tr>
+					<td>255</td>
+					<td>Exit status out of range</td>
+					<td>Exit status out of range (0-255)</td>
+				</tr>
+			</tbody>
+		</table>
+		<h2>Exit Functions Comparison</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Function</th>
+					<th>Exit Code</th>
+					<th>Runs Defers</th>
+					<th>Use Case</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td><code>os.Exit(0)</code></td>
+					<td>0</td>
+					<td>No</td>
+					<td>Successful termination</td>
+				</tr>
+				<tr>
+					<td><code>os. Exit(n)</code></td>
+					<td>n</td>
+					<td>No</td>
+					<td>Error termination with code</td>
+				</tr>
+				<tr>
+					<td><code>log.Fatal()</code></td>
+					<td>1</td>
+					<td>No</td>
+					<td>Log error and exit</td>
+				</tr>
+				<tr>
+					<td><code>log.Fatalf()</code></td>
+					<td>1</td>
+					<td>No</td>
+					<td>Log formatted error and exit</td>
+				</tr>
+				<tr>
+					<td><code>log.Fatalln()</code></td>
+					<td>1</td>
+					<td>No</td>
+					<td>Log error with newline and exit</td>
+				</tr>
+				<tr>
+					<td><code>panic()</code></td>
+					<td>2</td>
+					<td>Yes</td>
+					<td>Panic (unrecovered exits with 2)</td>
+				</tr>
+				<tr>
+					<td><code>{ "return from main" }</code></td>
+					<td>0</td>
+					<td>Yes</td>
+					<td>Normal function return</td>
+				</tr>
+			</tbody>
+		</table>
+		<h2>Exit Patterns</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Pattern</th>
+					<th>Code</th>
+					<th>Use Case</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Successful Exit</td>
+					<td><code>os.Exit(0)</code></td>
+					<td>Explicitly exit with success</td>
+				</tr>
+				<tr>
+					<td>Error Exit</td>
+					<td><code>{ "fmt.Fprintln(os.Stderr, err); os.Exit(1)" }</code></td>
+					<td>Print error to stderr and exit</td>
+				</tr>
+				<tr>
+					<td>Log and Exit</td>
+					<td><code>log.Fatal("error message")</code></td>
+					<td>Log error and exit with code 1</td>
+				</tr>
+				<tr>
+					<td>Conditional Exit</td>
+					<td><code>{ "if err != nil { os. Exit(1) }" }</code></td>
+					<td>Exit only on error</td>
+				</tr>
+				<tr>
+					<td>Cleanup Before Exit</td>
+					<td><code>{ "cleanup(); os.Exit(code)" }</code></td>
+					<td>Manual cleanup (defers won't run)</td>
+				</tr>
+				<tr>
+					<td>Return from Main</td>
+					<td><code>{ "return // from main()" }</code></td>
+					<td>Preferred - runs deferred functions</td>
+				</tr>
+				<tr>
+					<td>Custom Exit Code</td>
+					<td><code>{ "const ErrConfig = 3; os.Exit(ErrConfig)" }</code></td>
+					<td>Application-specific error codes</td>
+				</tr>
+			</tbody>
+		</table>
+		<h2>Best Practices</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Practice</th>
+					<th>Recommendation</th>
+					<th>Reason</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Prefer Return</td>
+					<td>Return from main() instead of os.Exit</td>
+					<td>Allows deferred functions to run</td>
+				</tr>
+				<tr>
+					<td>Use Exit in Main</td>
+					<td>Only call os.Exit from main or init</td>
+					<td>Makes testing easier, clearer control flow</td>
+				</tr>
+				<tr>
+					<td>Return Errors</td>
+					<td>Return errors from functions, handle in main</td>
+					<td>Better testability and composability</td>
+				</tr>
+				<tr>
+					<td>Document Exit Codes</td>
+					<td>Document what each exit code means</td>
+					<td>Helps users and scripts understand failures</td>
+				</tr>
+				<tr>
+					<td>Use log. Fatal Sparingly</td>
+					<td>Prefer returning errors and exiting in main</td>
+					<td>Makes code more testable</td>
+				</tr>
+				<tr>
+					<td>Stderr for Errors</td>
+					<td>Print errors to os.Stderr, not os.Stdout</td>
+					<td>Follows Unix conventions</td>
+				</tr>
+				<tr>
+					<td>Cleanup Resources</td>
+					<td>Manually cleanup before calling os.Exit</td>
+					<td>Deferred functions won't run</td>
+				</tr>
+			</tbody>
+		</table>
+		<h2>Exit vs Return in Main</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Aspect</th>
+					<th>os.Exit()</th>
+					<th>return from main()</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Deferred functions</td>
+					<td>Do not run</td>
+					<td>Run normally</td>
+				</tr>
+				<tr>
+					<td>Exit code</td>
+					<td>Custom code</td>
+					<td>Always 0</td>
+				</tr>
+				<tr>
+					<td>Testability</td>
+					<td>Harder to test</td>
+					<td>Easier to test</td>
+				</tr>
+				<tr>
+					<td>Resource cleanup</td>
+					<td>Manual only</td>
+					<td>Automatic via defer</td>
+				</tr>
+				<tr>
+					<td>Use case</td>
+					<td>When you need non-zero exit code</td>
+					<td>Normal successful completion</td>
+				</tr>
+			</tbody>
+		</table>
+		<h2>Testing Exit Behavior</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Technique</th>
+					<th>Approach</th>
+					<th>Benefits</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Separate Logic</td>
+					<td>Extract logic to testable functions</td>
+					<td>Test logic without testing exit</td>
+				</tr>
+				<tr>
+					<td>Return Exit Code</td>
+					<td>Have main() call run() that returns int</td>
+					<td>Test run() function independently</td>
+				</tr>
+				<tr>
+					<td>Subprocess Tests</td>
+					<td>Use exec. Command in tests</td>
+					<td>Test actual exit behavior</td>
+				</tr>
+				<tr>
+					<td>Mock Exit</td>
+					<td>Create variable for exit function</td>
+					<td>Replace os.Exit in tests</td>
+				</tr>
+			</tbody>
+		</table>
+		<h2>Common Exit Scenarios</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Scenario</th>
+					<th>Recommended Exit Code</th>
+					<th>Example</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Successful completion</td>
+					<td>0</td>
+					<td>Normal program completion</td>
+				</tr>
+				<tr>
+					<td>Invalid arguments</td>
+					<td>1 or 64</td>
+					<td>Missing or incorrect CLI arguments</td>
+				</tr>
+				<tr>
+					<td>Configuration error</td>
+					<td>78</td>
+					<td>Invalid configuration file</td>
+				</tr>
+				<tr>
+					<td>File not found</td>
+					<td>66</td>
+					<td>Required file doesn't exist</td>
+				</tr>
+				<tr>
+					<td>Permission denied</td>
+					<td>77</td>
+					<td>Insufficient permissions</td>
+				</tr>
+				<tr>
+					<td>Network error</td>
+					<td>1</td>
+					<td>Connection failed</td>
+				</tr>
+				<tr>
+					<td>Database error</td>
+					<td>1</td>
+					<td>Database connection failed</td>
+				</tr>
+				<tr>
+					<td>User interruption</td>
+					<td>130</td>
+					<td>Ctrl+C pressed</td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="nav-buttons">
+			@components.Button("Previous: Context", "/context")
+			@components.Button("Finished!", "/")
+		</div>
+	}
+}

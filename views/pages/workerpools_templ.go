@@ -52,7 +52,7 @@ func WorkerPools() templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = components.CustomHeader("Worker Pools", "Wait Groups").Render(ctx, templ_7745c5c3_Buffer)
+			templ_7745c5c3_Err = components.CustomHeader("Worker Pools", "WaitGroups").Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -186,11 +186,11 @@ All jobs done`).Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = components.Button("Previous: WaitGroups", "/waitgroups").Render(ctx, templ_7745c5c3_Buffer)
+			templ_7745c5c3_Err = components.Button("Previous: Tickers", "/tickers").Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = components.Button("Next: Channels", "/channels").Render(ctx, templ_7745c5c3_Buffer)
+			templ_7745c5c3_Err = components.Button("Next: WaitGroups", "/waitgroups").Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

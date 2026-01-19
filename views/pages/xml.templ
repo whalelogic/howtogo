@@ -1,0 +1,410 @@
+package pages
+
+import "github.com/whalelogic/howtogo/views/layouts"
+import "github.com/whalelogic/howtogo/views/components"
+
+templ XML() {
+	@layouts.Base("XML | How to Go") {
+		@components.Breadcrumb("xml", "XML")
+		@components.CustomHeader("XML", "Time")
+		<p>XML (Extensible Markup Language) is a markup language for encoding documents in a format that is both human-readable and machine-readable.  Go's encoding/xml package provides built-in support for encoding Go data structures to XML and decoding XML into Go structures using struct tags similar to JSON.</p>
+		@components.KeyPoints([]string{
+			"Use struct tags to control XML element names and attributes",
+			"XMLName field controls the root element name",
+			"Use <code>xml.Marshal()</code> to encode and <code>xml.Unmarshal()</code> to decode",
+			"The <code>attr</code> tag marks a field as an XML attribute",
+			"The <code>chardata</code> tag marks character data content",
+			"Use <code>xml.Encoder</code> and <code>xml.Decoder</code> for streaming",
+			"Support for namespaces, CDATA, comments, and processing instructions",
+		})
+		<h2>Encoding to XML</h2>
+		<p>Convert Go data structures to XML using xml.Marshal:</p>
+		<div class="code-block">
+			<pre>
+				<code class="language-go">
+					@templ.Raw(`package main
+
+import (
+    "encoding/xml"
+    "fmt"
+)
+
+type Person struct {
+    XMLName xml.Name ` + "`xml:\"person\"`" + `
+    Name    string   ` + "`xml:\"name\"`" + `
+    Age     int      ` + "`xml:\"age\"`" + `
+    Email   string   ` + "`xml:\"email\"`" + `
+}
+
+func main() {
+    p := Person{
+        Name:   "Alice",
+        Age:   30,
+        Email: "alice@example.com",
+    }
+    
+    xmlData, err := xml.MarshalIndent(p, "", "  ")
+    if err != nil {
+        fmt.Println("error:", err)
+        return
+    }
+    
+    fmt. Println(xml.Header + string(xmlData))
+}`)
+				</code>
+			</pre>
+		</div>
+		<span class="output-label">Output:</span>
+		@components.CodeOutput(`<?xml version="1.0" encoding="UTF-8"?>
+<person>
+  <name>Alice</name>
+  <age>30</age>
+  <email>alice@example.com</email>
+</person>`)
+		<h2>Decoding from XML</h2>
+		<p>Parse XML into Go structures using xml.Unmarshal:</p>
+		<div class="code-block">
+			<pre>
+				<code class="language-go">
+					@templ.Raw(`package main
+
+import (
+    "encoding/xml"
+    "fmt"
+)
+
+type Person struct {
+    XMLName xml.Name ` + "`xml:\"person\"`" + `
+    Name    string   ` + "`xml:\"name\"`" + `
+    Age     int      ` + "`xml:\"age\"`" + `
+    Email   string   ` + "`xml:\"email\"`" + `
+}
+
+func main() {
+    xmlStr := ` + "`" + `
+    <person>
+        <name>Bob</name>
+        <age>25</age>
+        <email>bob@example.com</email>
+    </person>
+    ` + "`" + `
+    
+    var p Person
+    err := xml.Unmarshal([]byte(xmlStr), &p)
+    if err != nil {
+        fmt.Println("error:", err)
+        return
+    }
+    
+    fmt.Printf("Name: %s, Age:  %d, Email: %s\n", p.Name, p. Age, p.Email)
+}`)
+				</code>
+			</pre>
+		</div>
+		<span class="output-label">Output:</span>
+		@components.CodeOutput(`Name: Bob, Age: 25, Email: bob@example.com`)
+		<h2>XML Attributes and Nested Elements</h2>
+		<p>XML supports attributes and nested structures:</p>
+		<div class="code-block">
+			<pre>
+				<code class="language-go">
+					@templ.Raw(`package main
+
+import (
+    "encoding/xml"
+    "fmt"
+)
+
+type Address struct {
+    City    string ` + "`xml:\"city\"`" + `
+    Country string ` + "`xml:\"country\"`" + `
+}
+
+type Person struct {
+    XMLName xml.Name ` + "`xml:\"person\"`" + `
+    ID      int      ` + "`xml:\"id,attr\"`" + `
+    Name    string   ` + "`xml:\"name\"`" + `
+    Address Address  ` + "`xml:\"address\"`" + `
+}
+
+func main() {
+    p := Person{
+        ID:   123,
+        Name: "Charlie",
+        Address: Address{
+            City:    "New York",
+            Country: "USA",
+        },
+    }
+    
+    xmlData, _ := xml.MarshalIndent(p, "", "  ")
+    fmt.Println(xml. Header + string(xmlData))
+}`)
+				</code>
+			</pre>
+		</div>
+		<span class="output-label">Output:</span>
+		@components.CodeOutput(`<?xml version="1.0" encoding="UTF-8"?>
+<person id="123">
+  <name>Charlie</name>
+  <address>
+    <city>New York</city>
+    <country>USA</country>
+  </address>
+</person>`)
+		<h2>Struct Tag Options</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Tag</th>
+					<th>Example</th>
+					<th>Description</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Element Name</td>
+					<td><code>` + "`xml:\"elementname\"`" + `</code></td>
+					<td>Sets XML element name</td>
+				</tr>
+				<tr>
+					<td>Attribute</td>
+					<td><code>` + "`xml:\"name,attr\"`" + `</code></td>
+					<td>Field becomes an attribute</td>
+				</tr>
+				<tr>
+					<td>Character Data</td>
+					<td><code>` + "`xml:\",chardata\"`" + `</code></td>
+					<td>Field contains element content</td>
+				</tr>
+				<tr>
+					<td>CDATA</td>
+					<td><code>` + "`xml:\",cdata\"`" + `</code></td>
+					<td>Wrap content in CDATA section</td>
+				</tr>
+				<tr>
+					<td>Inner XML</td>
+					<td><code>` + "`xml:\",innerxml\"`" + `</code></td>
+					<td>Raw XML content</td>
+				</tr>
+				<tr>
+					<td>Comment</td>
+					<td><code>` + "`xml:\",comment\"`" + `</code></td>
+					<td>XML comment</td>
+				</tr>
+				<tr>
+					<td>Any Element</td>
+					<td><code>` + "`xml:\",any\"`" + `</code></td>
+					<td>Match any element</td>
+				</tr>
+				<tr>
+					<td>Omit Empty</td>
+					<td><code>` + "`xml:\"name,omitempty\"`" + `</code></td>
+					<td>Omit if zero value</td>
+				</tr>
+				<tr>
+					<td>Ignore Field</td>
+					<td><code>` + "`xml:\"-\"`" + `</code></td>
+					<td>Skip field entirely</td>
+				</tr>
+			</tbody>
+		</table>
+		<h2>XML Encoding Functions</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Function</th>
+					<th>Signature</th>
+					<th>Use Case</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Marshal</td>
+					<td><code>{ "Marshal(v interface{}) ([]byte, error)" }</code></td>
+					<td>Encode to compact XML</td>
+				</tr>
+				<tr>
+					<td>MarshalIndent</td>
+					<td><code>{ "MarshalIndent(v interface{}, prefix, indent string) ([]byte, error)" }</code></td>
+					<td>Encode to formatted XML</td>
+				</tr>
+				<tr>
+					<td>Unmarshal</td>
+					<td><code>{ "Unmarshal(data []byte, v interface{}) error" }</code></td>
+					<td>Decode XML into struct</td>
+				</tr>
+				<tr>
+					<td>NewEncoder</td>
+					<td><code>{ "NewEncoder(w io.Writer) *Encoder" }</code></td>
+					<td>Create streaming encoder</td>
+				</tr>
+				<tr>
+					<td>NewDecoder</td>
+					<td><code>{ "NewDecoder(r io.Reader) *Decoder" }</code></td>
+					<td>Create streaming decoder</td>
+				</tr>
+			</tbody>
+		</table>
+		<h2>Type Mappings</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Go Type</th>
+					<th>XML Representation</th>
+					<th>Notes</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>bool</td>
+					<td>true/false</td>
+					<td>Boolean values</td>
+				</tr>
+				<tr>
+					<td>int, int8, int16, int32, int64</td>
+					<td>Decimal number</td>
+					<td>Integer values</td>
+				</tr>
+				<tr>
+					<td>uint, uint8, uint16, uint32, uint64</td>
+					<td>Decimal number</td>
+					<td>Unsigned integer values</td>
+				</tr>
+				<tr>
+					<td>float32, float64</td>
+					<td>Decimal number</td>
+					<td>Floating-point values</td>
+				</tr>
+				<tr>
+					<td>string</td>
+					<td>Character data</td>
+					<td>Text content</td>
+				</tr>
+				<tr>
+					<td>[]byte</td>
+					<td>Base64-encoded</td>
+					<td>Binary data</td>
+				</tr>
+				<tr>
+					<td>[]T</td>
+					<td>Multiple elements</td>
+					<td>Repeated elements</td>
+				</tr>
+				<tr>
+					<td>struct</td>
+					<td>Nested elements</td>
+					<td>Complex structures</td>
+				</tr>
+				<tr>
+					<td>*T</td>
+					<td>Element or omitted</td>
+					<td>Optional elements</td>
+				</tr>
+				<tr>
+					<td>xml.Name</td>
+					<td>Element name</td>
+					<td>Controls root element</td>
+				</tr>
+			</tbody>
+		</table>
+		<h2>Common XML Patterns</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Pattern</th>
+					<th>Code</th>
+					<th>Use Case</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>With XML Header</td>
+					<td><code>{ "xml. Header + string(xmlData)" }</code></td>
+					<td>{ "Include <? xml version=1.0?>" } </td>
+				</tr>
+				<tr>
+					<td>Stream Encoding</td>
+					<td><code>{ "xml.NewEncoder(w).Encode(v)" }</code></td>
+					<td>Write directly to io.Writer</td>
+				</tr>
+				<tr>
+					<td>Stream Decoding</td>
+					<td><code>{ "xml.NewDecoder(r).Decode(&v)" }</code></td>
+					<td>Read from io.Reader</td>
+				</tr>
+				<tr>
+					<td>Token-Based Parsing</td>
+					<td><code>{ "for { token, _ := decoder.Token(); ...  }" }</code></td>
+					<td>Low-level XML parsing</td>
+				</tr>
+				<tr>
+					<td>Custom Marshal</td>
+					<td><code>{ "func (t T) MarshalXML(e *Encoder, start StartElement) error" }</code></td>
+					<td>Custom encoding logic</td>
+				</tr>
+								<tr>
+					<td>Custom Unmarshal</td>
+					<td><code>{ "func (t *T) UnmarshalXML(d *Decoder, start StartElement) error" }</code></td>
+					<td>Custom decoding logic</td>
+				</tr>
+				<tr>
+					<td>Namespace Handling</td>
+					<td><code>{ "XMLName xml. Name `xml:\\\"http://example.com/ns elementname\\\"`" }</code></td>
+					<td>Work with XML namespaces</td>
+				</tr>
+			</tbody>
+		</table>
+		<h2>XML Features</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Feature</th>
+					<th>Example</th>
+					<th>Description</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Attributes</td>
+					<td><code>{ "ID int `xml:\\\"id,attr\\\"`" }</code></td>
+					<td>Add attributes to elements</td>
+				</tr>
+				<tr>
+					<td>Namespaces</td>
+					<td><code>{ "xml.Name{Space:  \\\"http://...\\\", Local: \\\"name\\\"}" }</code></td>
+					<td>XML namespace support</td>
+				</tr>
+				<tr>
+					<td>CDATA Sections</td>
+					<td><code>` + "`xml:\",cdata\"`" + `</code></td>
+					<td>Preserve special characters</td>
+				</tr>
+				<tr>
+					<td>Comments</td>
+					<td><code>` + "`xml:\",comment\"`" + `</code></td>
+					<td>XML comments</td>
+				</tr>
+				<tr>
+					<td>Processing Instructions</td>
+					<td><code>xml.ProcInst</code></td>
+					<td>Processing directives</td>
+				</tr>
+				<tr>
+					<td>Character Entities</td>
+					<td>Automatic escaping</td>
+					<td>&lt;, &gt;, &amp;, etc.</td>
+				</tr>
+				<tr>
+					<td>Directives</td>
+					<td><code>xml.Directive</code></td>
+					<td>DOCTYPE and other directives</td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="nav-buttons">
+			@components.Button("Previous: JSON", "/json")
+			@components.Button("Next: Time", "/time")
+		</div>
+	}
+}

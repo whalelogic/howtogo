@@ -6,7 +6,7 @@ import "github.com/whalelogic/howtogo/views/components"
 templ WorkerPools() {
 	@layouts.Base("Worker Pools | How to Go") {
 		@components.Breadcrumb("worker-pools", "Worker Pools")
-		@components.CustomHeader("Worker Pools", "Wait Groups")
+		@components.CustomHeader("Worker Pools", "WaitGroups")
 		<p>In this example we'll look at how to implement a worker pool using goroutines and channels. A worker pool is a common concurrency pattern for limiting the number of concurrently running tasks.</p>
 		@components.KeyPoints([]string{
 			"Worker pools are a common concurrency pattern for limiting the number of concurrently running tasks.",
@@ -101,8 +101,8 @@ All jobs done`)
 		</table>
 
 		<div class="nav-buttons">
-			@components.Button("Previous: WaitGroups", "/waitgroups")
-			@components.Button("Next: Channels", "/channels")
+			@components.Button("Previous: Tickers", "/tickers")
+			@components.Button("Next: WaitGroups", "/waitgroups")
 		</div>
 	}
 }

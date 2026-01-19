@@ -1,0 +1,316 @@
+package pages
+
+import "github.com/whalelogic/howtogo/views/layouts"
+import "github.com/whalelogic/howtogo/views/components"
+
+templ Context() {
+	@layouts.Base("Contexts | How to Go") {
+		@components. Breadcrumb("contexts", "Contexts")
+		@components.CustomHeader("Contexts", "Exit")
+		<p>Contexts are a key feature in Go for managing cancellation, deadlines, and request-scoped values across API boundaries and goroutines.  The context package provides a standard way to handle timeout and cancellation signals.</p>
+		@components.KeyPoints([]string{
+			"Contexts carry deadlines, cancellation signals, and request-scoped values",
+			"Context should be the first parameter of a function, typically named <code>ctx</code>",
+			"Never store contexts in structs; pass them explicitly",
+			"Canceling a context releases resources associated with it",
+			"Context cancellation is cascading - children are canceled when parent is canceled",
+			"<code>context.Background()</code> is the root of any context tree",
+			"Always call the cancel function to avoid context leaks",
+		})
+		<h2>Creating Contexts</h2>
+		<p>Contexts can be created in multiple ways:</p>
+		<div class="code-block">
+			<pre>
+				<code class="language-go">
+					@templ.Raw(`package main
+
+import (
+    "context"
+    "fmt"
+    "time"
+)
+
+func main() {
+    // Background context - typically used in main
+    ctx := context.Background()
+    fmt.Println("background:", ctx)
+
+    // Context with timeout
+    ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
+    defer cancel()
+    fmt.Println("with timeout:", ctx)
+
+    // Context with deadline
+    deadline := time.Now().Add(5 * time.Second)
+    ctx, cancel = context.WithDeadline(context.Background(), deadline)
+    defer cancel()
+    fmt.Println("with deadline:", ctx)
+
+    // Context with cancellation
+    ctx, cancel = context.WithCancel(context.Background())
+    defer cancel()
+    fmt.Println("with cancel:", ctx)
+}`)
+				</code>
+			</pre>
+		</div>
+		<span class="output-label">Output:</span>
+		@components.CodeOutput(`background: context.Background
+with timeout: context.Background. WithDeadline(...)
+with deadline: context.Background. WithDeadline(...)
+with cancel: context.Background.WithCancel`)
+		<h2>Context Cancellation</h2>
+		<p>Contexts can be canceled to signal goroutines to stop work: </p>
+		<div class="code-block">
+			<pre>
+				<code class="language-go">
+					@templ.Raw(`package main
+
+import (
+    "context"
+    "fmt"
+    "time"
+)
+
+func main() {
+    ctx, cancel := context.WithCancel(context.Background())
+    
+    go func() {
+        for {
+            select {
+            case <-ctx. Done():
+                fmt.Println("goroutine:  context canceled")
+                return
+            default:
+                fmt.Println("goroutine: working...")
+                time.Sleep(500 * time.Millisecond)
+            }
+        }
+    }()
+    
+    time.Sleep(2 * time.Second)
+    fmt.Println("main: canceling context")
+    cancel()
+    time.Sleep(1 * time.Second)
+}`)
+				</code>
+			</pre>
+		</div>
+		<span class="output-label">Output:</span>
+		@components.CodeOutput(`goroutine: working...
+goroutine: working... 
+goroutine: working... 
+main: canceling context
+goroutine: context canceled`)
+		<h2>Context With Values</h2>
+		<p>Contexts can carry request-scoped data across API boundaries:</p>
+		<div class="code-block">
+			<pre>
+				<code class="language-go">
+					@templ.Raw(`package main
+
+import (
+    "context"
+    "fmt"
+)
+
+type userKey string
+
+func main() {
+    // Store value in context
+    ctx := context. WithValue(context.Background(), userKey("userID"), 12345)
+    
+    // Retrieve value from context
+    userID := ctx.Value(userKey("userID"))
+    fmt.Println("userID:", userID)
+    
+    // Pass context to function
+    processRequest(ctx)
+}
+
+func processRequest(ctx context.Context) {
+    if userID, ok := ctx.Value(userKey("userID")).(int); ok {
+        fmt.Printf("processing request for user:  %d\n", userID)
+    }
+}`)
+				</code>
+			</pre>
+		</div>
+		<span class="output-label">Output:</span>
+		@components. CodeOutput(`userID: 12345
+processing request for user: 12345`)
+		<h2>Context Creation Patterns</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Pattern</th>
+					<th>Example</th>
+					<th>Description</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td><code>context.Background()</code></td>
+					<td><code>ctx := context.Background()</code></td>
+					<td>Root context, never canceled</td>
+				</tr>
+				<tr>
+					<td><code>context.TODO()</code></td>
+					<td><code>ctx := context.TODO()</code></td>
+					<td>Placeholder when context is unclear</td>
+				</tr>
+				<tr>
+					<td><code>{ "context.WithCancel(parent)" }</code></td>
+					<td><code>{ "ctx, cancel := context.WithCancel(parent)" }</code></td>
+					<td>Create cancelable context</td>
+				</tr>
+				<tr>
+					<td><code>{ "context.WithTimeout(parent, duration)" }</code></td>
+					<td><code>{ "ctx, cancel := context.WithTimeout(parent, 5*time.Second)" }</code></td>
+					<td>Context with timeout duration</td>
+				</tr>
+				<tr>
+					<td><code>{ "context. WithDeadline(parent, time)" }</code></td>
+					<td><code>{ "ctx, cancel := context.WithDeadline(parent, deadline)" }</code></td>
+					<td>Context with absolute deadline</td>
+				</tr>
+				<tr>
+					<td><code>{ "context.WithValue(parent, key, val)" }</code></td>
+					<td><code>{ "ctx := context.WithValue(parent, key, value)" }</code></td>
+					<td>Context with key-value pair</td>
+				</tr>
+			</tbody>
+		</table>
+		<h2>Context Operations</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Operation</th>
+					<th>Syntax</th>
+					<th>Example</th>
+					<th>Description</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Done Channel</td>
+					<td><code>ctx.Done()</code></td>
+					<td><code>{ "<-ctx.Done()" }</code></td>
+					<td>Returns channel closed when context canceled</td>
+				</tr>
+				<tr>
+					<td>Error</td>
+					<td><code>ctx.Err()</code></td>
+					<td><code>err := ctx.Err()</code></td>
+					<td>Returns cancellation reason</td>
+				</tr>
+				<tr>
+					<td>Deadline</td>
+					<td><code>ctx.Deadline()</code></td>
+					<td><code>{ "deadline, ok := ctx.Deadline()" }</code></td>
+					<td>Returns deadline time if set</td>
+				</tr>
+				<tr>
+					<td>Value</td>
+					<td><code>ctx.Value(key)</code></td>
+					<td><code>{ "val := ctx.Value(key)" }</code></td>
+					<td>Returns value for key</td>
+				</tr>
+				<tr>
+					<td>Cancel</td>
+					<td><code>cancel()</code></td>
+					<td><code>defer cancel()</code></td>
+					<td>Cancels context and children</td>
+				</tr>
+			</tbody>
+		</table>
+		<h2>Context Internals</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Concept</th>
+					<th>Description</th>
+					<th>Notes</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Immutability</td>
+					<td>Contexts are immutable</td>
+					<td>Each With* function creates a new context</td>
+				</tr>
+				<tr>
+					<td>Thread-safe</td>
+					<td>Safe for simultaneous use by multiple goroutines</td>
+					<td>All context methods are concurrent-safe</td>
+				</tr>
+				<tr>
+					<td>Cancellation propagation</td>
+					<td>Parent cancellation cancels all children</td>
+					<td>Forms a cancellation tree</td>
+				</tr>
+				<tr>
+					<td>Deadline inheritance</td>
+					<td>Child inherits parent's deadline if earlier</td>
+					<td>Cannot extend parent's deadline</td>
+				</tr>
+				<tr>
+					<td>Value lookup</td>
+					<td>Searches up the context chain</td>
+					<td>Most recent value for key is returned</td>
+				</tr>
+				<tr>
+					<td>Done channel</td>
+					<td>Closed on cancellation, never sends values</td>
+					<td>Use in select statements</td>
+				</tr>
+			</tbody>
+		</table>
+		<h2>Common Patterns</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Pattern</th>
+					<th>Code</th>
+					<th>Use Case</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>HTTP request context</td>
+					<td><code>ctx := req.Context()</code></td>
+					<td>Get context from HTTP request</td>
+				</tr>
+				<tr>
+					<td>Defer cancel</td>
+					<td><code>{ "ctx, cancel := context.WithTimeout(... ); defer cancel()" }</code></td>
+					<td>Always call cancel to prevent leaks</td>
+				</tr>
+				<tr>
+					<td>Select with context</td>
+					<td><code>{ "select { case <-ctx.Done(): return ctx.Err(); case result := <-ch: return result }" }</code></td>
+					<td>Respect cancellation in goroutines</td>
+				</tr>
+				<tr>
+					<td>Check cancellation</td>
+					<td><code>{ "if err := ctx.Err(); err != nil { return err }" }</code></td>
+					<td>Early return if context canceled</td>
+				</tr>
+				<tr>
+					<td>Custom key type</td>
+					<td><code>{ "type myKey string; const userKey myKey = \"user\"" }</code></td>
+					<td>Avoid key collisions</td>
+				</tr>
+				<tr>
+					<td>Timeout operation</td>
+					<td><code>{ "ctx, cancel := context.WithTimeout(ctx, 5*time.Second); defer cancel()" }</code></td>
+					<td>Limit operation duration</td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="nav-buttons">
+			@components.Button("Previous: Time", "/time")
+			@components.Button("Next: Exits", "/exit")
+		</div>
+	}
+}

@@ -1,0 +1,265 @@
+package pages
+
+import "github.com/whalelogic/howtogo/views/layouts"
+import "github.com/whalelogic/howtogo/views/components"
+
+templ Defer() {
+	@layouts.Base("Defer | How to Go") {
+		@components. Breadcrumb("defer", "Defer")
+		@components.CustomHeader("Defer", "Recover")
+		<p>Defer is a keyword in Go that schedules a function call to be executed after the surrounding function returns.  It's commonly used for cleanup tasks like closing files, unlocking mutexes, or releasing resources.</p>
+		@components.KeyPoints([]string{
+			"Deferred functions execute in LIFO (Last In, First Out) order",
+			"Arguments to deferred functions are evaluated immediately",
+			"Deferred functions run even if a panic occurs",
+			"Defer is commonly used for resource cleanup",
+			"Multiple defers stack up - last deferred runs first",
+			"Deferred functions can modify named return values",
+			"Defer has a small performance cost - use judiciously in hot paths",
+		})
+		<h2>Basic Defer Usage</h2>
+		<p>Defer schedules a function call to run after the current function completes: </p>
+		<div class="code-block">
+			<pre>
+				<code class="language-go">
+					@templ.Raw(`package main
+
+import "fmt"
+
+func main() {
+    defer fmt.Println("world")
+    fmt.Println("hello")
+}`)
+				</code>
+			</pre>
+		</div>
+		<span class="output-label">Output:</span>
+		@components.CodeOutput(`hello
+world`)
+		<h2>Defer Execution Order</h2>
+		<p>Multiple deferred calls are executed in reverse order (LIFO):</p>
+		<div class="code-block">
+			<pre>
+				<code class="language-go">
+					@templ.Raw(`package main
+
+import "fmt"
+
+func main() {
+    fmt.Println("counting")
+    
+    for i := 0; i < 3; i++ {
+        defer fmt.Println(i)
+    }
+    
+    fmt.Println("done")
+}`)
+				</code>
+			</pre>
+		</div>
+		<span class="output-label">Output:</span>
+		@components.CodeOutput(`counting
+done
+2
+1
+0`)
+		<h2>Defer with File Handling</h2>
+		<p>One of the most common uses of defer is closing files and resources:</p>
+		<div class="code-block">
+			<pre>
+				<code class="language-go">
+					@templ.Raw(`package main
+
+import (
+    "fmt"
+    "os"
+)
+
+func main() {
+    f, err := os.Create("test.txt")
+    if err != nil {
+        fmt.Println("error:", err)
+        return
+    }
+    defer f.Close()
+    
+    // Write to file
+    f.WriteString("Hello, defer!")
+    fmt.Println("file written successfully")
+    
+    // File automatically closed when function returns
+}`)
+				</code>
+			</pre>
+		</div>
+		<span class="output-label">Output: </span>
+		@components.CodeOutput(`file written successfully`)
+		<h2>Defer Behavior</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Aspect</th>
+					<th>Behavior</th>
+					<th>Example</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Execution Order</td>
+					<td>LIFO (Last In, First Out)</td>
+					<td>Last defer executes first</td>
+				</tr>
+				<tr>
+					<td>Argument Evaluation</td>
+					<td>Arguments evaluated immediately</td>
+					<td><code>defer fmt.Println(i)</code> captures current i</td>
+				</tr>
+				<tr>
+					<td>Execution Timing</td>
+					<td>After return statement, before return to caller</td>
+					<td>Can modify named return values</td>
+				</tr>
+				<tr>
+					<td>Panic Handling</td>
+					<td>Deferred functions still run during panic</td>
+					<td>Used for cleanup in error scenarios</td>
+				</tr>
+				<tr>
+					<td>Return Values</td>
+					<td>Can modify named return values</td>
+					<td>Useful for error handling patterns</td>
+				</tr>
+				<tr>
+					<td>Scope</td>
+					<td>Function-level, not block-level</td>
+					<td>Defers in loops accumulate</td>
+				</tr>
+			</tbody>
+		</table>
+		<h2>Common Defer Patterns</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Pattern</th>
+					<th>Code</th>
+					<th>Use Case</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>File Closing</td>
+					<td><code>defer file.Close()</code></td>
+					<td>Ensure files are closed</td>
+				</tr>
+				<tr>
+					<td>Mutex Unlocking</td>
+					<td><code>mu.Lock(); defer mu.Unlock()</code></td>
+					<td>Ensure locks are released</td>
+				</tr>
+				<tr>
+					<td>Connection Closing</td>
+					<td><code>defer conn.Close()</code></td>
+					<td>Close database/network connections</td>
+				</tr>
+				<tr>
+					<td>Timing Functions</td>
+					<td><code>{ "defer timeTrack(time.Now())" }</code></td>
+					<td>Measure function execution time</td>
+				</tr>
+				<tr>
+					<td>Cleanup Resources</td>
+					<td><code>{ "defer cleanup()" }</code></td>
+					<td>General resource cleanup</td>
+				</tr>
+				<tr>
+					<td>Recover from Panic</td>
+					<td><code>{ "defer func() { recover() }()" }</code></td>
+					<td>Catch and handle panics</td>
+				</tr>
+			</tbody>
+		</table>
+		<h2>Defer Gotchas</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Issue</th>
+					<th>Problem</th>
+					<th>Solution</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Loop Variables</td>
+					<td><code>{ "for _, f := range files { defer f.Close() }" }</code></td>
+					<td>Defers accumulate, close immediately or use closure</td>
+				</tr>
+				<tr>
+					<td>Argument Evaluation</td>
+					<td><code>{ "defer fmt.Println(x)" }</code> captures x now</td>
+					<td>Use closure if you need final value:  <code>{ "defer func() { fmt.Println(x) }()" }</code></td>
+				</tr>
+				<tr>
+					<td>Return Value Shadowing</td>
+					<td>Unnamed returns not modifiable</td>
+					<td>Use named return values if defer needs to modify</td>
+				</tr>
+				<tr>
+					<td>Performance</td>
+					<td>Small overhead per defer</td>
+					<td>Avoid in tight loops or hot paths</td>
+				</tr>
+				<tr>
+					<td>Error Handling</td>
+					<td><code>defer f.Close()</code> ignores errors</td>
+					<td>Check errors:  <code>{ "defer func() { err = f.Close() }()" }</code></td>
+				</tr>
+			</tbody>
+		</table>
+		<h2>Advanced Defer Examples</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Technique</th>
+					<th>Example</th>
+					<th>Description</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Modify Return Value</td>
+					<td><code>{ "func() (err error) { defer func() { if err != nil { err = wrap(err) } }(); ...  }" }</code></td>
+					<td>Wrap errors on return</td>
+				</tr>
+				<tr>
+					<td>Function Timing</td>
+					<td><code>{ "defer func(t time.Time) { log.Println(time.Since(t)) }(time.Now())" }</code></td>
+					<td>Log execution duration</td>
+				</tr>
+				<tr>
+					<td>Transaction Rollback</td>
+					<td><code>{ "defer func() { if err != nil { tx.Rollback() } else { tx.Commit() } }()" }</code></td>
+					<td>Conditional cleanup based on error</td>
+				</tr>
+				<tr>
+					<td>Panic Recovery</td>
+					<td><code>{ "defer func() { if r := recover(); r != nil { log.Println(r) } }()" }</code></td>
+					<td>Gracefully handle panics</td>
+				</tr>
+				<tr>
+					<td>Stack Tracing</td>
+					<td><code>{ "defer log.Println(\"exiting function\")" }</code></td>
+					<td>Track function entry/exit</td>
+				</tr>
+				<tr>
+					<td>Cleanup Chain</td>
+					<td><code>{ "defer cleanup1(); defer cleanup2(); defer cleanup3()" }</code></td>
+					<td>Multiple cleanup steps in order</td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="nav-buttons">
+			@components.Button("Previous: Panic", "/panic")
+			@components.Button("Next: Recover", "/recover")
+		</div>
+	}
+}

@@ -1,0 +1,502 @@
+package pages
+
+import "github.com/whalelogic/howtogo/views/layouts"
+import "github.com/whalelogic/howtogo/views/components"
+
+templ Time() {
+	@layouts.Base("Time | How to Go") {
+		@components.Breadcrumb("time", "Time")
+		@components.CustomHeader("Time", "Context")
+		<p>The time package in Go provides functionality for measuring and displaying time.  It includes support for time zones, durations, timers, tickers, and time formatting/parsing.  Time values in Go are represented by the time.Time type, which includes both a wall clock reading and a monotonic clock reading for accurate duration measurements.</p>
+		@components. KeyPoints([]string{
+			"Time values are immutable and safe for concurrent use",
+			"Use monotonic clocks for measuring durations and intervals",
+			"Format and parse times using layout strings (not format specifiers)",
+			"The reference time is <code>Mon Jan 2 15:04:05 MST 2006</code>",
+			"Timers and tickers provide scheduling functionality",
+			"Always be aware of time zones when working with time",
+			"Use <code>time.Duration</code> for type-safe time intervals",
+		})
+		<h2>Current Time and Basic Operations</h2>
+		<p>Get the current time and perform basic time operations:</p>
+		<div class="code-block">
+			<pre>
+				<code class="language-go">
+					@templ.Raw(`package main
+
+import (
+    "fmt"
+    "time"
+)
+
+func main() {
+    // Current time
+    now := time.Now()
+    fmt.Println("Current time:", now)
+    
+    // Time components
+    fmt.Println("Year:", now.Year())
+    fmt.Println("Month:", now. Month())
+    fmt.Println("Day:", now.Day())
+    fmt.Println("Hour:", now.Hour())
+    
+    // Unix timestamp
+    fmt.Println("Unix:", now.Unix())
+    fmt.Println("UnixNano:", now.UnixNano())
+}`)
+				</code>
+			</pre>
+		</div>
+		<span class="output-label">Output:</span>
+		@components.CodeOutput(`Current time: 2026-01-19 14:30:45.123456789 -0500 EST
+Year: 2026
+Month:  January
+Day: 19
+Hour:  14
+Unix: 1737315045
+UnixNano: 1737315045123456789`)
+		<h2>Formatting and Parsing</h2>
+		<p>Format and parse times using layout strings:</p>
+		<div class="code-block">
+			<pre>
+				<code class="language-go">
+					@templ.Raw(`package main
+
+import (
+    "fmt"
+    "time"
+)
+
+func main() {
+    now := time.Now()
+    
+    // Format time
+    fmt. Println("RFC3339:", now.Format(time.RFC3339))
+    fmt.Println("Custom:", now.Format("2006-01-02 15:04:05"))
+    fmt.Println("Date only:", now.Format("Jan 2, 2006"))
+    
+    // Parse time
+    timeStr := "2026-03-15 14:30:00"
+    parsed, err := time.Parse("2006-01-02 15:04:05", timeStr)
+    if err != nil {
+        fmt.Println("Parse error:", err)
+        return
+    }
+    fmt.Println("Parsed:", parsed)
+}`)
+				</code>
+			</pre>
+		</div>
+		<span class="output-label">Output:</span>
+		@components.CodeOutput(`RFC3339: 2026-01-19T14:30:45-05:00
+Custom: 2026-01-19 14:30:45
+Date only: Jan 19, 2026
+Parsed: 2026-03-15 14:30:00 +0000 UTC`)
+		<h2>Durations and Time Arithmetic</h2>
+		<p>Work with durations and perform time calculations:</p>
+		<div class="code-block">
+			<pre>
+				<code class="language-go">
+					@templ.Raw(`package main
+
+import (
+    "fmt"
+    "time"
+)
+
+func main() {
+    now := time.Now()
+    
+    // Add duration
+    future := now.Add(24 * time.Hour)
+    fmt.Println("24 hours from now:", future. Format("2006-01-02 15:04:05"))
+    
+    // Subtract time
+    past := now.Add(-48 * time.Hour)
+    fmt.Println("48 hours ago:", past.Format("2006-01-02 15:04:05"))
+    
+    // Time difference
+    diff := future.Sub(now)
+    fmt.Println("Difference:", diff)
+    fmt.Println("Hours:", diff.Hours())
+    
+    // Sleep
+    fmt.Println("Sleeping...")
+    time.Sleep(2 * time.Second)
+    fmt.Println("Awake!")
+}`)
+				</code>
+			</pre>
+		</div>
+		<span class="output-label">Output:</span>
+		@components.CodeOutput(`24 hours from now: 2026-01-20 14:30:45
+48 hours ago: 2026-01-17 14:30:45
+Difference: 24h0m0s
+Hours: 24
+Sleeping...
+Awake!`)
+		<h2>Time Creation Functions</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Function</th>
+					<th>Example</th>
+					<th>Description</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Now</td>
+					<td><code>time.Now()</code></td>
+					<td>Current local time</td>
+				</tr>
+				<tr>
+					<td>Date</td>
+					<td><code>{ "time.Date(2026, 1, 15, 14, 30, 0, 0, time.UTC)" }</code></td>
+					<td>Create specific time</td>
+				</tr>
+				<tr>
+					<td>Unix</td>
+					<td><code>{ "time.Unix(1234567890, 0)" }</code></td>
+					<td>From Unix timestamp</td>
+				</tr>
+				<tr>
+					<td>Parse</td>
+					<td><code>{ "time.Parse(layout, value)" }</code></td>
+					<td>Parse time from string</td>
+				</tr>
+				<tr>
+					<td>ParseInLocation</td>
+					<td><code>{ "time.ParseInLocation(layout, value, loc)" }</code></td>
+					<td>Parse with specific timezone</td>
+				</tr>
+			</tbody>
+		</table>
+		<h2>Duration Constants</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Constant</th>
+					<th>Value</th>
+					<th>Example</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Nanosecond</td>
+					<td>1 nanosecond</td>
+					<td><code>time. Nanosecond</code></td>
+				</tr>
+				<tr>
+					<td>Microsecond</td>
+					<td>1000 nanoseconds</td>
+					<td><code>time.Microsecond</code></td>
+				</tr>
+				<tr>
+					<td>Millisecond</td>
+					<td>1000 microseconds</td>
+					<td><code>time.Millisecond</code></td>
+				</tr>
+				<tr>
+					<td>Second</td>
+					<td>1000 milliseconds</td>
+					<td><code>time.Second</code></td>
+				</tr>
+				<tr>
+					<td>Minute</td>
+					<td>60 seconds</td>
+					<td><code>time.Minute</code></td>
+				</tr>
+				<tr>
+					<td>Hour</td>
+					<td>60 minutes</td>
+					<td><code>time.Hour</code></td>
+				</tr>
+			</tbody>
+		</table>
+		<h2>Common Time Methods</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Method</th>
+					<th>Return Type</th>
+					<th>Description</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Add(d Duration)</td>
+					<td>Time</td>
+					<td>Add duration to time</td>
+				</tr>
+				<tr>
+					<td>Sub(t Time)</td>
+					<td>Duration</td>
+					<td>Subtract two times</td>
+				</tr>
+				<tr>
+					<td>Before(t Time)</td>
+					<td>bool</td>
+					<td>Check if before another time</td>
+				</tr>
+				<tr>
+					<td>After(t Time)</td>
+					<td>bool</td>
+					<td>Check if after another time</td>
+				</tr>
+				<tr>
+					<td>Equal(t Time)</td>
+					<td>bool</td>
+					<td>Check if equal to another time</td>
+				</tr>
+				<tr>
+					<td>Format(layout string)</td>
+					<td>string</td>
+					<td>Format time as string</td>
+				</tr>
+				<tr>
+					<td>Unix()</td>
+					<td>int64</td>
+					<td>Unix timestamp in seconds</td>
+				</tr>
+				<tr>
+					<td>UnixNano()</td>
+					<td>int64</td>
+					<td>Unix timestamp in nanoseconds</td>
+				</tr>
+				<tr>
+					<td>Truncate(d Duration)</td>
+					<td>Time</td>
+					<td>Round down to duration</td>
+				</tr>
+				<tr>
+					<td>Round(d Duration)</td>
+					<td>Time</td>
+					<td>Round to nearest duration</td>
+				</tr>
+			</tbody>
+		</table>
+		<h2>Format Layout Components</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Component</th>
+					<th>Layout String</th>
+					<th>Example Output</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Year</td>
+					<td>2006</td>
+					<td>2026</td>
+				</tr>
+				<tr>
+					<td>Month (numeric)</td>
+					<td>01</td>
+					<td>01</td>
+				</tr>
+				<tr>
+					<td>Month (short)</td>
+					<td>Jan</td>
+					<td>Jan</td>
+				</tr>
+				<tr>
+					<td>Month (long)</td>
+					<td>January</td>
+					<td>January</td>
+				</tr>
+				<tr>
+					<td>Day</td>
+					<td>02</td>
+					<td>19</td>
+				</tr>
+				<tr>
+					<td>Weekday (short)</td>
+					<td>Mon</td>
+					<td>Sun</td>
+				</tr>
+				<tr>
+					<td>Weekday (long)</td>
+					<td>Monday</td>
+					<td>Sunday</td>
+				</tr>
+				<tr>
+					<td>Hour (12-hour)</td>
+					<td>03</td>
+					<td>02</td>
+				</tr>
+				<tr>
+					<td>Hour (24-hour)</td>
+					<td>15</td>
+					<td>14</td>
+				</tr>
+				<tr>
+					<td>Minute</td>
+					<td>04</td>
+					<td>30</td>
+				</tr>
+				<tr>
+					<td>Second</td>
+					<td>05</td>
+					<td>45</td>
+				</tr>
+				<tr>
+					<td>AM/PM</td>
+					<td>PM</td>
+					<td>PM</td>
+				</tr>
+				<tr>
+					<td>Timezone</td>
+					<td>MST</td>
+					<td>EST</td>
+				</tr>
+				<tr>
+					<td>Timezone offset</td>
+					<td>-0700</td>
+					<td>-0500</td>
+				</tr>
+			</tbody>
+		</table>
+		<h2>Timers and Tickers</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Type</th>
+					<th>Usage</th>
+					<th>Description</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Timer</td>
+					<td><code>{ "time.NewTimer(5 * time.Second)" }</code></td>
+					<td>Single event after duration</td>
+				</tr>
+				<tr>
+					<td>AfterFunc</td>
+					<td><code>{ "time. AfterFunc(d, func())" }</code></td>
+					<td>Execute function after duration</td>
+				</tr>
+				<tr>
+					<td>After</td>
+					<td><code>{ "<-time.After(d)" }</code></td>
+					<td>Simple timer channel</td>
+				</tr>
+				<tr>
+					<td>Ticker</td>
+					<td><code>{ "time.NewTicker(1 * time.Second)" }</code></td>
+					<td>Repeated events at interval</td>
+				</tr>
+				<tr>
+					<td>Tick</td>
+					<td><code>{ "time. Tick(d)" }</code></td>
+					<td>Simple ticker channel (no stop)</td>
+				</tr>
+			</tbody>
+		</table>
+		<h2>Common Time Patterns</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Pattern</th>
+					<th>Code</th>
+					<th>Use Case</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Timeout</td>
+					<td><code>{ "select { case <-time.After(5*time.Second): ...  }" }</code></td>
+					<td>Operation timeout</td>
+				</tr>
+				<tr>
+					<td>Ticker Loop</td>
+					<td><code>{ "ticker := time.NewTicker(1*time.Second); for range ticker.C { ... }" }</code></td>
+					<td>Periodic execution</td>
+				</tr>
+				<tr>
+					<td>Measure Duration</td>
+					<td><code>{ "start := time.Now(); ...; elapsed := time.Since(start)" }</code></td>
+					<td>Measure execution time</td>
+				</tr>
+				<tr>
+					<td>UTC Conversion</td>
+					<td><code>utc := t.UTC()</code></td>
+					<td>Convert to UTC timezone</td>
+				</tr>
+				<tr>
+					<td>Local Conversion</td>
+					<td><code>local := t. Local()</code></td>
+					<td>Convert to local timezone</td>
+				</tr>
+				<tr>
+					<td>Timezone Conversion</td>
+					<td><code>{ "loc, _ := time.LoadLocation(\"America/New_York\"); t.In(loc)" }</code></td>
+					<td>Convert to specific timezone</td>
+				</tr>
+				<tr>
+					<td>Start of Day</td>
+					<td><code>{ "time.Date(t.Year(), t.Month(), t.Day(), 0, 0, 0, 0, t.Location())" }</code></td>
+					<td>Truncate to midnight</td>
+				</tr>
+				<tr>
+					<td>Compare Times</td>
+					<td><code>{ "if t1.Before(t2) { ... }" }</code></td>
+					<td>Time comparison</td>
+				</tr>
+			</tbody>
+		</table>
+		<h2>Predefined Layouts</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Constant</th>
+					<th>Layout</th>
+					<th>Example</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>ANSIC</td>
+					<td>"Mon Jan _2 15:04:05 2006"</td>
+					<td>Sun Jan 19 14:30:45 2026</td>
+				</tr>
+				<tr>
+					<td>RFC3339</td>
+					<td>"2006-01-02T15:04:05Z07:00"</td>
+					<td>2026-01-19T14:30:45-05:00</td>
+				</tr>
+				<tr>
+					<td>RFC822</td>
+					<td>"02 Jan 06 15:04 MST"</td>
+					<td>19 Jan 26 14:30 EST</td>
+				</tr>
+				<tr>
+					<td>Kitchen</td>
+					<td>"3:04PM"</td>
+					<td>2:30PM</td>
+				</tr>
+				<tr>
+					<td>DateTime</td>
+					<td>"2006-01-02 15:04:05"</td>
+					<td>2026-01-19 14:30:45</td>
+				</tr>
+				<tr>
+					<td>DateOnly</td>
+					<td>"2006-01-02"</td>
+					<td>2026-01-19</td>
+				</tr>
+				<tr>
+					<td>TimeOnly</td>
+					<td>"15:04:05"</td>
+					<td>14:30:45</td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="nav-buttons">
+			@components.Button("Previous: XML", "/xml")
+			@components.Button("Next: Exit", "/context")
+		</div>
+	}
+}

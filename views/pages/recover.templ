@@ -1,0 +1,379 @@
+package pages
+
+import "github.com/whalelogic/howtogo/views/layouts"
+import "github.com/whalelogic/howtogo/views/components"
+
+templ Recover() {
+	@layouts.Base("Recover | How to Go") {
+		@components. Breadcrumb("recover", "Recover")
+		@components.CustomHeader("Recover", "JSON")
+		<p>Recover is a built-in function in Go that regains control of a panicking goroutine. It is only useful inside deferred functions and allows a program to handle a panic gracefully instead of crashing.  When called during a panic, recover stops the panicking sequence and returns the value passed to panic.</p>
+		@components. KeyPoints([]string{
+			"Recover only works when called inside a deferred function",
+			"Returns nil if the goroutine is not panicking",
+			"Returns the value passed to panic if called during a panic",
+			"Calling recover stops the panic and resumes normal execution",
+			"Recover only catches panics in the same goroutine",
+			"Use recover to convert panics into errors at API boundaries",
+			"Always check if recover returned non-nil before taking action",
+		})
+		<h2>Basic Recover Usage</h2>
+		<p>Recover must be called within a deferred function to catch panics: </p>
+		<div class="code-block">
+			<pre>
+				<code class="language-go">
+					@templ.Raw(`package main
+
+import "fmt"
+
+func safeDivide(a, b int) int {
+    defer func() {
+        if r := recover(); r != nil {
+            fmt. Println("Recovered from panic:", r)
+        }
+    }()
+    
+    return a / b
+}
+
+func main() {
+    result := safeDivide(10, 2)
+    fmt.Println("Result:", result)
+    
+    result = safeDivide(10, 0)
+    fmt.Println("Result after panic:", result)
+    
+    fmt.Println("Program continues normally")
+}`)
+				</code>
+			</pre>
+		</div>
+		<span class="output-label">Output:</span>
+		@components.CodeOutput(`Result: 5
+Recovered from panic: runtime error: integer divide by zero
+Result after panic:  0
+Program continues normally`)
+		<h2>Converting Panic to Error</h2>
+		<p>A common pattern is to convert a panic into an error return value:</p>
+		<div class="code-block">
+			<pre>
+				<code class="language-go">
+					@templ.Raw(`package main
+
+import (
+    "fmt"
+    "errors"
+)
+
+func riskyOperation(value int) (result int, err error) {
+    defer func() {
+        if r := recover(); r != nil {
+            err = fmt.Errorf("operation failed: %v", r)
+        }
+    }()
+    
+    if value < 0 {
+        panic("negative value not allowed")
+    }
+    
+    result = 100 / value
+    return result, nil
+}
+
+func main() {
+    result, err := riskyOperation(10)
+    fmt.Printf("Result: %d, Error:  %v\n", result, err)
+    
+    result, err = riskyOperation(0)
+    fmt.Printf("Result: %d, Error: %v\n", result, err)
+    
+    result, err = riskyOperation(-5)
+    fmt.Printf("Result: %d, Error: %v\n", result, err)
+}`)
+				</code>
+			</pre>
+		</div>
+		<span class="output-label">Output:</span>
+		@components.CodeOutput(`Result: 10, Error: <nil>
+Result: 0, Error: operation failed: runtime error: integer divide by zero
+Result: 0, Error: operation failed: negative value not allowed`)
+		<h2>Selective Recovery</h2>
+		<p>You can choose to recover only specific types of panics and re-panic others:</p>
+		<div class="code-block">
+			<pre>
+				<code class="language-go">
+					@templ.Raw(`package main
+
+import "fmt"
+
+type ValidationError struct {
+    Message string
+}
+
+func process(value int) {
+    defer func() {
+        if r := recover(); r != nil {
+            // Only recover from ValidationError
+            if _, ok := r.(ValidationError); ok {
+                fmt.Println("Recovered from validation error:", r)
+            } else {
+                // Re-panic for other errors
+                panic(r)
+            }
+        }
+    }()
+    
+    if value < 0 {
+        panic(ValidationError{Message: "value must be positive"})
+    }
+    
+    if value > 100 {
+        panic("value too large") // This will not be caught
+    }
+    
+    fmt. Println("Processing value:", value)
+}
+
+func main() {
+    process(50)
+    process(-10)
+    fmt.Println("Done")
+}`)
+				</code>
+			</pre>
+		</div>
+		<span class="output-label">Output:</span>
+		@components.CodeOutput(`Processing value: 50
+Recovered from validation error: {value must be positive}
+Done`)
+		<h2>Recover Behavior</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Context</th>
+					<th>Return Value</th>
+					<th>Effect</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>During panic in same goroutine</td>
+					<td>Panic value</td>
+					<td>Stops panic, resumes execution</td>
+				</tr>
+				<tr>
+					<td>Not during panic</td>
+					<td>nil</td>
+					<td>No effect</td>
+				</tr>
+				<tr>
+					<td>Called directly (not in defer)</td>
+					<td>nil</td>
+					<td>No effect, panic continues</td>
+				</tr>
+				<tr>
+					<td>Different goroutine's panic</td>
+					<td>nil</td>
+					<td>Cannot catch other goroutine's panic</td>
+				</tr>
+				<tr>
+					<td>Nested defer with recover</td>
+					<td>First recover catches it</td>
+					<td>Only outermost defer's recover executes</td>
+				</tr>
+			</tbody>
+		</table>
+		<h2>Common Recover Patterns</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Pattern</th>
+					<th>Code</th>
+					<th>Use Case</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Basic Recovery</td>
+					<td><code>{ "defer func() { if r := recover(); r != nil { log.Println(r) } }()" }</code></td>
+					<td>Log panic and continue</td>
+				</tr>
+				<tr>
+					<td>Return Error</td>
+					<td><code>{ "defer func() { if r := recover(); r != nil { err = fmt.Errorf(\"%v\", r) } }()" }</code></td>
+					<td>Convert panic to error</td>
+				</tr>
+				<tr>
+					<td>With Stack Trace</td>
+					<td><code>{ "defer func() { if r := recover(); r != nil { log.Printf(\"%v\\n%s\", r, debug.Stack()) } }()" }</code></td>
+					<td>Log panic with full stack trace</td>
+				</tr>
+				<tr>
+					<td>Cleanup and Recover</td>
+					<td><code>{ "defer func() { cleanup(); if r := recover(); r != nil { handle(r) } }()" }</code></td>
+					<td>Ensure cleanup before handling panic</td>
+				</tr>
+				<tr>
+					<td>Type-Based Recovery</td>
+					<td><code>{ "defer func() { if r := recover(); r != nil { if err, ok := r.(MyError); ok { ... } } }()" }</code></td>
+					<td>Handle specific error types</td>
+				</tr>
+				<tr>
+					<td>Re-panic</td>
+					<td><code>{ "defer func() { if r := recover(); r != nil { cleanup(); panic(r) } }()" }</code></td>
+					<td>Cleanup then propagate panic</td>
+				</tr>
+				<tr>
+					<td>Goroutine Safety</td>
+					<td><code>{ "go func() { defer func() { recover() }(); doWork() }()" }</code></td>
+					<td>Prevent goroutine panic from crashing app</td>
+				</tr>
+			</tbody>
+		</table>
+		<h2>Recover Use Cases</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Scenario</th>
+					<th>Should Use Recover? </th>
+					<th>Reason</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Web server handler</td>
+					<td>✅ Yes</td>
+					<td>Prevent one request panic from crashing server</td>
+				</tr>
+				<tr>
+					<td>Worker goroutine</td>
+					<td>✅ Yes</td>
+					<td>Prevent worker crash from affecting system</td>
+				</tr>
+				<tr>
+					<td>API package boundary</td>
+					<td>✅ Yes</td>
+					<td>Convert internal panics to errors for callers</td>
+				</tr>
+				<tr>
+					<td>Plugin/extension code</td>
+					<td>✅ Yes</td>
+					<td>Isolate third-party code failures</td>
+				</tr>
+				<tr>
+					<td>Development/testing</td>
+					<td>❌ No</td>
+					<td>Let panics surface to reveal bugs</td>
+				</tr>
+				<tr>
+					<td>Application initialization</td>
+					<td>❌ No</td>
+					<td>Fatal errors should stop the program</td>
+				</tr>
+				<tr>
+					<td>Library internal code</td>
+					<td>❌ Usually No</td>
+					<td>Fix bugs instead of hiding them</td>
+				</tr>
+			</tbody>
+		</table>
+		<h2>Recover Best Practices</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Practice</th>
+					<th>Description</th>
+					<th>Example</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Always Check for nil</td>
+					<td>Only act if recover returns non-nil</td>
+					<td><code>{ "if r := recover(); r != nil { ... }" }</code></td>
+				</tr>
+				<tr>
+					<td>Use in Defer Only</td>
+					<td>Recover only works in deferred functions</td>
+					<td><code>{ "defer func() { recover() }()" }</code></td>
+				</tr>
+				<tr>
+					<td>Log Recovered Panics</td>
+					<td>Always log when recovering from panic</td>
+					<td>Use structured logging with context</td>
+				</tr>
+				<tr>
+					<td>Include Stack Traces</td>
+					<td>Capture stack trace for debugging</td>
+					<td><code>debug.Stack()</code> in recover handler</td>
+				</tr>
+				<tr>
+					<td>Protect Goroutines</td>
+					<td>Every goroutine should have recover</td>
+					<td>Wrap goroutine body in defer/recover</td>
+				</tr>
+				<tr>
+					<td>Don't Ignore Panics</td>
+					<td>Silent recovery hides bugs</td>
+					<td>Always log or convert to error</td>
+				</tr>
+				<tr>
+					<td>Clean Up Resources</td>
+					<td>Ensure cleanup before/after recover</td>
+					<td>Close files, release locks, etc.</td>
+				</tr>
+				<tr>
+					<td>Avoid Over-Recovery</td>
+					<td>Don't recover everywhere</td>
+					<td>Let panics fail fast during development</td>
+				</tr>
+			</tbody>
+		</table>
+		<h2>Recover Gotchas</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Issue</th>
+					<th>Problem</th>
+					<th>Solution</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Not in Defer</td>
+					<td><code>{ "r := recover()" }</code> returns nil</td>
+					<td>Always call recover inside defer function</td>
+				</tr>
+				<tr>
+					<td>Wrong Goroutine</td>
+					<td>Cannot catch panic from another goroutine</td>
+					<td>Each goroutine needs its own recover</td>
+				</tr>
+				<tr>
+					<td>Nested Defers</td>
+					<td>Only one recover catches the panic</td>
+					<td>First recover in defer chain wins</td>
+				</tr>
+				<tr>
+					<td>Silent Recovery</td>
+					<td><code>{ "defer func() { recover() }()" }</code> hides errors</td>
+					<td>Always check and log recovered values</td>
+				</tr>
+				<tr>
+					<td>Re-panic Mistakes</td>
+					<td><code>{ "panic(recover())" }</code> may panic with nil</td>
+					<td>Check for nil before re-panicking</td>
+				</tr>
+				<tr>
+					<td>Resource Leaks</td>
+					<td>Recovered panic may leave resources open</td>
+					<td>Ensure cleanup in separate defers</td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="nav-buttons">
+			@components.Button("Previous: Defer", "/defer")
+			@components.Button("Next: JSON", "/json")
+		</div>
+	}
+}

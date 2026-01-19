@@ -52,11 +52,11 @@ func Sorting() templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = components.CustomHeader("Sorting", "Remaining concepts under construction").Render(ctx, templ_7745c5c3_Buffer)
+			templ_7745c5c3_Err = components.CustomHeader("Sorting", "Panic").Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, " <h1 style=\"text-align: center; margin: 24px;\">🏗️ Under contruction 📐</h1><p>Go's standard library provides robust support for sorting slices and user-defined collections through the sort package. It includes functions for sorting built-in types as well as interfaces for custom sorting logic.</p>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, " <h1 style=\"text-align: left; margin: 24px;\">🏗️</h1><p>Go's standard library provides robust support for sorting slices and user-defined collections through the sort package. It includes functions for sorting built-in types as well as interfaces for custom sorting logic.</p>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

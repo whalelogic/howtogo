@@ -1,0 +1,309 @@
+package pages
+
+import "github.com/whalelogic/howtogo/views/layouts"
+import "github.com/whalelogic/howtogo/views/components"
+
+templ Panic() {
+	  @layouts.Base("Panic | How to Go")  {
+		@components.Breadcrumb("panic", "Panic")
+		@components.CustomHeader("Panic", "Defer")
+		<p>Panic is a built-in function in Go that stops normal execution flow and begins panicking. When a function panics, it immediately stops executing, runs any deferred functions, and then returns to its caller.  This process continues up the stack until all functions in the current goroutine have returned, at which point the program crashes.</p>
+		@components. KeyPoints([]string{
+			"Panic stops normal execution and unwinds the stack",
+			"Deferred functions still execute during a panic",
+			"Use panic for truly unrecoverable errors",
+			"Prefer returning errors over panicking in most cases",
+			"Panic can be recovered using <code>recover()</code> in deferred functions",
+			"Unrecovered panics crash the program with a stack trace",
+			"Panics in goroutines only affect that goroutine (unless unrecovered)",
+		})
+		<h2>Basic Panic Usage</h2>
+		<p>A panic is typically caused by programming errors that should not occur: </p>
+		<div class="code-block">
+			<pre>
+				<code class="language-go">
+					@templ.Raw(`package main
+
+import "fmt"
+
+func main() {
+    fmt.Println("starting")
+    panic("something bad happened")
+    fmt.Println("this will not print")
+}`)
+				</code>
+			</pre>
+		</div>
+		<span class="output-label">Output:</span>
+		@components. CodeOutput(`starting
+panic: something bad happened
+
+goroutine 1 [running]: 
+main.main()
+        /path/to/file.go:6 +0x... `)
+		<h2>Panic with Defer</h2>
+		<p>Deferred functions execute even when a panic occurs:</p>
+		<div class="code-block">
+			<pre>
+				<code class="language-go">
+					@templ.Raw(`package main
+
+import "fmt"
+
+func main() {
+    defer fmt.Println("deferred call 1")
+    defer fmt.Println("deferred call 2")
+    
+    fmt.Println("about to panic")
+    panic("panic occurred")
+    
+    fmt.Println("this will not execute")
+}`)
+				</code>
+			</pre>
+		</div>
+		<span class="output-label">Output:</span>
+		@components.CodeOutput(`about to panic
+deferred call 2
+deferred call 1
+panic: panic occurred
+
+goroutine 1 [running]:
+main. main()
+        /path/to/file.go:9 +0x...`)
+		<h2>Recovering from Panic</h2>
+		<p>The recover function can catch a panic and resume normal execution:</p>
+		<div class="code-block">
+			<pre>
+				<code class="language-go">
+					@templ.Raw(`package main
+
+import "fmt"
+
+func safeDivide(a, b int) (result int) {
+    defer func() {
+        if r := recover(); r != nil {
+            fmt. Println("recovered from panic:", r)
+            result = 0
+        }
+    }()
+    
+    result = a / b
+    return result
+}
+
+func main() {
+    fmt.Println("result:", safeDivide(10, 2))
+    fmt.Println("result:", safeDivide(10, 0))
+    fmt.Println("program continues normally")
+}`)
+				</code>
+			</pre>
+		</div>
+		<span class="output-label">Output:</span>
+		@components.CodeOutput(`result: 5
+recovered from panic: runtime error: integer divide by zero
+result: 0
+program continues normally`)
+		<h2>When to Panic</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Scenario</th>
+					<th>Use Panic? </th>
+					<th>Reason</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Unrecoverable errors during init</td>
+					<td>✅ Yes</td>
+					<td>Cannot continue if setup fails</td>
+				</tr>
+				<tr>
+					<td>Programming errors (bugs)</td>
+					<td>✅ Yes</td>
+					<td>Indicates code needs fixing</td>
+				</tr>
+				<tr>
+					<td>Impossible state reached</td>
+					<td>✅ Yes</td>
+					<td>Logic error in code</td>
+				</tr>
+				<tr>
+					<td>Expected errors (file not found)</td>
+					<td>❌ No</td>
+					<td>Return error instead</td>
+				</tr>
+				<tr>
+					<td>User input validation failures</td>
+					<td>❌ No</td>
+					<td>Expected scenario, return error</td>
+				</tr>
+				<tr>
+					<td>Library/API code</td>
+					<td>❌ No</td>
+					<td>Let caller decide how to handle</td>
+				</tr>
+			</tbody>
+		</table>
+		<h2>Panic Functions and Methods</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Function</th>
+					<th>Signature</th>
+					<th>Description</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>{ "panic "}</td>
+					<td><code>{ "panic(v interface{})" }</code></td>
+					<td>Stops execution and begins panicking</td>
+				</tr>
+				<tr>
+					<td>recover</td>
+					<td><code>{ "recover() interface{}" }</code></td>
+					<td>Regains control of panicking goroutine</td>
+				</tr>
+			</tbody>
+		</table>
+		<h2>Common { "Panic" } Causes</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Cause</th>
+					<th>Example</th>
+					<th>Prevention</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Nil pointer dereference</td>
+					<td><code>{ "var p *int; fmt.Println(*p) "}</code></td>
+					<td>Check for nil before dereferencing</td>
+				</tr>
+				<tr>
+					<td>Index out of range</td>
+					<td><code>{ "arr := []int{1,2,3}; arr[5]" }</code></td>
+					<td>Check length before accessing</td>
+				</tr>
+				<tr>
+					<td>Type assertion failure</td>
+					<td><code>{ "var i interface{} = \"hello\"; i.(int)" }</code></td>
+					<td>Use comma-ok idiom:  <code>{ "v, ok := i.(int)" }</code></td>
+				</tr>
+				<tr>
+					<td>Close on closed channel</td>
+					<td><code>close(ch); close(ch)</code></td>
+					<td>Track channel state, close once</td>
+				</tr>
+				<tr>
+					<td>Send on closed channel</td>
+					<td><code>{ "close(ch); ch <- 1" }</code></td>
+					<td>Coordinate sender/receiver properly</td>
+				</tr>
+				<tr>
+					<td>Division by zero</td>
+					<td><code>x / 0</code></td>
+					<td>Check divisor before operation</td>
+				</tr>
+				<tr>
+					<td>Map concurrent access</td>
+					<td>Concurrent read/write to map</td>
+					<td>Use sync.Map or mutex protection</td>
+				</tr>
+			</tbody>
+		</table>
+		<h2>Panic and Recover Patterns</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Pattern</th>
+					<th>Code</th>
+					<th>Use Case</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Basic Recovery</td>
+					<td><code>{ "defer func() { if r := recover(); r != nil { log.Println(r) } }()" }</code></td>
+					<td>Log and continue</td>
+				</tr>
+				<tr>
+					<td>Convert to Error</td>
+					<td><code>{ "defer func() { if r := recover(); r != nil { err = fmt.Errorf(\"%v\", r) } }()" }</code></td>
+					<td>Convert panic to error return</td>
+				</tr>
+				<tr>
+					<td>Selective Recovery</td>
+					<td><code>{ "defer func() { if r := recover(); r != myError { panic(r) } }()" }</code></td>
+					<td>Only catch specific panics</td>
+				</tr>
+				<tr>
+					<td>Cleanup and Re-panic</td>
+					<td><code>{ "defer func() { cleanup(); panic(recover()) }()" }</code></td>
+					<td>Cleanup resources then propagate panic</td>
+				</tr>
+				<tr>
+					<td>Goroutine Protection</td>
+					<td><code>{ "go func() { defer recover(); ... }()" }</code></td>
+					<td>Prevent goroutine panic from crashing program</td>
+				</tr>
+				<tr>
+					<td>Assert Invariants</td>
+					<td><code>{ "if !condition { panic(\"invariant violated\") }" }</code></td>
+					<td>Check programming assumptions</td>
+				</tr>
+			</tbody>
+		</table>
+		<h2>Panic Best Practices</h2>
+		<table class="reference-table">
+			<thead>
+				<tr>
+					<th>Practice</th>
+					<th>Description</th>
+					<th>Example</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Prefer Errors</td>
+					<td>Return errors instead of panicking</td>
+					<td><code>{ "return nil, errors.New(\"failed\")" }</code> not <code>panic(... )</code></td>
+				</tr>
+				<tr>
+					<td>Document Panics</td>
+					<td>Document when functions may panic</td>
+					<td>Comment:  "Panics if index out of range"</td>
+				</tr>
+				<tr>
+					<td>Recover in Goroutines</td>
+					<td>Always recover in goroutines you start</td>
+					<td>Prevents unhandled panic crashes</td>
+				</tr>
+				<tr>
+					<td>Recover at Boundaries</td>
+					<td>Recover at package/API boundaries</td>
+					<td>Convert to errors for callers</td>
+				</tr>
+				<tr>
+					<td>Don't Recover Everywhere</td>
+					<td>Let panics crash during development</td>
+					<td>Reveals bugs that need fixing</td>
+				</tr>
+				<tr>
+					<td>Stack Traces</td>
+					<td>Include stack trace when recovering</td>
+					<td><code>debug.Stack()</code>  { `for context` }</td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="nav-buttons">
+			@components.Button("Previous: Sorting", "/sorting")
+			@components.Button("Next: Defer", "/defer")
+		</div>
+	}
+}
+
