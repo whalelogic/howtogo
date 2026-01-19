@@ -103,7 +103,7 @@ Contributions welcome! Please read the [CONTRIBUTING.md](CONTRIBUTING.md) guide 
 
 ## Author
 
-Created by Keith — Computer Science student, Army Veteran and Programmer. Passionate about learning, programming, and cloud-native systems 😄.
+Created by Keith. Dedicated to learning, programming, and cloud-native systems 😄.
 
 ---
 
