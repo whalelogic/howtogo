@@ -2,8 +2,6 @@
 .env
 *.db
 *.db-journal
-./ref
 *.db
 *.db-shm
 *.db-wal
-*/node_modules
