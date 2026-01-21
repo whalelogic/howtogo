@@ -13,21 +13,18 @@ type AnalyticsStore struct {
 }
 
 // InitAnalyticsDB opens the database, sets WAL mode, and creates tables.
-// using pure Go sqlite driver ensures easy compilation on AlmaLinux.
 func InitAnalyticsDB(filepath string) (*AnalyticsStore, error) {
 	db, err := sql.Open("sqlite", filepath)
 	if err != nil {
 		return nil, err
 	}
 
-	// 1. ENABLE WAL MODE
-	// Critical for production web servers. Allows concurrent reads/writes.
+	// Allows concurrent reads/writes.
 	if _, err := db.Exec("PRAGMA journal_mode=WAL;"); err != nil {
 		return nil, err
 	}
 
 	// 2. Set Busy Timeout
-	// Prevents "database is locked" errors during write contention
 	if _, err := db.Exec("PRAGMA busy_timeout=5000;"); err != nil {
 		return nil, err
 	}
@@ -52,8 +49,6 @@ func InitAnalyticsDB(filepath string) (*AnalyticsStore, error) {
 // RecordVisit runs asynchronously to prevent blocking the HTTP response.
 func (s *AnalyticsStore) RecordVisit(ip string, path string) {
 	go func() {
-		// Use a prepared statement for security/performance in a real app, 
-		// but direct exec is fine here for simplicity.
 		_, err := s.DB.Exec("INSERT INTO visits (ip_address, path) VALUES (?, ?)", ip, path)
 		if err != nil {
 			log.Printf("Background DB Error: Failed to record visit: %v", err)
@@ -66,8 +61,6 @@ func (s *AnalyticsStore) GetStats() (int, int) {
 	var totalViews int
 	var uniqueVisitors int
 
-	// These queries are fast on SQLite, but for massive scale, 
-	// you would cache these results in memory for 1 minute.
 	row := s.DB.QueryRow(`
 		SELECT 
 			(SELECT COUNT(*) FROM visits),
