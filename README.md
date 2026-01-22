@@ -76,9 +76,9 @@ https://go.dev/dl/
 ### Dev tools 
 ```templ generate --watch --proxy="http://localhost:8080" --cmd="go run ."```
 
-### Run an Example
+## To Run the app locally:
 
-```sh
+```go
 go run .
 ```
 Starts the server on `localhost:8080`
@@ -87,7 +87,7 @@ Verify Go Setup
 ```
 go version
 go env
-go work (new workspace tool)
+go work (workspace tool)
 ```
 
 
@@ -96,6 +96,33 @@ go work (new workspace tool)
   <img src="https://github.com/user-attachments/assets/92ae5dc6-b19f-4e3d-a855-673b280c12fd" width="45%" />
   <img src="https://github.com/user-attachments/assets/0e094107-42f1-4422-8a15-1f9021ea12e2" width="45%" /> 
 </p>
+
+
+## Official Site 
+
+The official howtogo.dev site is under development but available at: 
+
+`https://howtogo.dev`
+
+HowtoGo.dev uses the following technologies:
+- Go (Golang)
+- HTML/CSS/JavaScript
+- Templ (for static site generation)
+- Caddy HTTPS server
+- GitHub Pages (for hosting)
+
+### Caddy 
+Caddy is written in Go and uses:
+
+- Non-blocking I/O
+- Efficient connection reuse
+- HTTP/2 and HTTP/3 (QUIC) support
+- Automatic HTTPS with Let's Encrypt
+- Revserse proxy capabilities
+- Secure by default configurations
+
+Caddy is ideal for serving Go applications due to its performance, security features, and ease of use. Because howtogo.dev doesn't contain hundreds of pages, Caddy's lightweight footprint and fast startup times make it a perfect fit for hosting the site efficiently.
+
 
 ## Contributing
 
