@@ -69,8 +69,8 @@ func main() {
 	r.Static("/js", "./static/js")
 	r.Static("/icons", "./static/icons")
 	r.StaticFile("/favicon.ico", "./favicon.ico")
-	r.StaticFile("/robots.txt", "./static/robots.txt")
-	r.StaticFile("/sitemap.xml", "./static/sitemap.xml")
+	r.StaticFile("/robots.txt", "./robots.txt")
+	r.StaticFile("/sitemap.xml", "./sitemap.xml")
 
 	// Routes
 	r.GET("/", handlers.HomePageHandler)
