@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://howtogo.dev/</loc>
+    <lastmod>2025-12-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://howtogo.dev/hello-world</loc>
+    <lastmod>2025-12-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://howtogo.dev/values</loc>
+    <lastmod>2025-12-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://howtogo.dev/variables</loc>
+    <lastmod>2025-12-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://howtogo.dev/constants</loc>
+    <lastmod>2025-12-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+  <loc>https://howtogo.dev/</loc>
+  <lastmod>2026-01-01</lastmod>
+</url>
+
+<url>
+  <loc>https://howtogo.dev/about</loc>
+  <lastmod>2026-01-01</lastmod>
+</url>
+
+<url>
+  <loc>https://howtogo.dev/hello-world</loc>
+  <lastmod>2026-01-01</lastmod>
+</url>
+
+<url>
+  <loc>https://howtogo.dev/values</loc>
+  <lastmod>2026-01-01</lastmod>
+</url>
+
+<url>
+  <loc>https://howtogo.dev/variables</loc>
+  <lastmod>2026-01-01</lastmod>
+</url>
+
+<url>
+  <loc>https://howtogo.dev/constants</loc>
+  <lastmod>2026-01-01</lastmod>
+</url>
+
+<url>
+  <loc>https://howtogo.dev/arrays</loc>
+  <lastmod>2026-01-01</lastmod>
+</url>
+
+<url>
+  <loc>https://howtogo.dev/slices</loc>
+  <lastmod>2026-01-01</lastmod>
+</url>
+
+<url>
+  <loc>https://howtogo.dev/maps</loc>
+  <lastmod>2026-01-01</lastmod>
+</url>
+
+<url>
+  <loc>https://howtogo.dev/range</loc>
+  <lastmod>2026-01-01</lastmod>
+</url>
+
+<url>
+  <loc>https://howtogo.dev/ifelse</loc>
+  <lastmod>2026-01-01</lastmod>
+</url>
+
+<url>
+  <loc>https://howtogo.dev/switch</loc>
+  <lastmod>2026-01-01</lastmod>
+</url>
+
+<url>
+  <loc>https://howtogo.dev/for</loc>
+  <lastmod>2026-01-01</lastmod>
+</url>
+
+<url>
+  <loc>https://howtogo.dev/functions</loc>
+  <lastmod>2026-01-01</lastmod>
+</url>
+
+<url>
+  <loc>https://howtogo.dev/variadic-functions</loc>
+  <lastmod>2026-01-01</lastmod>
+</url>
+
+<url>
+  <loc>https://howtogo.dev/multiple-return-values</loc>
+  <lastmod>2026-01-01</lastmod>
+</url>
+
+<url>
+  <loc>https://howtogo.dev/closures</loc>
+  <lastmod>2026-01-01</lastmod>
+</url>
+
+<url>
+  <loc>https://howtogo.dev/recursion</loc>
+  <lastmod>2026-01-01</lastmod>
+</url>
+
+<url>
+  <loc>https://howtogo.dev/pointers</loc>
+  <lastmod>2026-01-01</lastmod>
+</url>
+
+<url>
+  <loc>https://howtogo.dev/structs</loc>
+  <lastmod>2026-01-01</lastmod>
+</url>
+
+<url>
+  <loc>https://howtogo.dev/methods</loc>
+  <lastmod>2026-01-01</lastmod>
+</url>
+
+<url>
+  <loc>https://howtogo.dev/interfaces</loc>
+  <lastmod>2026-01-01</lastmod>
+</url>
+
+<url>
+  <loc>https://howtogo.dev/generics</loc>
+  <lastmod>2026-01-01</lastmod>
+</url>
+
+<url>
+  <loc>https://howtogo.dev/errors</loc>
+  <lastmod>2026-01-01</lastmod>
+</url>
+
+<url>
+  <loc>https://howtogo.dev/strings</loc>
+  <lastmod>2026-01-01</lastmod>
+</url>
+
+<url>
+  <loc>https://howtogo.dev/runes</loc>
+  <lastmod>2026-01-01</lastmod>
+</url>
+
+<url>
+  <loc>https://howtogo.dev/sorting</loc>
+  <lastmod>2026-01-01</lastmod>
+</url>
+
+<url>
+  <loc>https://howtogo.dev/channels</loc>
+  <lastmod>2026-01-01</lastmod>
+</url>
+
+<url>
+  <loc>https://howtogo.dev/channel-buffering</loc>
+  <lastmod>2026-01-01</lastmod>
+</url>
+
+<url>
+  <loc>https://howtogo.dev/channel-synchronization</loc>
+  <lastmod>2026-01-01</lastmod>
+</url>
+
+<url>
+  <loc>https://howtogo.dev/goroutines</loc>
+  <lastmod>2026-01-01</lastmod>
+</url>
+
+<url>
+  <loc>https://howtogo.dev/stateful-goroutines</loc>
+  <lastmod>2026-01-01</lastmod>
+</url>
+
+<url>
+  <loc>https://howtogo.dev/mutexes</loc>
+  <lastmod>2026-01-01</lastmod>
+</url>
+
+<url>
+  <loc>https://howtogo.dev/waitgroups</loc>
+  <lastmod>2026-01-01</lastmod>
+</url>
+
+<url>
+  <loc>https://howtogo.dev/workerpools</loc>
+  <lastmod>2026-01-01</lastmod>
+</url>
+
+<url>
+  <loc>https://howtogo.dev/select</loc>
+  <lastmod>2026-01-01</lastmod>
+</url>
+
+<url>
+  <loc>https://howtogo.dev/timers</loc>
+  <lastmod>2026-01-01</lastmod>
+</url>
+
+<url>
+  <loc>https://howtogo.dev/tickers</loc>
+  <lastmod>2026-01-01</lastmod>
+</url>
+
+<url>
+  <loc>https://howtogo.dev/timeouts</loc>
+  <lastmod>2026-01-01</lastmod>
+</url>
+
+</urlset>
