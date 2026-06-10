@@ -5,7 +5,6 @@ import (
 	"os"
 )
 
-
 // TestCreateFile used to create a file in /output directory
 func TestCreateFile() {
 	os.MkdirAll("/output", os.ModePerm)
@@ -22,22 +21,6 @@ func TestCreateFile() {
 		return
 	}
 }
-// 		log.Fatalf("Failed to set trusted proxies: %v", err)
-// 	}
-// 
-// 	// Define routes
-// 	r.GET("/health", h.HealthCheck)
-// 	r.POST("/analytics/event", h.RecordEvent)
-// 	r.GET("/analytics/stats", h.GetStats)
-// 
-// 	// Start the server
-// 	log.Printf("Starting server on port %s", port)
-// 	if err := r.Run(":" + port); err != nil {
-// 		log.Fatalf("Failed to run server: %v", err)
-// 	}
-// }
-
-
 
 func main() {
 	TestCreateFile()
