@@ -404,7 +404,7 @@ decoded: map[active: true name:Charlie score:95.5]`).Render(ctx, templ_7745c5c3_
 			}
 			return nil
 		})
-		templ_7745c5c3_Err = layouts.Base("JSON | How to Go").Render(templ.WithChildren(ctx, templ_7745c5c3_Var2), templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = layouts.Base("JSON | How to Go", "/json", "Encoding and decoding JSON in Go with encoding/json.").Render(templ.WithChildren(ctx, templ_7745c5c3_Var2), templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

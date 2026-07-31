@@ -4,7 +4,7 @@ import "github.com/whalelogic/howtogo/views/layouts"
 import "github.com/whalelogic/howtogo/views/components"
 
 templ StatefulGoroutines() {
-	@layouts.Base("Stateful Goroutines | How to Go") {
+	@layouts.Base("Stateful Goroutines | How to Go", "/stateful-goroutines", "Managing state safely with a single goroutine instead of locks.") {
 		@components.Breadcrumb("stateful-goroutines", "Stateful Goroutines")
 		@components.CustomHeader("Stateful Goroutines", "Sorting")
 		<p>In Go, stateful goroutines are a pattern where a single goroutine owns a piece of state, and all access to that state is done via channels. This avoids the need for mutexes and helps prevent race conditions.</p>

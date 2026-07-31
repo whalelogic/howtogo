@@ -4,7 +4,7 @@ import "github.com/whalelogic/howtogo/views/layouts"
 import "github.com/whalelogic/howtogo/views/components"
 
 templ Range() {
-	@layouts.Base("Range | How to Go") {
+	@layouts.Base("Range | How to Go", "/range", "Iterating over arrays, slices, maps, and channels with range.") {
 		@components.Breadcrumb("range", "Range")
 		@components.CustomHeader("Range", "Functions")
 		<p>Range iterates over elements in a variety of data structures. It's commonly used with for loops to iterate over slices, arrays, maps, strings, and channels.</p>

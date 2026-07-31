@@ -17,7 +17,7 @@ func main() {
 }`
 
 templ Values() {
-	@layouts.Base("Values | How to Go") {
+	@layouts.Base("Values | How to Go", "/values", "Go's basic value types: booleans, numbers, and strings, with runnable examples.") {
 		@components.Breadcrumb("values", "Values")
 		@components.CustomHeader("Values", "Variables")
 		<p><b>Values</b> in Go cover numbers, strings, booleans, and compound types. They are the building blocks you combine to model data.</p>

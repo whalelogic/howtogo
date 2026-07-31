@@ -4,7 +4,7 @@ import "github.com/whalelogic/howtogo/views/layouts"
 import "github.com/whalelogic/howtogo/views/components"
 
 templ Pointers() {
-	@layouts.Base("Pointers | How to Go") {
+	@layouts.Base("Pointers | How to Go", "/pointers", "Understanding pointers in Go: memory addresses and indirection.") {
 		@components.Breadcrumb("pointers", "Pointers")
 		@components.CustomHeader("Pointers", "Strings")
 		<p>Go supports pointers, allowing you to pass references to values and records within your program. Pointers are useful for large structs or when you need to modify a value in a function.</p>

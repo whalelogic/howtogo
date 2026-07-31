@@ -147,7 +147,7 @@ channel`).Render(ctx, templ_7745c5c3_Buffer)
 			}
 			return nil
 		})
-		templ_7745c5c3_Err = layouts.Base("Channel Buffering | How to Go").Render(templ.WithChildren(ctx, templ_7745c5c3_Var2), templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = layouts.Base("Channel Buffering | How to Go", "/channel-buffering", "Buffered channels in Go and how they affect goroutine synchronization.").Render(templ.WithChildren(ctx, templ_7745c5c3_Var2), templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

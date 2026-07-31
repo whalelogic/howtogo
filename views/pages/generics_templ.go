@@ -544,7 +544,7 @@ Strings: [num_1 num_2 num_3 num_4 num_5]`).Render(ctx, templ_7745c5c3_Buffer)
 			}
 			return nil
 		})
-		templ_7745c5c3_Err = layouts.Base("Generics | How to Go").Render(templ.WithChildren(ctx, templ_7745c5c3_Var2), templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = layouts.Base("Generics | How to Go", "/generics", "Writing generic functions and types in Go using type parameters.").Render(templ.WithChildren(ctx, templ_7745c5c3_Var2), templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

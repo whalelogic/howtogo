@@ -4,7 +4,7 @@ import "github.com/whalelogic/howtogo/views/layouts"
 import "github.com/whalelogic/howtogo/views/components"
 
 templ VariadicFunctions() {
-	@layouts.Base("Variadic Functions | How to Go") {
+	@layouts.Base("Variadic Functions | How to Go", "/variadic-functions", "Functions that accept a variable number of arguments in Go.") {
 		@components.Breadcrumb("variadic-functions", "Variadic Functions")
 		@components.CustomHeader("Variadic Functions", "Closures")
 		<p>Variadic functions can be called with any number of trailing arguments. They are useful when you need to work with an arbitrary number of parameters of the same type.</p>

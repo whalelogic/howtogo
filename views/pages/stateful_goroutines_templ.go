@@ -182,7 +182,7 @@ writeOps: ...`).Render(ctx, templ_7745c5c3_Buffer)
 			}
 			return nil
 		})
-		templ_7745c5c3_Err = layouts.Base("Stateful Goroutines | How to Go").Render(templ.WithChildren(ctx, templ_7745c5c3_Var2), templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = layouts.Base("Stateful Goroutines | How to Go", "/stateful-goroutines", "Managing state safely with a single goroutine instead of locks.").Render(templ.WithChildren(ctx, templ_7745c5c3_Var2), templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

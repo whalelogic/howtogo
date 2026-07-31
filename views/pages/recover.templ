@@ -4,7 +4,7 @@ import "github.com/whalelogic/howtogo/views/layouts"
 import "github.com/whalelogic/howtogo/views/components"
 
 templ Recover() {
-	@layouts.Base("Recover | How to Go") {
+	@layouts.Base("Recover | How to Go", "/recover", "Recovering from panics in Go to keep programs running.") {
 		@components. Breadcrumb("recover", "Recover")
 		@components.CustomHeader("Recover", "JSON")
 		<p>Recover is a built-in function in Go that regains control of a panicking goroutine. It is only useful inside deferred functions and allows a program to handle a panic gracefully instead of crashing.  When called during a panic, recover stops the panicking sequence and returns the value passed to panic.</p>

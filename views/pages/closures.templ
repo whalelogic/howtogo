@@ -4,7 +4,7 @@ import "github.com/whalelogic/howtogo/views/layouts"
 import "github.com/whalelogic/howtogo/views/components"
 
 templ Closures() {
-	@layouts.Base("Closures | How to Go") {
+	@layouts.Base("Closures | How to Go", "/closures", "Go closures: functions that capture and reference variables from outside their body.") {
 		@components.Breadcrumb("closures", "Closures")
 		@components.CustomHeader("Closures", "Recursion")
 		<p>Go supports anonymous functions which can form closures. A closure is a function value that references variables from outside its body. The function may access and assign to the referenced variables.</p>

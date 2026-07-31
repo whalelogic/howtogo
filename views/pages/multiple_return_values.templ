@@ -4,7 +4,7 @@ import "github.com/whalelogic/howtogo/views/layouts"
 import "github.com/whalelogic/howtogo/views/components"
 
 templ MultipleReturnValues() {
-	@layouts.Base("Multiple Return Values | How to Go") {
+	@layouts.Base("Multiple Return Values | How to Go", "/multiple-return-values", "Returning multiple values from a Go function.") {
 		@components.Breadcrumb("multiple-return-values", "Multiple Return Values")
 		@components.CustomHeader("Multiple Return Values", "Variadic Functions")
 		<p>Go has built-in support for multiple return values. This feature is used extensively in idiomatic Go, especially for returning both a result and an error value from a function.</p>

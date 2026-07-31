@@ -550,7 +550,7 @@ func main() {
 			}
 			return nil
 		})
-		templ_7745c5c3_Err = layouts.Base("Slices | How to Go").Render(templ.WithChildren(ctx, templ_7745c5c3_Var2), templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = layouts.Base("Slices | How to Go", "/slices", "Go's dynamic, flexible slice type and how it differs from arrays.").Render(templ.WithChildren(ctx, templ_7745c5c3_Var2), templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

@@ -4,7 +4,7 @@ import "github.com/whalelogic/howtogo/views/layouts"
 import "github.com/whalelogic/howtogo/views/components"
 
 templ Variables() {
-	@layouts.Base("Variables | How to Go") {
+	@layouts.Base("Variables | How to Go", "/variables", "How to declare and use variables in Go, including type inference and short declarations.") {
 		@components.Breadcrumb("variables", "Variables")
 		@components.CustomHeader("Variables", "Constants")
 		<p>Variables let you name values. Go uses explicit <code>var</code> declarations or short-hand <code style="color: red;">:=</code> inside functions.</p>

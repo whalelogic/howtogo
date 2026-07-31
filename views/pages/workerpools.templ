@@ -4,7 +4,7 @@ import "github.com/whalelogic/howtogo/views/layouts"
 import "github.com/whalelogic/howtogo/views/components"
 
 templ WorkerPools() {
-	@layouts.Base("Worker Pools | How to Go") {
+	@layouts.Base("Worker Pools | How to Go", "/worker-pools", "Building a worker pool in Go to process jobs concurrently.") {
 		@components.Breadcrumb("worker-pools", "Worker Pools")
 		@components.CustomHeader("Worker Pools", "WaitGroups")
 		<p>In this example we'll look at how to implement a worker pool using goroutines and channels. A worker pool is a common concurrency pattern for limiting the number of concurrently running tasks.</p>

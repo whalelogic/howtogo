@@ -4,7 +4,7 @@ import "github.com/whalelogic/howtogo/views/layouts"
 import "github.com/whalelogic/howtogo/views/components"
 
 templ XML() {
-	@layouts.Base("XML | How to Go") {
+	@layouts.Base("XML | How to Go", "/xml", "Encoding and decoding XML in Go with encoding/xml.") {
 		@components.Breadcrumb("xml", "XML")
 		@components.CustomHeader("XML", "Time")
 		<p>XML (Extensible Markup Language) is a markup language for encoding documents in a format that is both human-readable and machine-readable.  Go's encoding/xml package provides built-in support for encoding Go data structures to XML and decoding XML into Go structures using struct tags similar to JSON.</p>

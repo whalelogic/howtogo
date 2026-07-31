@@ -273,7 +273,7 @@ func main() {
 			}
 			return nil
 		})
-		templ_7745c5c3_Err = layouts.Base("If/Else | How to Go").Render(templ.WithChildren(ctx, templ_7745c5c3_Var2), templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = layouts.Base("If/Else | How to Go", "/ifelse", "Conditional branching in Go using if, else if, and else.").Render(templ.WithChildren(ctx, templ_7745c5c3_Var2), templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

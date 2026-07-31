@@ -265,7 +265,7 @@ Even numbers: [2 4 6 8 10]`).Render(ctx, templ_7745c5c3_Buffer)
 			}
 			return nil
 		})
-		templ_7745c5c3_Err = layouts.Base("Closures | How to Go").Render(templ.WithChildren(ctx, templ_7745c5c3_Var2), templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = layouts.Base("Closures | How to Go", "/closures", "Go closures: functions that capture and reference variables from outside their body.").Render(templ.WithChildren(ctx, templ_7745c5c3_Var2), templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

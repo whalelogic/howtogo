@@ -4,7 +4,7 @@ import "github.com/whalelogic/howtogo/views/layouts"
 import "github.com/whalelogic/howtogo/views/components"
 
 templ Functions() {
-	@layouts.Base("Functions | How to Go") {
+	@layouts.Base("Functions | How to Go", "/functions", "Defining and calling functions in Go, including parameters and return values.") {
 		@components.Breadcrumb("functions", "Functions")
 		@components.CustomHeader("Functions", "Multiple Return Values")
 		<p>Functions are central to Go. They allow you to organize code into reusable blocks that can accept parameters and return values. Go supports various function patterns including multiple return values and variadic parameters.</p>

@@ -4,7 +4,7 @@ import "github.com/whalelogic/howtogo/views/layouts"
 import "github.com/whalelogic/howtogo/views/components"
 
 templ Panic() {
-	  @layouts.Base("Panic | How to Go")  {
+	  @layouts.Base("Panic | How to Go", "/panic", "Understanding panic in Go and when it's triggered.")  {
 		@components.Breadcrumb("panic", "Panic")
 		@components.CustomHeader("Panic", "Defer")
 		<p>Panic is a built-in function in Go that stops normal execution flow and begins panicking. When a function panics, it immediately stops executing, runs any deferred functions, and then returns to its caller.  This process continues up the stack until all functions in the current goroutine have returned, at which point the program crashes.</p>

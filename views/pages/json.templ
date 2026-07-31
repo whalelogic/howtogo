@@ -4,7 +4,7 @@ import "github.com/whalelogic/howtogo/views/layouts"
 import "github.com/whalelogic/howtogo/views/components"
 
 templ JSON() {
-	@layouts.Base("JSON | How to Go") {
+	@layouts.Base("JSON | How to Go", "/json", "Encoding and decoding JSON in Go with encoding/json.") {
 		@components.Breadcrumb("json", "JSON")
 		@components.CustomHeader("JSON", "XML")
 		<p>JSON (JavaScript Object Notation) is a lightweight data interchange format. Go's encoding/json package provides built-in support for encoding Go data structures to JSON and decoding JSON into Go structures.  Go uses struct tags to control JSON marshaling and unmarshaling behavior.</p>

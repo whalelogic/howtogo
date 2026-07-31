@@ -4,7 +4,7 @@ import "github.com/whalelogic/howtogo/views/layouts"
 import "github.com/whalelogic/howtogo/views/components"
 
 templ Exit() {
-	@layouts.Base("Exit | How to Go") {
+	@layouts.Base("Exit | How to Go", "/exit", "Exiting a Go program with os.Exit and understanding deferred cleanup.") {
 		@components.Breadcrumb("exit", "Exit")
 		@components.CustomHeader("Exit", "Signals")
 		<p>The os package in Go provides the Exit function to immediately terminate the program with a given status code.  Exit is typically used to indicate whether a program completed successfully or encountered an error.   By convention, exit code 0 indicates success, while non-zero codes indicate various types of failures.</p>

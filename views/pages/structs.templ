@@ -4,7 +4,7 @@ import "github.com/whalelogic/howtogo/views/layouts"
 import "github.com/whalelogic/howtogo/views/components"
 
 templ Structs() {
-	@layouts.Base("Structs | How to Go") {
+	@layouts.Base("Structs | How to Go", "/structs", "Defining and using structs to group related data in Go.") {
 		@components.Breadcrumb("structs", "Structs")
 		@components.CustomHeader("Structs", "Methods")
 		<p>A struct is a composite data type that groups together variables (fields) under a single name. Structs are fundamental in Go for creating complex data structures and modeling real-world entities.</p>

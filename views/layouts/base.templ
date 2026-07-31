@@ -1,7 +1,7 @@
 // Package layouts defines the layout templates.
 package layouts
 
-templ Base(title string) {
+templ Base(title string, path string, description string) {
 	<!DOCTYPE html>
 	<html lang="en">
 		<head>
@@ -9,22 +9,26 @@ templ Base(title string) {
 			<meta name="viewport" content="width=device-width, initial-scale=1"/>
 			<title>{ title }</title>
 			<!-- SEO Meta Tags -->
-			<meta name="description" content="Learn Go programming with hands-on examples. A comprehensive guide covering variables, functions, concurrency, and more."/>
+			<meta name="description" content={ description }/>
 			<meta name="author" content="WhaleLogic"/>
-			<meta name="robots" content="index, follow"/>
-			<link rel="canonical" href="https://howtogo.dev"/>
+			if path == "/analytics" {
+				<meta name="robots" content="noindex, follow"/>
+			} else {
+				<meta name="robots" content="index, follow"/>
+			}
+			<link rel="canonical" href={ "https://howtogo.dev" + path }/>
 			<!-- Open Graph / Facebook -->
 			<meta property="og:type" content="article"/>
-			<meta property="og:url" content="https://howtogo.dev"/>
+			<meta property="og:url" content={ "https://howtogo.dev" + path }/>
 			<meta property="og:title" content={ title }/>
-			<meta property="og:description" content="Learn Go programming with hands-on examples. A comprehensive guide covering variables, functions, concurrency, and more."/>
-			<meta property="og:image" content="https://howtogo.dev/static/img/og/default.jpg" />
+			<meta property="og:description" content={ description }/>
+			<meta property="og:image" content="https://howtogo.dev/img/og/default.jpg" />
 			<!-- Twitter -->
 			<meta property="twitter:card" content="summary_large_image"/>
-			<meta property="twitter:url" content="https://howtogo.dev"/>
+			<meta property="twitter:url" content={ "https://howtogo.dev" + path }/>
 			<meta property="twitter:title" content={ title }/>
-			<meta property="twitter:description" content="Learn Go in 2025 with hands-on examples. A comprehensive guide covering variables, functions, concurrency, and more."/>
-			<meta property="twitter:image" content="https://howtogo.dev/icons/devicon-master/icons/go/go-original.svg"/>
+			<meta property="twitter:description" content={ description }/>
+			<meta property="twitter:image" content="https://howtogo.dev/img/og/default.jpg"/>
 			<!-- Favicon -->
 			<link rel="icon" type="image/x-icon" href="/favicon.ico"/>
 			<link rel="preconnect" href="https://fonts.googleapis.com"/>

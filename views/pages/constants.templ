@@ -5,7 +5,7 @@ import "github.com/whalelogic/howtogo/views/layouts"
 import "github.com/whalelogic/howtogo/views/components"
 
 templ Constants() {
-	@layouts.Base("Constants | How to Go") {
+	@layouts.Base("Constants | How to Go", "/constants", "Declaring and using constants in Go, including typed and untyped constants.") {
 		@components.Breadcrumb("constants", "Constants")
 		@components.CustomHeader("Constants", "For")
 		<p>Constants hold values that do not change. They are great for configuration, sizes, and enumerations. One common use for constants is declaring an <code style="color: red; font-weight: 500;">API_KEY</code>. </p>

@@ -4,7 +4,7 @@ import "github.com/whalelogic/howtogo/views/layouts"
 import "github.com/whalelogic/howtogo/views/components"
 
 templ Slices() {
-	@layouts.Base("Slices | How to Go") {
+	@layouts.Base("Slices | How to Go", "/slices", "Go's dynamic, flexible slice type and how it differs from arrays.") {
 		@components.Breadcrumb("slices", "Slices")
 		@components.CustomHeader("Slices", "Maps")
 		<p>Slices are a key data type in Go, providing a more powerful interface to sequences than arrays. Unlike arrays, slices are dynamically-sized and flexible.</p>

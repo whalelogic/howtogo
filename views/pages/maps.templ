@@ -4,7 +4,7 @@ import "github.com/whalelogic/howtogo/views/layouts"
 import "github.com/whalelogic/howtogo/views/components"
 
 templ Maps() {
-	@layouts.Base("Maps | How to Go") {
+	@layouts.Base("Maps | How to Go", "/maps", "Working with Go's built-in map type for key-value data.") {
 		@components.Breadcrumb("maps", "Maps")
 		@components.CustomHeader("Maps", "Range")
 		<p>Maps are Go's built-in associative data type, also known as hash tables or dictionaries in other languages. Maps store key-value pairs.</p>

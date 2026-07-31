@@ -68,6 +68,7 @@ func main() {
 	r.Static("/css", "./static/css")
 	r.Static("/js", "./static/js")
 	r.Static("/icons", "./static/icons")
+	r.Static("/img", "./static/img")
 	r.StaticFile("/favicon.ico", "./favicon.ico")
 	r.StaticFile("/robots.txt", "./robots.txt")
 	r.StaticFile("/sitemap.xml", "./sitemap.xml")

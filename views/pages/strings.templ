@@ -4,7 +4,7 @@ import "github.com/whalelogic/howtogo/views/layouts"
 import "github.com/whalelogic/howtogo/views/components"
 
 templ Strings() {
-	@layouts.Base("Strings | How to Go") {
+	@layouts.Base("Strings | How to Go", "/strings", "Common string manipulation functions in Go.") {
 		@components.Breadcrumb("strings", "Strings")
 		@components.CustomHeader("Strings", "Runes")
 		<p>Strings in Go are immutable sequences of bytes, typically used to represent UTF-8 encoded text. Go provides rich support for string manipulation through the <code>strings</code> package and built-in operations.</p>

@@ -4,7 +4,7 @@ import "github.com/whalelogic/howtogo/views/layouts"
 import "github.com/whalelogic/howtogo/views/components"
 
 templ Context() {
-	@layouts.Base("Contexts | How to Go") {
+	@layouts.Base("Contexts | How to Go", "/context", "Using context.Context to control cancellation, deadlines, and timeouts in Go.") {
 		@components. Breadcrumb("contexts", "Contexts")
 		@components.CustomHeader("Contexts", "Exit")
 		<p>Contexts are a key feature in Go for managing cancellation, deadlines, and request-scoped values across API boundaries and goroutines.  The context package provides a standard way to handle timeout and cancellation signals.</p>

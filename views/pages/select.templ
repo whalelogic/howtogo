@@ -4,7 +4,7 @@ import "github.com/whalelogic/howtogo/views/layouts"
 import "github.com/whalelogic/howtogo/views/components"
 
 templ Select() {
-	@layouts.Base("Select | How to Go") {
+	@layouts.Base("Select | How to Go", "/select", "Using select to handle multiple channel operations in Go.") {
 		@components.Breadcrumb("select", "Select")
 		@components.CustomHeader("Select", "Timeouts")
 		<p>Go's <code>select</code> statement lets a goroutine wait on multiple communication operations. A <code>select</code> blocks until one of its cases can run, then it executes that case. It chooses one at random if multiple are ready.</p>
