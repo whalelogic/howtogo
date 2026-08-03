@@ -4,7 +4,7 @@ import "github.com/whalelogic/howtogo/views/layouts"
 import "github.com/whalelogic/howtogo/views/components"
 
 templ Tickers() {
-	@layouts.Base("Tickers | How to Go") {
+	@layouts.Base("Tickers | How to Go", "/tickers", "Running recurring tasks in Go with time.Ticker.") {
 		@components.Breadcrumb("tickers", "Tickers")
 		@components.CustomHeader("Tickers", "Worker Pools")
 		<p>Tickers are for when you want to do something repeatedly at regular intervals. Here's an example of a ticker that ticks periodically until we stop it.</p>

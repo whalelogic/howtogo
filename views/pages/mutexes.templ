@@ -4,7 +4,7 @@ import "github.com/whalelogic/howtogo/views/layouts"
 import "github.com/whalelogic/howtogo/views/components"
 
 templ Mutexes() {
-	@layouts.Base("Mutexes | How to Go") {
+	@layouts.Base("Mutexes | How to Go", "/mutexes", "Protecting shared state in Go with sync.Mutex.") {
 		@components.Breadcrumb("mutexes", "Mutexes")
 		@components.CustomHeader("Mutexes", "Stateful Goroutines")
 

@@ -120,7 +120,7 @@ func Values() templ.Component {
 			}
 			return nil
 		})
-		templ_7745c5c3_Err = layouts.Base("Values | How to Go").Render(templ.WithChildren(ctx, templ_7745c5c3_Var2), templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = layouts.Base("Values | How to Go", "/values", "Go's basic value types: booleans, numbers, and strings, with runnable examples.").Render(templ.WithChildren(ctx, templ_7745c5c3_Var2), templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

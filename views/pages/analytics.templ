@@ -8,7 +8,7 @@ import (
 
 // Analytics renders the server statistics page
 templ Analytics(ip string, views int, visitors int) {
-    @layouts.Base("Analytics | How to Go") {
+    @layouts.Base("Analytics | How to Go", "/analytics", "Traffic and usage analytics dashboard for How to Go.") {
         @components.Breadcrumb("analytics", "Analytics")
         @components.CustomHeader("Analytics", "About")
         

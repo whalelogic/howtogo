@@ -4,7 +4,7 @@ import "github.com/whalelogic/howtogo/views/layouts"
 import "github.com/whalelogic/howtogo/views/components"
 
 templ WaitGroups() {
-	@layouts.Base("WaitGroups | How to Go") {
+	@layouts.Base("WaitGroups | How to Go", "/waitgroups", "Waiting for multiple goroutines to finish using sync.WaitGroup.") {
 		@components.Breadcrumb("waitgroups", "Wait-Groups")
 		@components.CustomHeader("Wait Groups", "Mutexes")
 		<p>A <code>sync.WaitGroup</code> is used to wait for a collection of goroutines to finish executing. The main goroutine calls <code>Add</code> to set the number of goroutines to wait for, and then each of the goroutines runs and calls <code>Done</code> when finished. At the same time, <code>Wait</code> can be used to block until all goroutines have finished.</p>

@@ -4,7 +4,7 @@ import "github.com/whalelogic/howtogo/views/layouts"
 import "github.com/whalelogic/howtogo/views/components"
 
 templ Timeouts() {
-	@layouts.Base("Timeouts | How to Go") {
+	@layouts.Base("Timeouts | How to Go", "/timeouts", "Implementing timeouts in Go using channels and select.") {
 		@components.Breadcrumb("timeouts", "Timeouts")
 		@components.CustomHeader("Timeouts", "Timers")
 		<p>Timeouts are important for programs that connect to external resources or that otherwise need to bound execution time. Implementing timeouts in Go is clean and simple using <code>select</code> and <code>time.After</code>.</p>

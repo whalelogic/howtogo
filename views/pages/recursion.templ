@@ -4,7 +4,7 @@ import "github.com/whalelogic/howtogo/views/layouts"
 import "github.com/whalelogic/howtogo/views/components"
 
 templ Recursion() {
-	@layouts.Base("Recursion | How to Go") {
+	@layouts.Base("Recursion | How to Go", "/recursion", "Writing recursive functions in Go.") {
 		@components.Breadcrumb("recursion", "Recursion")
 		@components.CustomHeader("Recursion", "Pointers")
 		<p>Recursion is a technique where a function calls itself to solve a problem by breaking it down into smaller subproblems. Go supports recursive functions naturally, making it useful for problems that have a recursive structure.</p>

@@ -4,7 +4,7 @@ import "github.com/whalelogic/howtogo/views/layouts"
 import "github.com/whalelogic/howtogo/views/components"
 
 templ Goroutines() {
-	@layouts.Base("Goroutines | How to Go") {
+	@layouts.Base("Goroutines | How to Go", "/goroutines", "Concurrent programming in Go with lightweight goroutines.") {
 		@components.Breadcrumb("goroutines", "Goroutines")
 		@components.CustomHeader("Goroutines", "Channels")
 		<p>Goroutines are lightweight threads managed by the Go runtime. They enable concurrent execution of functions, making it easy to write programs that do multiple things at once. Goroutines are one of Go's most powerful features.</p>

@@ -4,7 +4,7 @@ import "github.com/whalelogic/howtogo/views/layouts"
 import "github.com/whalelogic/howtogo/views/components"
 
 templ ChannelBuffering() {
-	@layouts.Base("Channel Buffering | How to Go") {
+	@layouts.Base("Channel Buffering | How to Go", "/channel-buffering", "Buffered channels in Go and how they affect goroutine synchronization.") {
 		@components.Breadcrumb("channel-buffering", "Channel Buffering")
 		@components.CustomHeader("Channel Buffering", "Channel Synchronization")
 		<p>By default, channels are unbuffered, meaning that they will only accept a send if there is a corresponding receive ready to take the value. Buffered channels accept a limited number of values without a corresponding receiver for those values.</p>

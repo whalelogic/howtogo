@@ -436,7 +436,7 @@ Unwrapped: failed to read config: open config.json: no such file or directory`).
 			}
 			return nil
 		})
-		templ_7745c5c3_Err = layouts.Base("Errors | How to Go").Render(templ.WithChildren(ctx, templ_7745c5c3_Var2), templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = layouts.Base("Errors | How to Go", "/errors", "Idiomatic error handling in Go using the error interface.").Render(templ.WithChildren(ctx, templ_7745c5c3_Var2), templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

@@ -4,7 +4,7 @@ import "github.com/whalelogic/howtogo/views/layouts"
 import "github.com/whalelogic/howtogo/views/components"
 
 templ Methods() {
-	@layouts.Base("Methods | How to Go") {
+	@layouts.Base("Methods | How to Go", "/methods", "Attaching methods to types in Go, with value and pointer receivers.") {
 		@components.Breadcrumb("methods", "Methods")
 		@components.CustomHeader("Methods", "Interfaces")
 		<p>Methods in Go are functions with a special receiver argument. They allow you to define behavior on types, enabling object-oriented programming patterns while maintaining Go's simplicity.</p>

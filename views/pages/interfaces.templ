@@ -4,7 +4,7 @@ import "github.com/whalelogic/howtogo/views/layouts"
 import "github.com/whalelogic/howtogo/views/components"
 
 templ Interfaces() {
-	@layouts.Base("Interfaces | How to Go") {
+	@layouts.Base("Interfaces | How to Go", "/interfaces", "Defining and implementing interfaces in Go for flexible, decoupled code.") {
 		@components.Breadcrumb("interfaces", "Interfaces")
 		@components.CustomHeader("Interfaces", "Generics")
 		<p>An interface in Go is a collection of method signatures. A value implements an interface by implementing its methods. There is no explicit declaration of intent.</p>

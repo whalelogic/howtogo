@@ -4,7 +4,7 @@ import "github.com/whalelogic/howtogo/views/layouts"
 import "github.com/whalelogic/howtogo/views/components"
 
 templ Switch() {
-	@layouts.Base("Switch | How to Go") {
+	@layouts.Base("Switch | How to Go", "/switch", "Using switch statements in Go for cleaner multi-way branching.") {
 		@components.Breadcrumb("switch", "Switch")
 		@components.CustomHeader("Switch", "Arrays")
 		<p>Switch statements express conditionals across many branches. Go's switch is more powerful than in many other languages, with flexible matching and automatic break behavior.</p>

@@ -110,7 +110,7 @@ func main() {
 			}
 			return nil
 		})
-		templ_7745c5c3_Err = layouts.Base("How to Go").Render(templ.WithChildren(ctx, templ_7745c5c3_Var2), templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = layouts.Base("How to Go", "/hello-world", "Write and run your first Go program with the classic Hello, World! example.").Render(templ.WithChildren(ctx, templ_7745c5c3_Var2), templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

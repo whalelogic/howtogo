@@ -4,7 +4,7 @@ import "github.com/whalelogic/howtogo/views/layouts"
 import "github.com/whalelogic/howtogo/views/components"
 
 templ Runes() {
-	@layouts.Base("Runes | How to Go") {
+	@layouts.Base("Runes | How to Go", "/runes", "Working with Unicode runes and UTF-8 strings in Go.") {
 		@components.Breadcrumb("runes", "Runes")
 		@components.CustomHeader("Runes", "Structs")
 		<p>A rune in Go is an alias for <code>int32</code> and represents a Unicode code point. Runes are essential for properly handling international text and multi-byte characters in Go.</p>

@@ -4,7 +4,7 @@ import "github.com/whalelogic/howtogo/views/layouts"
 import "github.com/whalelogic/howtogo/views/components"
 
 templ Time() {
-	@layouts.Base("Time | How to Go") {
+	@layouts.Base("Time | How to Go", "/time", "Working with dates and times in Go using the time package.") {
 		@components.Breadcrumb("time", "Time")
 		@components.CustomHeader("Time", "Context")
 		<p>The time package in Go provides functionality for measuring and displaying time.  It includes support for time zones, durations, timers, tickers, and time formatting/parsing.  Time values in Go are represented by the time.Time type, which includes both a wall clock reading and a monotonic clock reading for accurate duration measurements.</p>

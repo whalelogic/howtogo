@@ -4,7 +4,7 @@ import "github.com/whalelogic/howtogo/views/layouts"
 import "github.com/whalelogic/howtogo/views/components"
 
 templ Timers() {
-	@layouts.Base("Timers | How to Go") {
+	@layouts.Base("Timers | How to Go", "/timers", "Scheduling one-off delayed work in Go with time.Timer.") {
 		@components.Breadcrumb("timers", "Timers")
 		@components.CustomHeader("Timers", "Tickers")
 		<p>Timers are for when you want to do something once in the future. Here's an example of a timer that fires after a specified duration.</p>

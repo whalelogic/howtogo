@@ -6,7 +6,7 @@ import (
 )
 
 templ HelloWorld() {
-	@layouts.Base("How to Go") {
+	@layouts.Base("How to Go", "/hello-world", "Write and run your first Go program with the classic Hello, World! example.") {
 		@components.Breadcrumb("hello-world", "Hello World")
         <br/>
 		@components.Header()

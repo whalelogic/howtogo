@@ -4,7 +4,7 @@ import "github.com/whalelogic/howtogo/views/layouts"
 import "github.com/whalelogic/howtogo/views/components"
 
 templ Index() {
-	@layouts.Base("How to Go") {
+	@layouts.Base("How to Go", "/", "Learn Go with hands-on, runnable examples covering syntax, data structures, concurrency, and the standard library.") {
 		@components.Header()
 		<ul class="examples menu-list">
 			<li><a href="hello-world">Hello World</a></li>
@@ -40,7 +40,7 @@ templ Index() {
 				<li><a href="timers">Timers</a></li>
 				<li><a href="tickers">Tickers</a></li>
 				<li><a href="worker-pools">Worker Pools</a></li>
-				<li><a href="wait-groups">WaitGroups</a></li>
+				<li><a href="waitgroups">WaitGroups</a></li>
 				<li><a href="mutexes">Mutexes</a></li>
 				<li><a href="stateful-goroutines">Stateful Goroutines</a></li>
 				<li><a href="sorting">Sorting</a></li>

@@ -4,7 +4,7 @@ import "github.com/whalelogic/howtogo/views/layouts"
 import "github.com/whalelogic/howtogo/views/components"
 
 templ IfElse() {
-	@layouts.Base("If/Else | How to Go") {
+	@layouts.Base("If/Else | How to Go", "/ifelse", "Conditional branching in Go using if, else if, and else.") {
 		@components.Breadcrumb("if-else", "If/Else")
 		@components.CustomHeader("If/Else", "Switch")
 		<p>Branching with <code>if</code> and <code>else</code> in Go is straightforward. Go doesn't require parentheses around conditions, but braces are always required.</p>

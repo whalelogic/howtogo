@@ -4,7 +4,7 @@ import "github.com/whalelogic/howtogo/views/layouts"
 import "github.com/whalelogic/howtogo/views/components"
 
 templ Generics() {
-	@layouts.Base("Generics | How to Go") {
+	@layouts.Base("Generics | How to Go", "/generics", "Writing generic functions and types in Go using type parameters.") {
 		@components.Breadcrumb("generics", "Generics")
 		@components.CustomHeader("Generics", "Errors")
 		<p>Generics (type parameters) were introduced in Go 1.18, allowing you to write functions and types that work with multiple types while maintaining type safety. Generics eliminate code duplication and enable powerful abstractions.</p>

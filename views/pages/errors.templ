@@ -4,7 +4,7 @@ import "github.com/whalelogic/howtogo/views/layouts"
 import "github.com/whalelogic/howtogo/views/components"
 
 templ Errors() {
-	@layouts.Base("Errors | How to Go") {
+	@layouts.Base("Errors | How to Go", "/errors", "Idiomatic error handling in Go using the error interface.") {
 		@components.Breadcrumb("errors", "Errors")
 		@components.CustomHeader("Errors", "Goroutines")
 		<p>Go handles errors explicitly through return values rather than exceptions. Errors are values that implement the <code>error</code> interface, making error handling straightforward and visible in your code.</p>

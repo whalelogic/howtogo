@@ -25,6 +25,18 @@ type URL struct {
 	LastMod string `xml:"lastmod"`
 }
 
+// routeOverrides maps a .templ filename (minus extension, underscores intact)
+// to its actual registered route in main.go, for the cases where the two diverge.
+var routeOverrides = map[string]string{
+	"workerpools": "worker-pools",
+}
+
+// excludedRoutes are routes that exist but shouldn't be published in the sitemap
+// (internal dashboards, not content pages).
+var excludedRoutes = map[string]bool{
+	"analytics": true,
+}
+
 func main() {
 	now := time.Now().Format("2006-01-02")
 	var urls []URL
@@ -49,8 +61,14 @@ func main() {
 		route := strings.TrimSuffix(name, ".templ")
 		if route == "index" {
 			route = ""
+		} else if override, ok := routeOverrides[route]; ok {
+			route = override
 		} else {
 			route = strings.ReplaceAll(route, "_", "-")
+		}
+
+		if excludedRoutes[route] {
+			return nil
 		}
 
 		urls = append(urls, URL{

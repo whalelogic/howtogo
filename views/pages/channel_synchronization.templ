@@ -4,7 +4,7 @@ import "github.com/whalelogic/howtogo/views/layouts"
 import "github.com/whalelogic/howtogo/views/components"
 
 templ ChannelSynchronization() {
-	@layouts.Base("Channel Synchronization | How to Go") {
+	@layouts.Base("Channel Synchronization | How to Go", "/channel-synchronization", "Synchronizing goroutines using channels in Go.") {
 		@components.Breadcrumb("channel-synchronization", "Channel Synchronization")
 		@components.CustomHeader("Channel Synchronization", "Select")
 		<p>We can use channels to synchronize execution across goroutines. Here's an example of using a blocking receive to wait for a goroutine to finish. This is a powerful way to orchestrate complex concurrent operations.</p>

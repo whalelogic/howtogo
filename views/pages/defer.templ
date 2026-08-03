@@ -4,7 +4,7 @@ import "github.com/whalelogic/howtogo/views/layouts"
 import "github.com/whalelogic/howtogo/views/components"
 
 templ Defer() {
-	@layouts.Base("Defer | How to Go") {
+	@layouts.Base("Defer | How to Go", "/defer", "Deferring function calls in Go for cleanup and resource management.") {
 		@components. Breadcrumb("defer", "Defer")
 		@components.CustomHeader("Defer", "Recover")
 		<p>Defer is a keyword in Go that schedules a function call to be executed after the surrounding function returns.  It's commonly used for cleanup tasks like closing files, unlocking mutexes, or releasing resources.</p>
